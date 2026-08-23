@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BLL.BACKUP_BLL">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BACKUP_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.BITACORA_BLL">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAACAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>BITACORA_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.CONTROLCAMBIO_BLL">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAgAAAkAAAAAAAAAgAAAAAAAAAIAIAAAAAAAAAA=</HashCode>
+      <FileName>CONTROLCAMBIO_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.DIGITOVERIFICADOR_BLL">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAABgAAAAAAAAAAAAEBAAgAAAAIAAACAAKAgA=</HashCode>
+      <FileName>DIGITOVERIFICADOR_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.IDIOMA_BLL">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAACAAAAEACAAAAEBAAAAACAAAAAAAAQAABAAAAA=</HashCode>
+      <FileName>IDIOMA_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.PERMISO_BLL">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAKAAAAAAAAAAJAACAAgAAAAICAACCAIACAAACCAAA=</HashCode>
+      <FileName>PERMISO_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.PRODUCTO_BLL">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAEAAABkAAACgAAAAAAAEAABgAAAAAAAAAKAIAAA=</HashCode>
+      <FileName>PRODUCTO_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.RESTORE_BLL">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RESTORE_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BLL.USUARIO_BLL">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAACIIAIAAAAAAAAAAABAAAAAAAAAAAAAAIQAA=</HashCode>
+      <FileName>USUARIO_BLL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

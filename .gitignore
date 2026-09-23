@@ -449,3 +449,5 @@ FodyWeavers.xsd
 *.sln.iml
 *.ini
 *.zip
+Instalador/redist/
+Instalador/Output/

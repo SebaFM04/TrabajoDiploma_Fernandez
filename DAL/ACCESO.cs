@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+
 
 namespace DAL
 {
     public class ACCESO
     {
         SqlConnection Conexion;
+        public static string ObtenerCadena()
+        {
+            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.txt");
+            string instancia = File.Exists(ruta) ? File.ReadAllText(ruta).Trim() : @".";
+            return $"Data Source={instancia};Initial Catalog=TpIngSoftware_2026;Integrated Security=True;TrustServerCertificate=True;";
+        }
         public void Abrir()
         {
             Conexion = new SqlConnection();
-            //Conexion.ConnectionString = "Integrated Security=SSPI;Initial Catalog=TpIngSoftware_2026 ;Data Source=ACERNOTEBOOK-MC\\SQLEXPRESS";
-            Conexion.ConnectionString = "Integrated Security=SSPI;Initial Catalog=TpIngSoftware_2026 ;Data Source=.";
+            if (Conexion.ConnectionString == "")
+            {
+                Conexion.ConnectionString = ObtenerCadena();
+            }
             Conexion.Open();
         }
         public void Cerrar()

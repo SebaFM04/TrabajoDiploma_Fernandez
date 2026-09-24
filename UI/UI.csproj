@@ -7,7 +7,7 @@
     <ProjectGuid>{DF737CCD-C76D-4341-AFED-0AFD729F7A34}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>UI</RootNamespace>
-    <AssemblyName>UI</AssemblyName>
+    <AssemblyName>SistemaBar</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

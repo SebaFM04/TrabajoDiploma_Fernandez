@@ -46,6 +46,7 @@
     <Compile Include="CONTROLCAMBIO_BLL.cs" />
     <Compile Include="DIGITOVERIFICADOR_BLL.cs" />
     <Compile Include="IDIOMA_BLL.cs" />
+    <Compile Include="INSUMO_BLL.cs" />
     <Compile Include="PERMISO_BLL.cs" />
     <Compile Include="PRODUCTO_BLL.cs" />
     <Compile Include="RESTORE_BLL.cs" />

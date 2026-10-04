@@ -44,6 +44,7 @@
     <Compile Include="BITACORA.cs" />
     <Compile Include="CONTROLCAMBIO.cs" />
     <Compile Include="DIGITOVERIFICADOR.cs" />
+    <Compile Include="INSUMO.cs" />
     <Compile Include="PERMISOATOMICO.cs" />
     <Compile Include="PERMISOCOMPONENT.cs" />
     <Compile Include="PERMISOCOMPOSITE.cs" />

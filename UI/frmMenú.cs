@@ -33,6 +33,7 @@ namespace UI
 
             gestiónUsuariosToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Usuarios");
             gestiónProductosToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Productos");
+            formularioInsumosToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Insumos");
             adminitraciónToolStripMenuItem.Visible = usuario.TienePermiso("Auditoria");
             idiomaToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Idiomas");
             backUpToolStripMenuItem1.Visible = usuario.TienePermiso("BackUp");
@@ -76,6 +77,11 @@ namespace UI
         private void formularioProductosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmProducto());
+        }
+
+        private void formularioInsumosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmInsumo());
         }
 
         private void admRolesToolStripMenuItem_Click(object sender, EventArgs e)

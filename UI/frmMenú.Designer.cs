@@ -36,6 +36,7 @@
             this.admRolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestiónProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formularioProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.formularioInsumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminitraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,7 +114,8 @@
             // gestiónProductosToolStripMenuItem
             // 
             this.gestiónProductosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.formularioProductosToolStripMenuItem});
+            this.formularioProductosToolStripMenuItem,
+            this.formularioInsumosToolStripMenuItem});
             this.gestiónProductosToolStripMenuItem.Name = "gestiónProductosToolStripMenuItem";
             this.gestiónProductosToolStripMenuItem.Size = new System.Drawing.Size(134, 20);
             this.gestiónProductosToolStripMenuItem.Text = "Gestión Productos";
@@ -124,7 +126,14 @@
             this.formularioProductosToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.formularioProductosToolStripMenuItem.Text = "Formulario Productos";
             this.formularioProductosToolStripMenuItem.Click += new System.EventHandler(this.formularioProductosToolStripMenuItem_Click);
-            // 
+            //
+            // formularioInsumosToolStripMenuItem
+            //
+            this.formularioInsumosToolStripMenuItem.Name = "formularioInsumosToolStripMenuItem";
+            this.formularioInsumosToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.formularioInsumosToolStripMenuItem.Text = "Formulario Insumos";
+            this.formularioInsumosToolStripMenuItem.Click += new System.EventHandler(this.formularioInsumosToolStripMenuItem_Click);
+            //
             // adminitraciónToolStripMenuItem
             // 
             this.adminitraciónToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -233,6 +242,7 @@
         private System.Windows.Forms.ToolStripMenuItem formularioUsuariosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gestiónProductosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem formularioProductosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem formularioInsumosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adminitraciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bitacoraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem admRolesToolStripMenuItem;

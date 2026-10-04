@@ -62,6 +62,7 @@
     <Compile Include="MAPPER_ORDEN_COMPRA.cs" />
     <Compile Include="MAPPER_RECEPCION.cs" />
     <Compile Include="MAPPER_RECLAMO.cs" />
+    <Compile Include="MAPPER_PAGO_PROVEEDOR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

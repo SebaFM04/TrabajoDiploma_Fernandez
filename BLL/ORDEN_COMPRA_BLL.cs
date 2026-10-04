@@ -47,6 +47,18 @@ namespace BLL
             return estado;
         }
 
+        // CU021 mensajes 31-36: cambio de estado dentro de la transacción del pago
+        public void CambiarEstado(int idOrdenCompra, string estado, ACCESO acceso)
+        {
+            new MAPPER_ORDEN_COMPRA(acceso).ActualizarEstado(idOrdenCompra, estado);
+        }
+
+        // CU021 paso 2: recepciones de la orden (facturas del proveedor asociadas)
+        public List<BE.RECEPCION> ListarRecepciones(int idOrdenCompra)
+        {
+            return new MAPPER_RECEPCION().ListarPorOrden(idOrdenCompra);
+        }
+
         // CU021: total de la orden = lo recibido × el costo de cada recepción
         public decimal CalcularTotal(int idOrdenCompra)
         {

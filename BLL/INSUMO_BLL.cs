@@ -110,8 +110,13 @@ namespace BLL
         // Si la lista no está vacía, el insumo no se puede dar de baja.
         public List<BE.PRODUCTO> VerificarBajaInsumo(int idInsumo)
         {
-            // N02: acá se suma el control de órdenes de compra no cerradas (FA2), cuando exista ORDEN_COMPRA
             return GestorInsumo.ListarProductosActivosPorInsumo(idInsumo);
+        }
+
+        // CU025 FA2: órdenes de compra abiertas (ni Cerrada ni Pagada, decisión 49) que incluyen el insumo
+        public List<BE.ORDEN_COMPRA> VerificarOrdenesAbiertas(int idInsumo)
+        {
+            return new MAPPER_ORDEN_COMPRA().ListarAbiertasPorInsumo(idInsumo);
         }
 
         // CU025 Dar de Baja Insumo: baja lógica. Un stock mayor a cero no la impide.
@@ -123,6 +128,8 @@ namespace BLL
 
             if (VerificarBajaInsumo(idInsumo).Count > 0)
                 throw new ArgumentException("msgInsumoEnReceta");
+            if (VerificarOrdenesAbiertas(idInsumo).Count > 0)
+                throw new ArgumentException("msgInsumoEnOrdenAbierta");
 
             GestorInsumo.BajaInsumo(idInsumo);
 

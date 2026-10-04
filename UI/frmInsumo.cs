@@ -299,6 +299,14 @@ namespace UI
                         g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                // FA2: el insumo figura en órdenes de compra abiertas (N02)
+                var ordenes = GestorInsumo.VerificarOrdenesAbiertas(seleccionado.IdInsumo);
+                if (ordenes.Count > 0)
+                {
+                    MessageBox.Show(string.Format(g.Traducir("msgInsumoEnOrdenAbierta"), string.Join(", ", ordenes.Select(o => $"N° {o.IdOrdenCompra} ({o.Estado})"))),
+                        g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 // Paso 2: datos del insumo y pedido de confirmación. FA3: con "No" se vuelve al listado.
                 var confirmar = MessageBox.Show(

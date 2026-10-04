@@ -43,6 +43,8 @@
             this.entregaPiqueosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.proveedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaValesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminitraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,9 +98,26 @@
             this.gestiónProductosToolStripMenuItem,
             this.operacionBarToolStripMenuItem,
             this.consultasToolStripMenuItem,
+            this.comprasToolStripMenuItem,
             this.adminitraciónToolStripMenuItem,
             this.idiomaToolStripMenuItem});
             this.mnstripMenu.Location = new System.Drawing.Point(0, 0);
+            //
+            // proveedoresToolStripMenuItem
+            //
+            this.proveedoresToolStripMenuItem.Name = "proveedoresToolStripMenuItem";
+            this.proveedoresToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.proveedoresToolStripMenuItem.Text = "Proveedores";
+            this.proveedoresToolStripMenuItem.Click += new System.EventHandler(this.proveedoresToolStripMenuItem_Click);
+            //
+            // comprasToolStripMenuItem
+            //
+            this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.proveedoresToolStripMenuItem,
+            });
+            this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
+            this.comprasToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.comprasToolStripMenuItem.Text = "Compras";
             this.mnstripMenu.Name = "mnstripMenu";
             this.mnstripMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
             this.mnstripMenu.Size = new System.Drawing.Size(600, 24);
@@ -400,6 +419,8 @@
         private System.Windows.Forms.ToolStripMenuItem formularioInsumosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem formularioRecetasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operacionBarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem proveedoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrarVentaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaPiqueosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaBebidasToolStripMenuItem;

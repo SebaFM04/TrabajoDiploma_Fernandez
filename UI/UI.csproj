@@ -151,6 +151,12 @@
       <DependentUpon>frmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIManager.cs" />
+    <Compile Include="frmProveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProveedor.Designer.cs">
+      <DependentUpon>frmProveedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmABMIdioma.resx">

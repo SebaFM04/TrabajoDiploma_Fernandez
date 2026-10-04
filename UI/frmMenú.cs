@@ -52,6 +52,7 @@ namespace UI
             controlCambiosToolStripMenuItem.Available = tiene("Control Cambios");
 
             admIdiomasToolStripMenuItem.Available = tiene("Gestion Idiomas");
+            proveedoresToolStripMenuItem.Available = tiene("Gestion Proveedores");
 
             foreach (ToolStripMenuItem padre in mnstripMenu.Items.OfType<ToolStripMenuItem>())
                 padre.Available = padre.DropDownItems.OfType<ToolStripItem>().Any(h => h.Available);
@@ -191,6 +192,12 @@ namespace UI
         private void consultaVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmConsultaVentas());
+        }
+
+        // CU022, CU026 y CU027: ABM de proveedores
+        private void proveedoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmProveedor());
         }
 
         private void consultaValesToolStripMenuItem_Click(object sender, EventArgs e)

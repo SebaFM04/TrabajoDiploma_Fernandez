@@ -58,6 +58,8 @@
     <Compile Include="MAPPER_FACTURA.cs" />
     <Compile Include="MAPPER_VALE.cs" />
     <Compile Include="MAPPER_VENTA.cs" />
+    <Compile Include="MAPPER_PROVEEDOR.cs" />
+    <Compile Include="MAPPER_ORDEN_COMPRA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

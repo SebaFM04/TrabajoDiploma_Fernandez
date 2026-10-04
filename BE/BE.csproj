@@ -59,6 +59,9 @@
     <Compile Include="VALE.cs" />
     <Compile Include="VENTA.cs" />
     <Compile Include="VENTA_DETALLE.cs" />
+    <Compile Include="PROVEEDOR.cs" />
+    <Compile Include="ORDEN_COMPRA.cs" />
+    <Compile Include="ORDEN_COMPRA_DETALLE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

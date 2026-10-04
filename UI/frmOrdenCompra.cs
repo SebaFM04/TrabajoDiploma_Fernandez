@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace UI
 {
-    // CU016 Generar Orden de Compra (DSS-CU016). Actor: Encargado de Stock.
+    // CU016 Generar Orden de Compra (DSS-CU016) y CU018 Ajustar Orden Observada (DSS-CU018). Actor: Encargado de Stock.
     public partial class frmOrdenCompra : Form, IObservadorIdioma
     {
         INSUMO_BLL GestorInsumo = new INSUMO_BLL();
@@ -23,6 +23,13 @@ namespace UI
         // Insumos con aviso pendiente (se marcan para pedir por defecto)
         List<int> idsConAviso = new List<int>();
         bool cargando = false;
+        // CU018: orden observada que se está ajustando (null en modo "Nueva orden")
+        BE.ORDEN_COMPRA ordenEnAjuste = null;
+
+        private bool ModoAjuste
+        {
+            get { return rdbObservadasfrmOrdenCompra.Checked; }
+        }
 
         public frmOrdenCompra()
         {
@@ -52,6 +59,86 @@ namespace UI
             foreach (DataGridViewColumn col in dgvPedidofrmOrdenCompra.Columns)
                 col.ReadOnly = col.Name != "colPedirfrmOrdenCompra" && col.Name != "colCantidadfrmOrdenCompra";
             dgvPedidofrmOrdenCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvObservadasfrmOrdenCompra.Columns.Clear();
+            foreach (string col in new[] { "colNumerofrmOrdenCompra", "colProveedorfrmOrdenCompra", "colFechafrmOrdenCompra" })
+                dgvObservadasfrmOrdenCompra.Columns.Add(col, g.Traducir(col));
+            dgvObservadasfrmOrdenCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        // "Nueva orden" (CU016) u "Órdenes observadas" (CU018)
+        private void rdbModo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!((RadioButton)sender).Checked) return;
+            var g = GestorIdioma.Instancia;
+            bool ajuste = ModoAjuste;
+            lblAvisosfrmOrdenCompra.Visible = dgvAvisosfrmOrdenCompra.Visible = !ajuste;
+            dgvObservadasfrmOrdenCompra.Visible = lblObservacionesfrmOrdenCompra.Visible = txtObservacionesfrmOrdenCompra.Visible = ajuste;
+            btnConfirmarfrmOrdenCompra.Text = g.Traducir(ajuste ? "msgOrdenAjustarBoton" : "btnConfirmarfrmOrdenCompra");
+            ordenEnAjuste = null;
+            txtObservacionesfrmOrdenCompra.Text = string.Empty;
+            if (ajuste)
+            {
+                CargarProveedores(null);
+                CargarObservadas(true);
+            }
+            else
+            {
+                CargarAvisos(false);
+                CargarProveedores(null);
+            }
+        }
+
+        // CU018 paso 2 / FA1: órdenes observadas
+        private void CargarObservadas(bool avisarSiVacio)
+        {
+            var g = GestorIdioma.Instancia;
+            cargando = true;
+            dgvObservadasfrmOrdenCompra.Rows.Clear();
+            var ordenes = new List<BE.ORDEN_COMPRA>();
+            try
+            {
+                ordenes = GestorOrden.ListarPorEstado(ORDEN_COMPRA_BLL.EstadoObservada);
+                foreach (var o in ordenes)
+                {
+                    int fila = dgvObservadasfrmOrdenCompra.Rows.Add(o.IdOrdenCompra, o.Proveedor.RazonSocial, o.FechaGeneracion.ToString("dd/MM/yyyy HH:mm", CultureInfo.CurrentCulture));
+                    dgvObservadasfrmOrdenCompra.Rows[fila].Tag = o;
+                }
+                dgvObservadasfrmOrdenCompra.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
+            }
+            finally
+            {
+                cargando = false;
+            }
+            if (avisarSiVacio && ordenes.Count == 0)
+                MessageBox.Show(g.Traducir("msgOrdenSinObservadas"), g.Traducir("frmOrdenCompra"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // CU018 pasos 3 y 4: detalle de la orden con las observaciones del Dueño, listo para modificar
+        private void dgvObservadasfrmOrdenCompra_SelectionChanged(object sender, EventArgs e)
+        {
+            if (cargando || dgvObservadasfrmOrdenCompra.SelectedRows.Count == 0) return;
+            var seleccionada = dgvObservadasfrmOrdenCompra.SelectedRows[0].Tag as BE.ORDEN_COMPRA;
+            try
+            {
+                ordenEnAjuste = GestorOrden.ObtenerDetalle(seleccionada.IdOrdenCompra);
+                txtObservacionesfrmOrdenCompra.Text = ordenEnAjuste.Observaciones;
+                CargarProveedores(ordenEnAjuste.IdProveedor);
+                foreach (DataGridViewRow fila in dgvPedidofrmOrdenCompra.Rows)
+                {
+                    var linea = ordenEnAjuste.Detalles.FirstOrDefault(d => d.IdInsumo == ((BE.INSUMO)fila.Tag).IdInsumo);
+                    fila.Cells["colPedirfrmOrdenCompra"].Value = linea != null;
+                    fila.Cells["colCantidadfrmOrdenCompra"].Value = linea != null ? linea.CantidadPedida.ToString() : string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
+            }
         }
 
         // CU016 paso 2 / FA1: insumos con aviso pendiente; si no hay, todos los insumos
@@ -185,6 +272,24 @@ namespace UI
             }
             try
             {
+                if (ModoAjuste)
+                {
+                    // CU018 pasos 5 y 6 (FA2: orden inválida)
+                    if (ordenEnAjuste == null)
+                    {
+                        Avisar("msgOrdenSeleccionarObservada");
+                        return;
+                    }
+                    orden.IdOrdenCompra = ordenEnAjuste.IdOrdenCompra;
+                    GestorOrden.ValidarOrden(orden);
+                    GestorOrden.AjustarOrden(orden);
+                    MessageBox.Show(g.Traducir("msgOrdenAjustada"), g.Traducir("frmOrdenCompra"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ordenEnAjuste = null;
+                    txtObservacionesfrmOrdenCompra.Text = string.Empty;
+                    CargarProveedores(null);
+                    CargarObservadas(false);
+                    return;
+                }
                 GestorOrden.ValidarOrden(orden);
                 GestorOrden.GenerarOrden(orden);
                 MessageBox.Show(string.Format(g.Traducir("msgOrdenGenerada"), orden.IdOrdenCompra), g.Traducir("frmOrdenCompra"), MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -224,7 +329,7 @@ namespace UI
             this.Text = g.Traducir(this.Name);
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl is DataGridView || ctrl is ComboBox || ctrl == lblAvisosfrmOrdenCompra)
+                if (ctrl is DataGridView || ctrl is ComboBox || ctrl is TextBox || ctrl == lblAvisosfrmOrdenCompra)
                     continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }
@@ -233,6 +338,9 @@ namespace UI
             foreach (DataGridViewColumn col in dgvPedidofrmOrdenCompra.Columns)
                 col.HeaderText = g.Traducir(col.Name == "colInsumoPedidofrmOrdenCompra" ? "colInsumofrmOrdenCompra" : col.Name);
             lblAvisosfrmOrdenCompra.Text = g.Traducir(idsConAviso.Count > 0 ? "lblAvisosfrmOrdenCompra" : "msgOrdenTodosLosInsumos");
+            foreach (DataGridViewColumn col in dgvObservadasfrmOrdenCompra.Columns)
+                col.HeaderText = g.Traducir(col.Name);
+            if (ModoAjuste) btnConfirmarfrmOrdenCompra.Text = g.Traducir("msgOrdenAjustarBoton");
         }
     }
 }

@@ -68,6 +68,30 @@ namespace BLL
                 $"Orden {idOrdenCompra}: {observaciones}");
         }
 
+        // CU018 pasos 5 y 6 (mensajes 24-30): guarda los cambios de una orden "Observada" y la reenvía a aprobación
+        public void AjustarOrden(BE.ORDEN_COMPRA orden)
+        {
+            ObtenerEnEstado(orden.IdOrdenCompra, EstadoObservada);
+            ValidarOrden(orden);
+            var acceso = new ACCESO();
+            acceso.IniciarTransaccion();
+            try
+            {
+                var mapper = new MAPPER_ORDEN_COMPRA(acceso);
+                mapper.ActualizarOrden(orden);
+                GestorInsumo.ReasociarAvisos(orden, acceso);
+                mapper.ActualizarEstado(orden.IdOrdenCompra, EstadoPendienteAprobacion);
+                acceso.ConfirmarTransaccion();
+            }
+            catch
+            {
+                acceso.DeshacerTransaccion();
+                throw;
+            }
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Orden de compra ajustada",
+                $"Orden {orden.IdOrdenCompra} reenviada a aprobación con {orden.Detalles.Count} insumos");
+        }
+
         // CU016 paso 6 / FA3 y CU018 FA2. Las excepciones llevan la clave de idioma del mensaje.
         public bool ValidarOrden(BE.ORDEN_COMPRA orden)
         {

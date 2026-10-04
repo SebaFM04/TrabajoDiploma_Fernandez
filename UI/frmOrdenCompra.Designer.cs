@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.lblAvisosfrmOrdenCompra = new System.Windows.Forms.Label();
+            this.rdbNuevafrmOrdenCompra = new System.Windows.Forms.RadioButton();
+            this.rdbObservadasfrmOrdenCompra = new System.Windows.Forms.RadioButton();
+            this.dgvObservadasfrmOrdenCompra = new System.Windows.Forms.DataGridView();
+            this.lblObservacionesfrmOrdenCompra = new System.Windows.Forms.Label();
+            this.txtObservacionesfrmOrdenCompra = new System.Windows.Forms.TextBox();
             this.dgvAvisosfrmOrdenCompra = new System.Windows.Forms.DataGridView();
             this.lblProveedorfrmOrdenCompra = new System.Windows.Forms.Label();
             this.cmbProveedorfrmOrdenCompra = new System.Windows.Forms.ComboBox();
@@ -38,8 +43,68 @@
             this.btnLimpiarfrmOrdenCompra = new System.Windows.Forms.Button();
             this.btnConfirmarfrmOrdenCompra = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvisosfrmOrdenCompra)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservadasfrmOrdenCompra)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPedidofrmOrdenCompra)).BeginInit();
             this.SuspendLayout();
+            //
+            // rdbNuevafrmOrdenCompra
+            //
+            this.rdbNuevafrmOrdenCompra.AutoSize = true;
+            this.rdbNuevafrmOrdenCompra.Checked = true;
+            this.rdbNuevafrmOrdenCompra.Location = new System.Drawing.Point(20, 12);
+            this.rdbNuevafrmOrdenCompra.Name = "rdbNuevafrmOrdenCompra";
+            this.rdbNuevafrmOrdenCompra.TabIndex = 20;
+            this.rdbNuevafrmOrdenCompra.TabStop = true;
+            this.rdbNuevafrmOrdenCompra.Text = "Nueva orden";
+            this.rdbNuevafrmOrdenCompra.UseVisualStyleBackColor = true;
+            this.rdbNuevafrmOrdenCompra.CheckedChanged += new System.EventHandler(this.rdbModo_CheckedChanged);
+            //
+            // rdbObservadasfrmOrdenCompra
+            //
+            this.rdbObservadasfrmOrdenCompra.AutoSize = true;
+            this.rdbObservadasfrmOrdenCompra.Location = new System.Drawing.Point(200, 12);
+            this.rdbObservadasfrmOrdenCompra.Name = "rdbObservadasfrmOrdenCompra";
+            this.rdbObservadasfrmOrdenCompra.TabIndex = 21;
+            this.rdbObservadasfrmOrdenCompra.Text = "Órdenes observadas";
+            this.rdbObservadasfrmOrdenCompra.UseVisualStyleBackColor = true;
+            this.rdbObservadasfrmOrdenCompra.CheckedChanged += new System.EventHandler(this.rdbModo_CheckedChanged);
+            //
+            // dgvObservadasfrmOrdenCompra
+            //
+            this.dgvObservadasfrmOrdenCompra.AllowUserToAddRows = false;
+            this.dgvObservadasfrmOrdenCompra.AllowUserToDeleteRows = false;
+            this.dgvObservadasfrmOrdenCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObservadasfrmOrdenCompra.Location = new System.Drawing.Point(20, 70);
+            this.dgvObservadasfrmOrdenCompra.MultiSelect = false;
+            this.dgvObservadasfrmOrdenCompra.Name = "dgvObservadasfrmOrdenCompra";
+            this.dgvObservadasfrmOrdenCompra.ReadOnly = true;
+            this.dgvObservadasfrmOrdenCompra.RowHeadersVisible = false;
+            this.dgvObservadasfrmOrdenCompra.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvObservadasfrmOrdenCompra.Size = new System.Drawing.Size(420, 200);
+            this.dgvObservadasfrmOrdenCompra.TabIndex = 22;
+            this.dgvObservadasfrmOrdenCompra.Visible = false;
+            this.dgvObservadasfrmOrdenCompra.SelectionChanged += new System.EventHandler(this.dgvObservadasfrmOrdenCompra_SelectionChanged);
+            //
+            // lblObservacionesfrmOrdenCompra
+            //
+            this.lblObservacionesfrmOrdenCompra.AutoSize = true;
+            this.lblObservacionesfrmOrdenCompra.Location = new System.Drawing.Point(20, 280);
+            this.lblObservacionesfrmOrdenCompra.Name = "lblObservacionesfrmOrdenCompra";
+            this.lblObservacionesfrmOrdenCompra.TabIndex = 23;
+            this.lblObservacionesfrmOrdenCompra.Text = "Observaciones del Dueño";
+            this.lblObservacionesfrmOrdenCompra.Visible = false;
+            //
+            // txtObservacionesfrmOrdenCompra
+            //
+            this.txtObservacionesfrmOrdenCompra.BackColor = System.Drawing.Color.White;
+            this.txtObservacionesfrmOrdenCompra.Location = new System.Drawing.Point(20, 303);
+            this.txtObservacionesfrmOrdenCompra.Multiline = true;
+            this.txtObservacionesfrmOrdenCompra.Name = "txtObservacionesfrmOrdenCompra";
+            this.txtObservacionesfrmOrdenCompra.ReadOnly = true;
+            this.txtObservacionesfrmOrdenCompra.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtObservacionesfrmOrdenCompra.Size = new System.Drawing.Size(420, 147);
+            this.txtObservacionesfrmOrdenCompra.TabIndex = 24;
+            this.txtObservacionesfrmOrdenCompra.Visible = false;
             //
             // lblAvisosfrmOrdenCompra
             //
@@ -145,12 +210,18 @@
             this.Controls.Add(this.lblProveedorfrmOrdenCompra);
             this.Controls.Add(this.dgvAvisosfrmOrdenCompra);
             this.Controls.Add(this.lblAvisosfrmOrdenCompra);
+            this.Controls.Add(this.txtObservacionesfrmOrdenCompra);
+            this.Controls.Add(this.lblObservacionesfrmOrdenCompra);
+            this.Controls.Add(this.dgvObservadasfrmOrdenCompra);
+            this.Controls.Add(this.rdbObservadasfrmOrdenCompra);
+            this.Controls.Add(this.rdbNuevafrmOrdenCompra);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "frmOrdenCompra";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmOrdenCompra";
             this.Load += new System.EventHandler(this.frmOrdenCompra_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvisosfrmOrdenCompra)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservadasfrmOrdenCompra)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPedidofrmOrdenCompra)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -168,5 +239,10 @@
         private System.Windows.Forms.DataGridView dgvPedidofrmOrdenCompra;
         private System.Windows.Forms.Button btnLimpiarfrmOrdenCompra;
         private System.Windows.Forms.Button btnConfirmarfrmOrdenCompra;
+        private System.Windows.Forms.RadioButton rdbNuevafrmOrdenCompra;
+        private System.Windows.Forms.RadioButton rdbObservadasfrmOrdenCompra;
+        private System.Windows.Forms.DataGridView dgvObservadasfrmOrdenCompra;
+        private System.Windows.Forms.Label lblObservacionesfrmOrdenCompra;
+        private System.Windows.Forms.TextBox txtObservacionesfrmOrdenCompra;
     }
 }

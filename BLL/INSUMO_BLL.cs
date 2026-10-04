@@ -169,6 +169,13 @@ namespace BLL
                 mapper.ActualizarAvisos(id, idOrdenCompra);
         }
 
+        // CU018: al ajustar la orden, los avisos de insumos quitados vuelven a "Pendiente" y los de insumos nuevos se asocian
+        public void ReasociarAvisos(BE.ORDEN_COMPRA orden, ACCESO acceso)
+        {
+            new MAPPER_INSUMO(acceso).LiberarAvisos(orden.IdOrdenCompra);
+            AsociarAvisosAOrden(orden.Detalles.Select(d => d.IdInsumo).ToList(), orden.IdOrdenCompra, acceso);
+        }
+
         // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente
         public List<BE.INSUMO> ListarStockBajo()
         {

@@ -227,6 +227,20 @@ namespace DAL
             }
         }
 
+        // CU018: los avisos de la orden cuyo insumo se quitó vuelven a "Pendiente"
+        public void LiberarAvisos(int idOrdenCompra)
+        {
+            acceso.Abrir();
+            try
+            {
+                acceso.Escribir("LiberarAvisosOrdenCompra", new List<SqlParameter> { acceso.CrearParametro("@IdOrdenCompra", idOrdenCompra) });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
         // CU019 (decisión 59): el insumo volvió a tener stock; sus avisos se resuelven y el flag vuelve a 0
         public void ResolverAvisos(int idInsumo)
         {

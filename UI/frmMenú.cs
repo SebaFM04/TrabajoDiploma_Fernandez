@@ -23,36 +23,38 @@ namespace UI
             SERVICIO.SessionManager sesion = SERVICIO.SessionManager.Instancia;
             var g = GestorIdioma.Instancia;           
         }
+        // Roles (decisión 55): cada opción del menú depende de su permiso y cada menú padre se muestra
+        // si tiene al menos una opción disponible. Un usuario sin permisos no ve ninguna opción.
         private void AplicarPermisos()
         {
             var usuario = SERVICIO.SessionManager.Instancia.UsuarioActual;
+            Func<string, bool> tiene = permiso => usuario.PermisosAsignados != null && usuario.TienePermiso(permiso);
 
-            // Sin permisos asignados → muestra todo
-            if (usuario.PermisosAsignados == null || usuario.PermisosAsignados.Count == 0)
-                return;
+            formularioUsuariosToolStripMenuItem.Available = tiene("Gestion Usuarios");
+            admRolesToolStripMenuItem.Available = tiene("Adm Roles y Permisos");
 
-            gestiónUsuariosToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Usuarios");
-            gestiónProductosToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Productos");
-            formularioInsumosToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Insumos");
-            formularioRecetasToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Recetas");
-            // Operación del bar (N01): cada opción con su permiso, para asociarla después a los roles nuevos
-            bool venta = usuario.TienePermiso("Gestion Ventas");
-            bool comandas = usuario.TienePermiso("Gestion Comandas");
-            bool entregas = usuario.TienePermiso("Gestion Entregas");
-            registrarVentaToolStripMenuItem.Visible = venta;
-            entregaPiqueosToolStripMenuItem.Visible = comandas;
-            entregaBebidasToolStripMenuItem.Visible = entregas;
-            operacionBarToolStripMenuItem.Visible = venta || comandas || entregas;
+            formularioProductosToolStripMenuItem.Available = tiene("Gestion Productos");
+            formularioInsumosToolStripMenuItem.Available = tiene("Gestion Insumos");
+            formularioRecetasToolStripMenuItem.Available = tiene("Gestion Recetas");
+
+            // Operación del bar (N01)
+            registrarVentaToolStripMenuItem.Available = tiene("Gestion Ventas");
+            entregaPiqueosToolStripMenuItem.Available = tiene("Gestion Comandas");
+            entregaBebidasToolStripMenuItem.Available = tiene("Gestion Entregas");
+
             // Consultas (decisión 56)
-            bool consultaVentas = usuario.TienePermiso("Consulta Ventas");
-            bool consultaVales = usuario.TienePermiso("Consulta Vales");
-            consultaVentasToolStripMenuItem.Visible = consultaVentas;
-            consultaValesToolStripMenuItem.Visible = consultaVales;
-            consultasToolStripMenuItem.Visible = consultaVentas || consultaVales;
-            adminitraciónToolStripMenuItem.Visible = usuario.TienePermiso("Auditoria");
-            idiomaToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Idiomas");
-            backUpToolStripMenuItem1.Visible = usuario.TienePermiso("BackUp");
-            recalcularDVToolStripMenuItem.Visible = usuario.TienePermiso("Auditoria");
+            consultaVentasToolStripMenuItem.Available = tiene("Consulta Ventas");
+            consultaValesToolStripMenuItem.Available = tiene("Consulta Vales");
+
+            bitacoraToolStripMenuItem.Available = tiene("Auditoria");
+            backUpToolStripMenuItem1.Available = tiene("BackUp");
+            recalcularDVToolStripMenuItem.Available = tiene("Recalcular DV") || tiene("Auditoria");
+            controlCambiosToolStripMenuItem.Available = tiene("Control Cambios");
+
+            admIdiomasToolStripMenuItem.Available = tiene("Gestion Idiomas");
+
+            foreach (ToolStripMenuItem padre in mnstripMenu.Items.OfType<ToolStripMenuItem>())
+                padre.Available = padre.DropDownItems.OfType<ToolStripItem>().Any(h => h.Available);
         }
 
         private void btnCerrarSesionfrmMenu_Click(object sender, EventArgs e)

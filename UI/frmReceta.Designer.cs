@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.rdbSinRecetafrmReceta = new System.Windows.Forms.RadioButton();
+            this.rdbConRecetafrmReceta = new System.Windows.Forms.RadioButton();
             this.lblProductosfrmReceta = new System.Windows.Forms.Label();
             this.dgvProductosfrmReceta = new System.Windows.Forms.DataGridView();
             this.lblRecetafrmReceta = new System.Windows.Forms.Label();
@@ -61,6 +62,18 @@
             this.rdbSinRecetafrmReceta.Text = "Productos sin receta";
             this.rdbSinRecetafrmReceta.UseVisualStyleBackColor = true;
             this.rdbSinRecetafrmReceta.CheckedChanged += new System.EventHandler(this.rdbModo_CheckedChanged);
+            //
+            // rdbConRecetafrmReceta
+            //
+            this.rdbConRecetafrmReceta.AutoSize = true;
+            this.rdbConRecetafrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbConRecetafrmReceta.Location = new System.Drawing.Point(260, 12);
+            this.rdbConRecetafrmReceta.Name = "rdbConRecetafrmReceta";
+            this.rdbConRecetafrmReceta.Size = new System.Drawing.Size(200, 27);
+            this.rdbConRecetafrmReceta.TabIndex = 1;
+            this.rdbConRecetafrmReceta.Text = "Productos con receta";
+            this.rdbConRecetafrmReceta.UseVisualStyleBackColor = true;
+            this.rdbConRecetafrmReceta.CheckedChanged += new System.EventHandler(this.rdbModo_CheckedChanged);
             //
             // lblProductosfrmReceta
             //
@@ -240,6 +253,7 @@
             this.Controls.Add(this.lblRecetafrmReceta);
             this.Controls.Add(this.dgvProductosfrmReceta);
             this.Controls.Add(this.lblProductosfrmReceta);
+            this.Controls.Add(this.rdbConRecetafrmReceta);
             this.Controls.Add(this.rdbSinRecetafrmReceta);
             this.Name = "frmReceta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -256,6 +270,7 @@
         #endregion
 
         private System.Windows.Forms.RadioButton rdbSinRecetafrmReceta;
+        private System.Windows.Forms.RadioButton rdbConRecetafrmReceta;
         private System.Windows.Forms.Label lblProductosfrmReceta;
         private System.Windows.Forms.DataGridView dgvProductosfrmReceta;
         private System.Windows.Forms.Label lblRecetafrmReceta;

@@ -66,6 +66,33 @@ namespace DAL
             }
         }
 
+        // CU014: productos activos con receta
+        public List<BE.PRODUCTO> ListarProductosConReceta()
+        {
+            return ListarProductos("ListarProductoConReceta");
+        }
+
+        // CU014: reemplaza las líneas de la receta en una sola transacción (decisión 27)
+        public void ActualizarReceta(int idProducto, List<BE.RECETA> receta)
+        {
+            acceso.IniciarTransaccion();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@IdProducto", idProducto)
+                };
+                acceso.Escribir("EliminarRecetaProducto", parametros);
+                GuardarLineas(idProducto, receta);
+                acceso.ConfirmarTransaccion();
+            }
+            catch
+            {
+                acceso.DeshacerTransaccion();
+                throw;
+            }
+        }
+
         private void GuardarLineas(int idProducto, List<BE.RECETA> receta)
         {
             foreach (var linea in receta)

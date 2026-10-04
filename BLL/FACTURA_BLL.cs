@@ -142,10 +142,9 @@ namespace BLL
                 "Comprobante simulado sin validez fiscal (sin CAE, sin conexión con ARCA)."
             };
 
-            string ruta = GeneradorPdf.RutaFactura(factura.NumeroComprobante);
-            GeneradorPdf.GenerarComprobante(ruta, "FACTURA B", encabezado, filas,
+            // Si el PDF anterior está abierto en el visor, GeneradorPdf guarda una copia y devuelve esa ruta
+            return GeneradorPdf.GenerarComprobante(GeneradorPdf.RutaFactura(factura.NumeroComprobante), "FACTURA B", encabezado, filas,
                 new[] { 0.34, 0.2, 0.12, 0.17, 0.17 }, pie, columnasTexto: 2);
-            return ruta;
         }
     }
 }

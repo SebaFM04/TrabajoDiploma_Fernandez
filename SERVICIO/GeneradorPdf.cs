@@ -24,7 +24,8 @@ namespace SERVICIO
 
         // filas[0] es el encabezado de la tabla. anchos: proporción de cada columna (suman 1).
         // Las primeras columnasTexto van a la izquierda; el resto (números) a la derecha.
-        public static void GenerarComprobante(string ruta, string titulo, IList<string> encabezado, IList<string[]> filas, double[] anchos, IList<string> pie, int columnasTexto = 1)
+        // Devuelve la ruta donde quedó guardado (puede ser otra si la original está en uso).
+        public static string GenerarComprobante(string ruta, string titulo, IList<string> encabezado, IList<string[]> filas, double[] anchos, IList<string> pie, int columnasTexto = 1)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(ruta));
             var opciones = new XPdfFontOptions(PdfFontEncoding.Unicode);
@@ -73,8 +74,19 @@ namespace SERVICIO
                         y += 16;
                     }
                 }
-                documento.Save(ruta);
+                try
+                {
+                    documento.Save(ruta);
+                }
+                catch (IOException)
+                {
+                    // El archivo está abierto en otro programa (por ejemplo, el visor de PDF): se guarda una copia aparte
+                    ruta = Path.Combine(Path.GetDirectoryName(ruta),
+                        Path.GetFileNameWithoutExtension(ruta) + "_" + DateTime.Now.ToString("HHmmss") + Path.GetExtension(ruta));
+                    documento.Save(ruta);
+                }
             }
+            return ruta;
         }
     }
 }

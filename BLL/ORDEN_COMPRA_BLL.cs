@@ -27,6 +27,33 @@ namespace BLL
             return GestorOrden.ListarPorEstado(estado);
         }
 
+        // CU019 paso 2 (mensajes 2-10): órdenes "Aprobada" o "Recibida parcialmente"
+        public List<BE.ORDEN_COMPRA> ListarPendientesRecepcion()
+        {
+            return GestorOrden.ListarPorEstado(EstadoAprobada)
+                .Concat(GestorOrden.ListarPorEstado(EstadoRecibidaParcialmente))
+                .OrderBy(o => o.IdOrdenCompra).ToList();
+        }
+
+        // CU019 mensajes 39-48: suma lo recibido a cada línea y devuelve el estado resultante (Cerrada o Recibida parcialmente)
+        public string ActualizarPorRecepcion(BE.ORDEN_COMPRA orden, List<BE.RECEPCION_DETALLE> recibidos, ACCESO acceso)
+        {
+            var mapper = new MAPPER_ORDEN_COMPRA(acceso);
+            foreach (var r in recibidos)
+                mapper.ActualizarCantidadRecibida(orden.IdOrdenCompra, r.IdInsumo, r.CantidadRecibida);
+            bool completa = orden.Detalles.All(d => d.CantidadPendiente - recibidos.Where(r => r.IdInsumo == d.IdInsumo).Sum(r => r.CantidadRecibida) <= 0);
+            string estado = completa ? EstadoCerrada : EstadoRecibidaParcialmente;
+            mapper.ActualizarEstado(orden.IdOrdenCompra, estado);
+            return estado;
+        }
+
+        // CU021: total de la orden = lo recibido × el costo de cada recepción
+        public decimal CalcularTotal(int idOrdenCompra)
+        {
+            return new MAPPER_RECEPCION().ListarPorOrden(idOrdenCompra)
+                .SelectMany(r => r.Detalles).Sum(d => d.CantidadRecibida * d.CostoUnidadCompra);
+        }
+
         // Orden con sus líneas. ArgumentException si no existe.
         public BE.ORDEN_COMPRA ObtenerDetalle(int idOrdenCompra)
         {

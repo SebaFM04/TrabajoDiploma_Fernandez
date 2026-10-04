@@ -176,6 +176,28 @@ namespace BLL
             AsociarAvisosAOrden(orden.Detalles.Select(d => d.IdInsumo).ToList(), orden.IdOrdenCompra, acceso);
         }
 
+        // CU019 mensajes 29-38: ingresa lo recibido (decisión 61): stock += cantidad × equivalencia y costo promedio ponderado.
+        // Decisión 59: si el insumo queda en o sobre el umbral, sus avisos se resuelven y el flag vuelve a 0.
+        public void IngresarStock(List<BE.RECEPCION_DETALLE> recibidos, ACCESO acceso)
+        {
+            var mapper = new MAPPER_INSUMO(acceso);
+            foreach (var r in recibidos)
+            {
+                var insumo = mapper.BuscarInsumo(r.IdInsumo);
+                if (insumo == null)
+                    throw new ArgumentException("msgInsumoInexistente");
+                decimal stockEnUnidades = insumo.EquivalenciaMagnitud > 0 ? insumo.VolumenPesoDisponible / insumo.EquivalenciaMagnitud : 0;
+                decimal costo = stockEnUnidades + r.CantidadRecibida > 0
+                    ? (stockEnUnidades * insumo.CostoUnidadCompra + r.CantidadRecibida * r.CostoUnidadCompra) / (stockEnUnidades + r.CantidadRecibida)
+                    : r.CostoUnidadCompra;
+                decimal nuevoStock = insumo.VolumenPesoDisponible + r.CantidadRecibida * insumo.EquivalenciaMagnitud;
+                mapper.ActualizarVolumenPeso(insumo.IdInsumo, nuevoStock);
+                mapper.ActualizarCosto(insumo.IdInsumo, Math.Round(costo, 2));
+                if (nuevoStock >= insumo.UmbralReposicion)
+                    mapper.ResolverAvisos(insumo.IdInsumo);
+            }
+        }
+
         // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente
         public List<BE.INSUMO> ListarStockBajo()
         {

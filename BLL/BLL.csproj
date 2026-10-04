@@ -59,6 +59,8 @@
     <Compile Include="VENTA_BLL.cs" />
     <Compile Include="PROVEEDOR_BLL.cs" />
     <Compile Include="ORDEN_COMPRA_BLL.cs" />
+    <Compile Include="RECEPCION_BLL.cs" />
+    <Compile Include="RECLAMO_BLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

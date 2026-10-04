@@ -37,7 +37,7 @@ namespace UI
             dataGridView1.Columns.Add("Apellido", "Apellido");
             dataGridView1.Columns.Add("Dni", "Dni");
             dataGridView1.Columns.Add("CorreoElectronico", "Correo Electronico");
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dataGridView1);
         }
 
         private void CargarUsuarios()

@@ -182,6 +182,7 @@
       <DependentUpon>frmProveedor.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="AjusteGrilla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmABMIdioma.resx">
       <DependentUpon>frmABMIdioma.cs</DependentUpon>

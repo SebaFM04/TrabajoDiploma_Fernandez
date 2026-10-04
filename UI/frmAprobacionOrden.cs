@@ -39,12 +39,12 @@ namespace UI
             dgvOrdenesfrmAprobacionOrden.Columns.Clear();
             foreach (string col in new[] { "colNumerofrmAprobacionOrden", "colProveedorfrmAprobacionOrden", "colFechafrmAprobacionOrden" })
                 dgvOrdenesfrmAprobacionOrden.Columns.Add(col, g.Traducir(col));
-            dgvOrdenesfrmAprobacionOrden.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvOrdenesfrmAprobacionOrden);
 
             dgvDetallefrmAprobacionOrden.Columns.Clear();
             foreach (string col in new[] { "colInsumofrmAprobacionOrden", "colCantidadfrmAprobacionOrden", "colUnidadComprafrmAprobacionOrden", "colCostoEstimadofrmAprobacionOrden" })
                 dgvDetallefrmAprobacionOrden.Columns.Add(col, g.Traducir(col));
-            dgvDetallefrmAprobacionOrden.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvDetallefrmAprobacionOrden);
         }
 
         // CU017 paso 2 / FA1: órdenes pendientes de aprobación

@@ -40,12 +40,12 @@ namespace UI
             dgvOrdenesfrmPagoProveedor.Columns.Clear();
             foreach (string col in new[] { "colNumerofrmPagoProveedor", "colProveedorfrmPagoProveedor", "colFechafrmPagoProveedor", "colTotalfrmPagoProveedor" })
                 dgvOrdenesfrmPagoProveedor.Columns.Add(col, g.Traducir(col));
-            dgvOrdenesfrmPagoProveedor.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvOrdenesfrmPagoProveedor);
 
             dgvFacturasfrmPagoProveedor.Columns.Clear();
             foreach (string col in new[] { "colFechaRecepcionfrmPagoProveedor", "colRemitofrmPagoProveedor", "colFacturafrmPagoProveedor", "colImportefrmPagoProveedor" })
                 dgvFacturasfrmPagoProveedor.Columns.Add(col, g.Traducir(col));
-            dgvFacturasfrmPagoProveedor.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvFacturasfrmPagoProveedor);
 
             cmbMediofrmPagoProveedor.Items.Clear();
             cmbMediofrmPagoProveedor.Items.AddRange(GestorPago.ListarMediosPago());

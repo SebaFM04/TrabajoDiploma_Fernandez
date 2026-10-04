@@ -43,14 +43,14 @@ namespace UI
             dgvOrdenesfrmRecepcion.Columns.Clear();
             foreach (string col in new[] { "colNumerofrmRecepcion", "colProveedorfrmRecepcion", "colEstadofrmRecepcion" })
                 dgvOrdenesfrmRecepcion.Columns.Add(col, g.Traducir(col));
-            dgvOrdenesfrmRecepcion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvOrdenesfrmRecepcion);
 
             dgvInsumosfrmRecepcion.Columns.Clear();
             foreach (string col in new[] { "colInsumofrmRecepcion", "colUnidadComprafrmRecepcion", "colPedidafrmRecepcion", "colPendientefrmRecepcion", "colRecibidafrmRecepcion", "colCostofrmRecepcion" })
                 dgvInsumosfrmRecepcion.Columns.Add(col, g.Traducir(col));
             foreach (DataGridViewColumn col in dgvInsumosfrmRecepcion.Columns)
                 col.ReadOnly = col.Name != "colRecibidafrmRecepcion" && col.Name != "colCostofrmRecepcion";
-            dgvInsumosfrmRecepcion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvInsumosfrmRecepcion);
 
             // CU020: motivo con valores de la base y texto traducido
             dgvReclamofrmRecepcion.Columns.Clear();
@@ -63,7 +63,7 @@ namespace UI
             dgvReclamofrmRecepcion.Columns["colInsumoReclamofrmRecepcion"].ReadOnly = true;
             dgvReclamofrmRecepcion.Columns["colCantidadPendientefrmRecepcion"].ReadOnly = true;
             ((DataGridViewTextBoxColumn)dgvReclamofrmRecepcion.Columns["colDescripcionfrmRecepcion"]).MaxInputLength = 200;
-            dgvReclamofrmRecepcion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvReclamofrmRecepcion);
         }
 
         private List<KeyValuePair<string, string>> Motivos()

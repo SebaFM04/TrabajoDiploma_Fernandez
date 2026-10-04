@@ -72,7 +72,7 @@ namespace UI
         {
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = gestorCambios.ListarTodos();
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dataGridView1);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ReadOnly = true;

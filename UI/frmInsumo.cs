@@ -55,7 +55,7 @@ namespace UI
             {
                 dataGridView1.Columns.Add(columna, g.Traducir(columna));
             }
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dataGridView1);
         }
 
         // CU023 paso 1-2: formulario vacío para registrar un insumo nuevo

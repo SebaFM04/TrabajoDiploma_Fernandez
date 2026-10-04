@@ -20,6 +20,8 @@ namespace UI
         public frmABMIdioma()
         {
             InitializeComponent();
+            AjusteGrilla.Configurar(dgvIdiomas);
+            AjusteGrilla.Configurar(dgvTraduccion);
             GestorIdioma.Instancia.Suscribir(this);
         }
 

@@ -50,7 +50,7 @@ namespace UI
             dgvAvisosfrmOrdenCompra.Columns.Clear();
             foreach (string col in new[] { "colInsumofrmOrdenCompra", "colStockfrmOrdenCompra", "colUmbralfrmOrdenCompra" })
                 dgvAvisosfrmOrdenCompra.Columns.Add(col, g.Traducir(col));
-            dgvAvisosfrmOrdenCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvAvisosfrmOrdenCompra);
 
             dgvPedidofrmOrdenCompra.Columns.Clear();
             dgvPedidofrmOrdenCompra.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colPedirfrmOrdenCompra", HeaderText = g.Traducir("colPedirfrmOrdenCompra"), FillWeight = 40 });
@@ -58,12 +58,12 @@ namespace UI
                 dgvPedidofrmOrdenCompra.Columns.Add(col, g.Traducir(col == "colInsumoPedidofrmOrdenCompra" ? "colInsumofrmOrdenCompra" : col));
             foreach (DataGridViewColumn col in dgvPedidofrmOrdenCompra.Columns)
                 col.ReadOnly = col.Name != "colPedirfrmOrdenCompra" && col.Name != "colCantidadfrmOrdenCompra";
-            dgvPedidofrmOrdenCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvPedidofrmOrdenCompra);
 
             dgvObservadasfrmOrdenCompra.Columns.Clear();
             foreach (string col in new[] { "colNumerofrmOrdenCompra", "colProveedorfrmOrdenCompra", "colFechafrmOrdenCompra" })
                 dgvObservadasfrmOrdenCompra.Columns.Add(col, g.Traducir(col));
-            dgvObservadasfrmOrdenCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvObservadasfrmOrdenCompra);
         }
 
         // "Nueva orden" (CU016) u "Órdenes observadas" (CU018)

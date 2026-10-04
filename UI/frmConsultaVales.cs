@@ -45,7 +45,7 @@ namespace UI
             foreach (string col in new[] { "colValefrmConsultaVales", "colFechafrmConsultaVales", "colVentafrmConsultaVales",
                                            "colMontofrmConsultaVales", "colBebidasfrmConsultaVales", "colUtilizadofrmConsultaVales" })
                 dgvValesfrmConsultaVales.Columns.Add(col, g.Traducir(col));
-            dgvValesfrmConsultaVales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvValesfrmConsultaVales);
             CargarEstados();
         }
 

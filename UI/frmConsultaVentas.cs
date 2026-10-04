@@ -46,12 +46,12 @@ namespace UI
             foreach (string col in new[] { "colVentafrmConsultaVentas", "colFechafrmConsultaVentas", "colTotalfrmConsultaVentas", "colMedioPagofrmConsultaVentas",
                                            "colValefrmConsultaVentas", "colValeUsadofrmConsultaVentas", "colFacturafrmConsultaVentas", "colComandafrmConsultaVentas" })
                 dgvVentasfrmConsultaVentas.Columns.Add(col, g.Traducir(col));
-            dgvVentasfrmConsultaVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvVentasfrmConsultaVentas);
 
             dgvDetallefrmConsultaVentas.Columns.Clear();
             foreach (string col in new[] { "colProductofrmConsultaVentas", "colTamaniofrmConsultaVentas", "colCantidadfrmConsultaVentas", "colSubtotalfrmConsultaVentas" })
                 dgvDetallefrmConsultaVentas.Columns.Add(col, g.Traducir(col));
-            dgvDetallefrmConsultaVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvDetallefrmConsultaVentas);
         }
 
         private void Buscar()

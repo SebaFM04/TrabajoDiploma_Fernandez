@@ -42,7 +42,7 @@ namespace UI
             dgvProductosfrmReceta.Columns.Clear();
             dgvProductosfrmReceta.Columns.Add("colProductofrmReceta", g.Traducir("colProductofrmReceta"));
             dgvProductosfrmReceta.Columns.Add("colTipofrmReceta", g.Traducir("colTipofrmReceta"));
-            dgvProductosfrmReceta.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvProductosfrmReceta);
 
             dgvRecetafrmReceta.Columns.Clear();
             dgvRecetafrmReceta.Columns.Add("colInsumofrmReceta", g.Traducir("colInsumofrmReceta"));
@@ -52,7 +52,7 @@ namespace UI
             dgvRecetafrmReceta.Columns["colUnidadfrmReceta"].ReadOnly = true;
             // La proporción se puede corregir en la grilla
             dgvRecetafrmReceta.Columns["colProporcionfrmReceta"].ReadOnly = false;
-            dgvRecetafrmReceta.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvRecetafrmReceta);
         }
 
         // Insumos activos para armar la receta (decisión 7), filtrados por el uso que corresponde

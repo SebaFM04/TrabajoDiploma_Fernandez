@@ -34,7 +34,7 @@ namespace UI
             dataGridView1.Columns.Add("Actividad", "Actividad");
             dataGridView1.Columns.Add("FechaHora", "Fecha y Hora");
             dataGridView1.Columns.Add("InformacionAsociada", "Información Asociada");
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dataGridView1);
         }
         private void CargarBitacora(List<BITACORA> bitacoraList)
         {

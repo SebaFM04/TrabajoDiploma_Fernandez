@@ -40,13 +40,13 @@ namespace UI
             dgvBebidasfrmEntrega.Columns.Clear();
             foreach (string col in new[] { "colBebidafrmEntrega", "colTamaniofrmEntrega", "colCantidadfrmEntrega" })
                 dgvBebidasfrmEntrega.Columns.Add(col, g.Traducir(col));
-            dgvBebidasfrmEntrega.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvBebidasfrmEntrega);
 
             dgvRecetasfrmEntrega.Columns.Clear();
             dgvRecetasfrmEntrega.Columns.Add("colBebidaRecetafrmEntrega", g.Traducir("colBebidafrmEntrega"));
             foreach (string col in new[] { "colInsumofrmEntrega", "colConsumofrmEntrega", "colUnidadfrmEntrega" })
                 dgvRecetasfrmEntrega.Columns.Add(col, g.Traducir(col));
-            dgvRecetasfrmEntrega.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvRecetasfrmEntrega);
         }
 
         private void Limpiar()

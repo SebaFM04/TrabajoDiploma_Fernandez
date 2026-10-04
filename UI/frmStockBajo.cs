@@ -56,7 +56,7 @@ namespace UI
             dgvInsumosfrmStockBajo.Columns.Clear();
             foreach (string col in new[] { "colInsumofrmStockBajo", "colStockfrmStockBajo", "colUmbralfrmStockBajo", "colUnidadfrmStockBajo", "colAvisofrmStockBajo" })
                 dgvInsumosfrmStockBajo.Columns.Add(col, g.Traducir(col));
-            dgvInsumosfrmStockBajo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvInsumosfrmStockBajo);
         }
 
         public void ActualizarIdioma()

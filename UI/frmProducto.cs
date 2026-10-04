@@ -44,7 +44,7 @@ namespace UI
             dataGridView1.Columns.Add("colNombrefrmProducto", g.Traducir("colNombrefrmProducto"));
             dataGridView1.Columns.Add("colTipofrmProducto", g.Traducir("colTipofrmProducto"));
             dataGridView1.Columns["colIdfrmProducto"].Visible = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dataGridView1);
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
@@ -54,7 +54,7 @@ namespace UI
             dgvTamaniosfrmProducto.Columns.Add("colTamaniofrmProducto", g.Traducir("colTamaniofrmProducto"));
             dgvTamaniosfrmProducto.Columns.Add("colPreciofrmProducto", g.Traducir("colPreciofrmProducto"));
             dgvTamaniosfrmProducto.Columns["colTamaniofrmProducto"].ReadOnly = true;
-            dgvTamaniosfrmProducto.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvTamaniosfrmProducto);
 
             cmbTipofrmProducto.Items.Clear();
             cmbTipofrmProducto.Items.AddRange(GestorProducto.ListarTiposProducto());

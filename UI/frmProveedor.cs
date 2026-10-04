@@ -44,7 +44,7 @@ namespace UI
             dgvProveedoresfrmProveedor.Columns.Clear();
             foreach (string col in new[] { "colRazonSocialfrmProveedor", "colCuitfrmProveedor", "colTelefonofrmProveedor", "colCorreofrmProveedor" })
                 dgvProveedoresfrmProveedor.Columns.Add(col, g.Traducir(col));
-            dgvProveedoresfrmProveedor.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvProveedoresfrmProveedor);
         }
 
         // CU022 paso 2: insumos activos para asociar

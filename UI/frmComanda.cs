@@ -39,12 +39,12 @@ namespace UI
             dgvComandasfrmComanda.Columns.Clear();
             foreach (string col in new[] { "colNumerofrmComanda", "colVentafrmComanda", "colHorafrmComanda" })
                 dgvComandasfrmComanda.Columns.Add(col, g.Traducir(col));
-            dgvComandasfrmComanda.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvComandasfrmComanda);
 
             dgvDetallefrmComanda.Columns.Clear();
             foreach (string col in new[] { "colPiqueofrmComanda", "colTamaniofrmComanda", "colCantidadfrmComanda" })
                 dgvDetallefrmComanda.Columns.Add(col, g.Traducir(col));
-            dgvDetallefrmComanda.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvDetallefrmComanda);
         }
 
         // CU011 paso 1: comandas pendientes. avisarSiVacio: informa si no hay ninguna.

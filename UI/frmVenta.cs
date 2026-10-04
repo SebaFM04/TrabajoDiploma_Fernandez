@@ -49,14 +49,14 @@ namespace UI
             dgvProductosfrmVenta.Columns.Add("colProductofrmVenta", g.Traducir("colProductofrmVenta"));
             dgvProductosfrmVenta.Columns.Add("colTamaniofrmVenta", g.Traducir("colTamaniofrmVenta"));
             dgvProductosfrmVenta.Columns.Add("colPreciofrmVenta", g.Traducir("colPreciofrmVenta"));
-            dgvProductosfrmVenta.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvProductosfrmVenta);
 
             dgvPedidofrmVenta.Columns.Clear();
             dgvPedidofrmVenta.Columns.Add("colProductoPedidofrmVenta", g.Traducir("colProductofrmVenta"));
             dgvPedidofrmVenta.Columns.Add("colTamanioPedidofrmVenta", g.Traducir("colTamaniofrmVenta"));
             dgvPedidofrmVenta.Columns.Add("colCantidadfrmVenta", g.Traducir("colCantidadfrmVenta"));
             dgvPedidofrmVenta.Columns.Add("colSubtotalfrmVenta", g.Traducir("colSubtotalfrmVenta"));
-            dgvPedidofrmVenta.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AjusteGrilla.Configurar(dgvPedidofrmVenta);
         }
 
         // CU010 paso 1: productos activos con receta (S1) con sus tamaños y precios

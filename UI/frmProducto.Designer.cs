@@ -43,10 +43,10 @@
             // 
             this.btnModificacionfrmProducto.BackColor = System.Drawing.Color.SandyBrown;
             this.btnModificacionfrmProducto.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificacionfrmProducto.Location = new System.Drawing.Point(424, 331);
-            this.btnModificacionfrmProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnModificacionfrmProducto.Location = new System.Drawing.Point(318, 269);
+            this.btnModificacionfrmProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnModificacionfrmProducto.Name = "btnModificacionfrmProducto";
-            this.btnModificacionfrmProducto.Size = new System.Drawing.Size(147, 47);
+            this.btnModificacionfrmProducto.Size = new System.Drawing.Size(110, 38);
             this.btnModificacionfrmProducto.TabIndex = 9;
             this.btnModificacionfrmProducto.Text = "Modificar";
             this.btnModificacionfrmProducto.UseVisualStyleBackColor = false;
@@ -56,10 +56,10 @@
             // 
             this.btnBajafrmProducto.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBajafrmProducto.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBajafrmProducto.Location = new System.Drawing.Point(220, 331);
-            this.btnBajafrmProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBajafrmProducto.Location = new System.Drawing.Point(165, 269);
+            this.btnBajafrmProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBajafrmProducto.Name = "btnBajafrmProducto";
-            this.btnBajafrmProducto.Size = new System.Drawing.Size(147, 47);
+            this.btnBajafrmProducto.Size = new System.Drawing.Size(118, 38);
             this.btnBajafrmProducto.TabIndex = 8;
             this.btnBajafrmProducto.Text = "Dar de baja";
             this.btnBajafrmProducto.UseVisualStyleBackColor = false;
@@ -69,10 +69,10 @@
             // 
             this.btnAltafrmProducto.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAltafrmProducto.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAltafrmProducto.Location = new System.Drawing.Point(29, 331);
-            this.btnAltafrmProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAltafrmProducto.Location = new System.Drawing.Point(22, 269);
+            this.btnAltafrmProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAltafrmProducto.Name = "btnAltafrmProducto";
-            this.btnAltafrmProducto.Size = new System.Drawing.Size(147, 47);
+            this.btnAltafrmProducto.Size = new System.Drawing.Size(110, 38);
             this.btnAltafrmProducto.TabIndex = 7;
             this.btnAltafrmProducto.Text = "Agregar";
             this.btnAltafrmProducto.UseVisualStyleBackColor = false;
@@ -83,62 +83,64 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(607, 34);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView1.Location = new System.Drawing.Point(455, 28);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(779, 383);
+            this.dataGridView1.Size = new System.Drawing.Size(584, 311);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // cmbTipofrmProducto
-            //
+            // 
             this.cmbTipofrmProducto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipofrmProducto.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbTipofrmProducto.FormattingEnabled = true;
-            this.cmbTipofrmProducto.Location = new System.Drawing.Point(192, 78);
-            this.cmbTipofrmProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbTipofrmProducto.Location = new System.Drawing.Point(144, 63);
+            this.cmbTipofrmProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbTipofrmProducto.Name = "cmbTipofrmProducto";
-            this.cmbTipofrmProducto.Size = new System.Drawing.Size(360, 30);
+            this.cmbTipofrmProducto.Size = new System.Drawing.Size(271, 26);
             this.cmbTipofrmProducto.TabIndex = 2;
-            //
+            // 
             // lblTipofrmProducto
-            //
+            // 
             this.lblTipofrmProducto.AutoSize = true;
             this.lblTipofrmProducto.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTipofrmProducto.Location = new System.Drawing.Point(39, 85);
+            this.lblTipofrmProducto.Location = new System.Drawing.Point(29, 69);
+            this.lblTipofrmProducto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTipofrmProducto.Name = "lblTipofrmProducto";
-            this.lblTipofrmProducto.Size = new System.Drawing.Size(48, 23);
+            this.lblTipofrmProducto.Size = new System.Drawing.Size(40, 19);
             this.lblTipofrmProducto.TabIndex = 59;
             this.lblTipofrmProducto.Text = "Tipo";
-            //
+            // 
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(192, 34);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox1.Location = new System.Drawing.Point(144, 28);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(360, 29);
+            this.textBox1.Size = new System.Drawing.Size(271, 25);
             this.textBox1.TabIndex = 1;
             // 
             // lblNombrefrmProducto
             // 
             this.lblNombrefrmProducto.AutoSize = true;
             this.lblNombrefrmProducto.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombrefrmProducto.Location = new System.Drawing.Point(39, 39);
+            this.lblNombrefrmProducto.Location = new System.Drawing.Point(29, 32);
+            this.lblNombrefrmProducto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNombrefrmProducto.Name = "lblNombrefrmProducto";
-            this.lblNombrefrmProducto.Size = new System.Drawing.Size(82, 23);
+            this.lblNombrefrmProducto.Size = new System.Drawing.Size(69, 19);
             this.lblNombrefrmProducto.TabIndex = 55;
             this.lblNombrefrmProducto.Text = "Nombre";
-            //
+            // 
             // frmProducto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1397, 507);
+            this.ClientSize = new System.Drawing.Size(1048, 412);
             this.Controls.Add(this.btnModificacionfrmProducto);
             this.Controls.Add(this.btnBajafrmProducto);
             this.Controls.Add(this.btnAltafrmProducto);
@@ -147,7 +149,7 @@
             this.Controls.Add(this.lblTipofrmProducto);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblNombrefrmProducto);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmProducto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmProducto";

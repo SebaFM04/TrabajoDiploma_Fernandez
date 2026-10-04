@@ -53,218 +53,253 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudStockInicialfrmInsumo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // lblNombrefrmInsumo
-            //
+            // 
             this.lblNombrefrmInsumo.AutoSize = true;
             this.lblNombrefrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombrefrmInsumo.Location = new System.Drawing.Point(29, 37);
+            this.lblNombrefrmInsumo.Location = new System.Drawing.Point(22, 30);
+            this.lblNombrefrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblNombrefrmInsumo.Name = "lblNombrefrmInsumo";
-            this.lblNombrefrmInsumo.Size = new System.Drawing.Size(82, 23);
+            this.lblNombrefrmInsumo.Size = new System.Drawing.Size(69, 19);
             this.lblNombrefrmInsumo.TabIndex = 0;
             this.lblNombrefrmInsumo.Text = "Nombre";
-            //
+            // 
             // txtNombrefrmInsumo
-            //
+            // 
             this.txtNombrefrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombrefrmInsumo.Location = new System.Drawing.Point(290, 34);
+            this.txtNombrefrmInsumo.Location = new System.Drawing.Point(247, 30);
+            this.txtNombrefrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtNombrefrmInsumo.MaxLength = 100;
             this.txtNombrefrmInsumo.Name = "txtNombrefrmInsumo";
-            this.txtNombrefrmInsumo.Size = new System.Drawing.Size(280, 29);
+            this.txtNombrefrmInsumo.Size = new System.Drawing.Size(211, 25);
             this.txtNombrefrmInsumo.TabIndex = 1;
-            //
+            // 
             // lblUnidadMedidafrmInsumo
-            //
+            // 
             this.lblUnidadMedidafrmInsumo.AutoSize = true;
             this.lblUnidadMedidafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUnidadMedidafrmInsumo.Location = new System.Drawing.Point(29, 80);
+            this.lblUnidadMedidafrmInsumo.Location = new System.Drawing.Point(22, 65);
+            this.lblUnidadMedidafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUnidadMedidafrmInsumo.Name = "lblUnidadMedidafrmInsumo";
-            this.lblUnidadMedidafrmInsumo.Size = new System.Drawing.Size(160, 23);
+            this.lblUnidadMedidafrmInsumo.Size = new System.Drawing.Size(141, 19);
             this.lblUnidadMedidafrmInsumo.TabIndex = 2;
             this.lblUnidadMedidafrmInsumo.Text = "Unidad de medida";
-            //
+            // 
             // cmbUnidadMedidafrmInsumo
-            //
+            // 
             this.cmbUnidadMedidafrmInsumo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbUnidadMedidafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbUnidadMedidafrmInsumo.FormattingEnabled = true;
-            this.cmbUnidadMedidafrmInsumo.Location = new System.Drawing.Point(290, 77);
+            this.cmbUnidadMedidafrmInsumo.Location = new System.Drawing.Point(247, 62);
+            this.cmbUnidadMedidafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbUnidadMedidafrmInsumo.Name = "cmbUnidadMedidafrmInsumo";
-            this.cmbUnidadMedidafrmInsumo.Size = new System.Drawing.Size(280, 30);
+            this.cmbUnidadMedidafrmInsumo.Size = new System.Drawing.Size(211, 26);
             this.cmbUnidadMedidafrmInsumo.TabIndex = 3;
-            //
+            // 
             // lblUnidadComprafrmInsumo
-            //
+            // 
             this.lblUnidadComprafrmInsumo.AutoSize = true;
             this.lblUnidadComprafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUnidadComprafrmInsumo.Location = new System.Drawing.Point(29, 123);
+            this.lblUnidadComprafrmInsumo.Location = new System.Drawing.Point(22, 100);
+            this.lblUnidadComprafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUnidadComprafrmInsumo.Name = "lblUnidadComprafrmInsumo";
-            this.lblUnidadComprafrmInsumo.Size = new System.Drawing.Size(157, 23);
+            this.lblUnidadComprafrmInsumo.Size = new System.Drawing.Size(144, 19);
             this.lblUnidadComprafrmInsumo.TabIndex = 4;
             this.lblUnidadComprafrmInsumo.Text = "Unidad de compra";
-            //
+            // 
             // txtUnidadComprafrmInsumo
-            //
+            // 
             this.txtUnidadComprafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUnidadComprafrmInsumo.Location = new System.Drawing.Point(290, 120);
+            this.txtUnidadComprafrmInsumo.Location = new System.Drawing.Point(247, 97);
+            this.txtUnidadComprafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtUnidadComprafrmInsumo.MaxLength = 50;
             this.txtUnidadComprafrmInsumo.Name = "txtUnidadComprafrmInsumo";
-            this.txtUnidadComprafrmInsumo.Size = new System.Drawing.Size(280, 29);
+            this.txtUnidadComprafrmInsumo.Size = new System.Drawing.Size(211, 25);
             this.txtUnidadComprafrmInsumo.TabIndex = 5;
-            //
+            // 
             // lblEquivalenciafrmInsumo
-            //
+            // 
             this.lblEquivalenciafrmInsumo.AutoSize = true;
             this.lblEquivalenciafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEquivalenciafrmInsumo.Location = new System.Drawing.Point(29, 166);
+            this.lblEquivalenciafrmInsumo.Location = new System.Drawing.Point(22, 135);
+            this.lblEquivalenciafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblEquivalenciafrmInsumo.Name = "lblEquivalenciafrmInsumo";
-            this.lblEquivalenciafrmInsumo.Size = new System.Drawing.Size(117, 23);
+            this.lblEquivalenciafrmInsumo.Size = new System.Drawing.Size(98, 19);
             this.lblEquivalenciafrmInsumo.TabIndex = 6;
             this.lblEquivalenciafrmInsumo.Text = "Equivalencia";
-            //
+            // 
             // nudEquivalenciafrmInsumo
-            //
+            // 
             this.nudEquivalenciafrmInsumo.DecimalPlaces = 3;
             this.nudEquivalenciafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudEquivalenciafrmInsumo.Location = new System.Drawing.Point(290, 163);
-            this.nudEquivalenciafrmInsumo.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+            this.nudEquivalenciafrmInsumo.Location = new System.Drawing.Point(248, 133);
+            this.nudEquivalenciafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nudEquivalenciafrmInsumo.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.nudEquivalenciafrmInsumo.Name = "nudEquivalenciafrmInsumo";
-            this.nudEquivalenciafrmInsumo.Size = new System.Drawing.Size(280, 29);
+            this.nudEquivalenciafrmInsumo.Size = new System.Drawing.Size(210, 25);
             this.nudEquivalenciafrmInsumo.TabIndex = 7;
             this.nudEquivalenciafrmInsumo.ThousandsSeparator = true;
-            //
+            // 
             // lblUmbralfrmInsumo
-            //
+            // 
             this.lblUmbralfrmInsumo.AutoSize = true;
             this.lblUmbralfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUmbralfrmInsumo.Location = new System.Drawing.Point(29, 209);
+            this.lblUmbralfrmInsumo.Location = new System.Drawing.Point(22, 170);
+            this.lblUmbralfrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUmbralfrmInsumo.Name = "lblUmbralfrmInsumo";
-            this.lblUmbralfrmInsumo.Size = new System.Drawing.Size(196, 23);
+            this.lblUmbralfrmInsumo.Size = new System.Drawing.Size(165, 19);
             this.lblUmbralfrmInsumo.TabIndex = 8;
             this.lblUmbralfrmInsumo.Text = "Umbral de reposición";
-            //
+            // 
             // nudUmbralfrmInsumo
-            //
+            // 
             this.nudUmbralfrmInsumo.DecimalPlaces = 3;
             this.nudUmbralfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudUmbralfrmInsumo.Location = new System.Drawing.Point(290, 206);
-            this.nudUmbralfrmInsumo.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+            this.nudUmbralfrmInsumo.Location = new System.Drawing.Point(248, 168);
+            this.nudUmbralfrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nudUmbralfrmInsumo.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.nudUmbralfrmInsumo.Name = "nudUmbralfrmInsumo";
-            this.nudUmbralfrmInsumo.Size = new System.Drawing.Size(280, 29);
+            this.nudUmbralfrmInsumo.Size = new System.Drawing.Size(210, 25);
             this.nudUmbralfrmInsumo.TabIndex = 9;
             this.nudUmbralfrmInsumo.ThousandsSeparator = true;
-            //
+            // 
             // lblCostofrmInsumo
-            //
+            // 
             this.lblCostofrmInsumo.AutoSize = true;
             this.lblCostofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCostofrmInsumo.Location = new System.Drawing.Point(29, 252);
+            this.lblCostofrmInsumo.Location = new System.Drawing.Point(22, 205);
+            this.lblCostofrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCostofrmInsumo.Name = "lblCostofrmInsumo";
-            this.lblCostofrmInsumo.Size = new System.Drawing.Size(245, 23);
+            this.lblCostofrmInsumo.Size = new System.Drawing.Size(222, 19);
             this.lblCostofrmInsumo.TabIndex = 10;
             this.lblCostofrmInsumo.Text = "Costo por unidad de compra";
-            //
+            // 
             // nudCostofrmInsumo
-            //
+            // 
             this.nudCostofrmInsumo.DecimalPlaces = 2;
             this.nudCostofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudCostofrmInsumo.Location = new System.Drawing.Point(290, 249);
-            this.nudCostofrmInsumo.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+            this.nudCostofrmInsumo.Location = new System.Drawing.Point(248, 203);
+            this.nudCostofrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nudCostofrmInsumo.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.nudCostofrmInsumo.Name = "nudCostofrmInsumo";
-            this.nudCostofrmInsumo.Size = new System.Drawing.Size(280, 29);
+            this.nudCostofrmInsumo.Size = new System.Drawing.Size(210, 25);
             this.nudCostofrmInsumo.TabIndex = 11;
             this.nudCostofrmInsumo.ThousandsSeparator = true;
-            //
+            // 
             // lblStockInicialfrmInsumo
-            //
+            // 
             this.lblStockInicialfrmInsumo.AutoSize = true;
             this.lblStockInicialfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStockInicialfrmInsumo.Location = new System.Drawing.Point(29, 295);
+            this.lblStockInicialfrmInsumo.Location = new System.Drawing.Point(22, 240);
+            this.lblStockInicialfrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblStockInicialfrmInsumo.Name = "lblStockInicialfrmInsumo";
-            this.lblStockInicialfrmInsumo.Size = new System.Drawing.Size(116, 23);
+            this.lblStockInicialfrmInsumo.Size = new System.Drawing.Size(95, 19);
             this.lblStockInicialfrmInsumo.TabIndex = 12;
             this.lblStockInicialfrmInsumo.Text = "Stock inicial";
-            //
+            // 
             // nudStockInicialfrmInsumo
-            //
+            // 
             this.nudStockInicialfrmInsumo.DecimalPlaces = 3;
             this.nudStockInicialfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudStockInicialfrmInsumo.Location = new System.Drawing.Point(290, 292);
-            this.nudStockInicialfrmInsumo.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+            this.nudStockInicialfrmInsumo.Location = new System.Drawing.Point(248, 238);
+            this.nudStockInicialfrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nudStockInicialfrmInsumo.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.nudStockInicialfrmInsumo.Name = "nudStockInicialfrmInsumo";
-            this.nudStockInicialfrmInsumo.Size = new System.Drawing.Size(280, 29);
+            this.nudStockInicialfrmInsumo.Size = new System.Drawing.Size(210, 25);
             this.nudStockInicialfrmInsumo.TabIndex = 13;
             this.nudStockInicialfrmInsumo.ThousandsSeparator = true;
-            //
+            // 
             // btnNuevofrmInsumo
-            //
+            // 
             this.btnNuevofrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnNuevofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevofrmInsumo.Location = new System.Drawing.Point(29, 350);
+            this.btnNuevofrmInsumo.Location = new System.Drawing.Point(22, 284);
+            this.btnNuevofrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNuevofrmInsumo.Name = "btnNuevofrmInsumo";
-            this.btnNuevofrmInsumo.Size = new System.Drawing.Size(124, 47);
+            this.btnNuevofrmInsumo.Size = new System.Drawing.Size(93, 38);
             this.btnNuevofrmInsumo.TabIndex = 14;
             this.btnNuevofrmInsumo.Text = "Nuevo";
             this.btnNuevofrmInsumo.UseVisualStyleBackColor = false;
             this.btnNuevofrmInsumo.Click += new System.EventHandler(this.btnNuevofrmInsumo_Click);
-            //
+            // 
             // btnAltafrmInsumo
-            //
+            // 
             this.btnAltafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAltafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAltafrmInsumo.Location = new System.Drawing.Point(164, 350);
+            this.btnAltafrmInsumo.Location = new System.Drawing.Point(123, 284);
+            this.btnAltafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAltafrmInsumo.Name = "btnAltafrmInsumo";
-            this.btnAltafrmInsumo.Size = new System.Drawing.Size(124, 47);
+            this.btnAltafrmInsumo.Size = new System.Drawing.Size(93, 38);
             this.btnAltafrmInsumo.TabIndex = 15;
             this.btnAltafrmInsumo.Text = "Agregar";
             this.btnAltafrmInsumo.UseVisualStyleBackColor = false;
             this.btnAltafrmInsumo.Click += new System.EventHandler(this.btnAltafrmInsumo_Click);
-            //
+            // 
             // btnModificacionfrmInsumo
-            //
+            // 
             this.btnModificacionfrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnModificacionfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificacionfrmInsumo.Location = new System.Drawing.Point(299, 350);
+            this.btnModificacionfrmInsumo.Location = new System.Drawing.Point(224, 284);
+            this.btnModificacionfrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnModificacionfrmInsumo.Name = "btnModificacionfrmInsumo";
-            this.btnModificacionfrmInsumo.Size = new System.Drawing.Size(124, 47);
+            this.btnModificacionfrmInsumo.Size = new System.Drawing.Size(93, 38);
             this.btnModificacionfrmInsumo.TabIndex = 16;
             this.btnModificacionfrmInsumo.Text = "Modificar";
             this.btnModificacionfrmInsumo.UseVisualStyleBackColor = false;
             this.btnModificacionfrmInsumo.Click += new System.EventHandler(this.btnModificacionfrmInsumo_Click);
-            //
+            // 
             // btnBajafrmInsumo
-            //
+            // 
             this.btnBajafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBajafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBajafrmInsumo.Location = new System.Drawing.Point(434, 350);
+            this.btnBajafrmInsumo.Location = new System.Drawing.Point(326, 284);
+            this.btnBajafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBajafrmInsumo.Name = "btnBajafrmInsumo";
-            this.btnBajafrmInsumo.Size = new System.Drawing.Size(136, 47);
+            this.btnBajafrmInsumo.Size = new System.Drawing.Size(117, 38);
             this.btnBajafrmInsumo.TabIndex = 17;
             this.btnBajafrmInsumo.Text = "Dar de baja";
             this.btnBajafrmInsumo.UseVisualStyleBackColor = false;
             this.btnBajafrmInsumo.Click += new System.EventHandler(this.btnBajafrmInsumo_Click);
-            //
+            // 
             // dataGridView1
-            //
+            // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(600, 34);
+            this.dataGridView1.Location = new System.Drawing.Point(462, 28);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(780, 383);
+            this.dataGridView1.Size = new System.Drawing.Size(585, 311);
             this.dataGridView1.TabIndex = 18;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-            //
+            // 
             // frmInsumo
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1397, 450);
+            this.ClientSize = new System.Drawing.Size(1056, 366);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnBajafrmInsumo);
             this.Controls.Add(this.btnModificacionfrmInsumo);
@@ -284,6 +319,7 @@
             this.Controls.Add(this.lblUnidadMedidafrmInsumo);
             this.Controls.Add(this.txtNombrefrmInsumo);
             this.Controls.Add(this.lblNombrefrmInsumo);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmInsumo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmInsumo";

@@ -66,6 +66,12 @@
     <Compile Include="frmBitacora.Designer.cs">
       <DependentUpon>frmBitacora.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmComanda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmComanda.Designer.cs">
+      <DependentUpon>frmComanda.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmControlCambio.cs">
       <SubType>Form</SubType>
     </Compile>

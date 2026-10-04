@@ -36,6 +36,38 @@ namespace BLL
             return orden;
         }
 
+        // Condición de CU017/CU018/CU019/CU021: la orden tiene que estar en uno de los estados indicados
+        private BE.ORDEN_COMPRA ObtenerEnEstado(int idOrdenCompra, params string[] estados)
+        {
+            var orden = ObtenerDetalle(idOrdenCompra);
+            if (!estados.Contains(orden.Estado))
+                throw new ArgumentException("msgOrdenEstadoInvalido");
+            return orden;
+        }
+
+        // CU017 pasos 5 y 6 (mensajes 29-36): la orden pasa a "Aprobada" con la fecha de aprobación
+        public void Aprobar(int idOrdenCompra)
+        {
+            var orden = ObtenerEnEstado(idOrdenCompra, EstadoPendienteAprobacion);
+            GestorOrden.ActualizarEstado(idOrdenCompra, EstadoAprobada, DateTime.Now);
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Orden de compra aprobada",
+                $"Orden {idOrdenCompra} al proveedor {orden.Proveedor?.RazonSocial}");
+        }
+
+        // CU017 FA2 / FA3 (mensajes 19-28): la orden vuelve al Encargado como "Observada"; las observaciones son obligatorias
+        public void Devolver(int idOrdenCompra, string observaciones)
+        {
+            if (string.IsNullOrWhiteSpace(observaciones))
+                throw new ArgumentException("msgOrdenSinObservaciones");
+            observaciones = observaciones.Trim();
+            if (observaciones.Length > 500)
+                throw new ArgumentException("msgOrdenObservacionesLargas");
+            ObtenerEnEstado(idOrdenCompra, EstadoPendienteAprobacion);
+            GestorOrden.ActualizarEstado(idOrdenCompra, EstadoObservada, null, observaciones);
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Orden de compra observada",
+                $"Orden {idOrdenCompra}: {observaciones}");
+        }
+
         // CU016 paso 6 / FA3 y CU018 FA2. Las excepciones llevan la clave de idioma del mensaje.
         public bool ValidarOrden(BE.ORDEN_COMPRA orden)
         {

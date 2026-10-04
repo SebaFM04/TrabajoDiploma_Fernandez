@@ -151,6 +151,12 @@
       <DependentUpon>frmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIManager.cs" />
+    <Compile Include="frmAprobacionOrden.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAprobacionOrden.Designer.cs">
+      <DependentUpon>frmAprobacionOrden.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmOrdenCompra.cs">
       <SubType>Form</SubType>
     </Compile>

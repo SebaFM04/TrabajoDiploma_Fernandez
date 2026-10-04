@@ -44,6 +44,7 @@
             this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aprobacionOrdenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordenCompraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proveedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,9 +119,17 @@
             this.ordenCompraToolStripMenuItem.Text = "Órdenes de compra";
             this.ordenCompraToolStripMenuItem.Click += new System.EventHandler(this.ordenCompraToolStripMenuItem_Click);
             //
+            // aprobacionOrdenToolStripMenuItem
+            //
+            this.aprobacionOrdenToolStripMenuItem.Name = "aprobacionOrdenToolStripMenuItem";
+            this.aprobacionOrdenToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.aprobacionOrdenToolStripMenuItem.Text = "Aprobar órdenes de compra";
+            this.aprobacionOrdenToolStripMenuItem.Click += new System.EventHandler(this.aprobacionOrdenToolStripMenuItem_Click);
+            //
             // comprasToolStripMenuItem
             //
             this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aprobacionOrdenToolStripMenuItem,
             this.ordenCompraToolStripMenuItem,
             this.proveedoresToolStripMenuItem,
             });
@@ -429,6 +438,7 @@
         private System.Windows.Forms.ToolStripMenuItem formularioRecetasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operacionBarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aprobacionOrdenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordenCompraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem proveedoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrarVentaToolStripMenuItem;

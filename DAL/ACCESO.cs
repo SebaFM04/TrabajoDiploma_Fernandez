@@ -12,7 +12,7 @@ namespace DAL
         SqlConnection Conexion;
         public static string ObtenerCadena()
         {
-            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.txt");
+            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.txt"); 
             string instancia = File.Exists(ruta) ? File.ReadAllText(ruta).Trim() : @".";
             return $"Data Source={instancia};Initial Catalog=TpIngSoftware_2026;Integrated Security=True;TrustServerCertificate=True;";
         }

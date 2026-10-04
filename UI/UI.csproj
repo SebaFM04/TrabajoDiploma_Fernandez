@@ -168,5 +168,10 @@
       <Name>SERVICIO</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="conexion.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

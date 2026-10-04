@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using SERVICIO;
 using SERVICIO.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
@@ -111,7 +112,7 @@ namespace UI
                 {
                     int fila = dataGridView1.Rows.Add(i.IdInsumo, i.Nombre, i.UnidadMedida, i.UnidadCompra,
                         i.EquivalenciaMagnitud.ToString("0.###"), i.VolumenPesoDisponible.ToString("0.###"),
-                        i.UmbralReposicion.ToString("0.###"), i.CostoUnidadCompra.ToString("0.00"));
+                        i.UmbralReposicion.ToString("0.###"), FormatoMoneda.Pesos(i.CostoUnidadCompra));
                     dataGridView1.Rows[fila].Tag = i;
                 }
                 dataGridView1.ClearSelection();

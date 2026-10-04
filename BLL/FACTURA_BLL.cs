@@ -3,6 +3,7 @@ using DAL;
 using SERVICIO;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -72,22 +73,46 @@ namespace BLL
             return factura;
         }
 
-        // CU015 (decisión 43, supuesto S4): PDF de la factura en Documentos\SistemaBar\Facturas. Devuelve la ruta.
+        // Datos del emisor (App.config, decisión 54). Si falta una clave se usa el valor por defecto.
+        private static string Emisor(string clave, string porDefecto)
+        {
+            string valor = ConfigurationManager.AppSettings["Emisor." + clave];
+            return string.IsNullOrWhiteSpace(valor) ? porDefecto : valor.Trim();
+        }
+
+        // Número con punto de venta: 0001-00000001
+        public string NumeroCompleto(BE.FACTURA factura)
+        {
+            int puntoVenta = int.TryParse(Emisor("PuntoVenta", "1"), out int pv) ? pv : 1;
+            return $"{puntoVenta:0000}-{factura.NumeroComprobante:00000000}";
+        }
+
+        // IVA contenido en el total (Ley 27.743, régimen de transparencia fiscal al consumidor)
+        public decimal CalcularIvaContenido(decimal total)
+        {
+            decimal alicuota = decimal.TryParse(Emisor("AlicuotaIva", "21"), NumberStyles.Number, CultureInfo.InvariantCulture, out decimal a) ? a : 21m;
+            return Math.Round(total - total / (1 + alicuota / 100m), 2);
+        }
+
+        // CU015 (decisiones 43 y 54, supuesto S4): PDF de la Factura B a consumidor final en Documentos\SistemaBar\Facturas.
+        // Devuelve la ruta.
         public string GenerarPdf(BE.FACTURA factura, BE.VENTA venta)
         {
-            var ar = CultureInfo.GetCultureInfo("es-AR");
+            var ar = FormatoMoneda.Cultura;
             var encabezado = new List<string>
             {
-                "Comprobante simulado - sin validez fiscal",
-                $"Número: {factura.NumeroComprobante:00000000}",
-                $"Fecha: {factura.FechaHoraEmision.ToString("dd/MM/yyyy HH:mm", ar)}",
-                $"Cliente: {factura.NombreCliente ?? "Consumidor final"}"
+                "Código 006 - ORIGINAL",
+                $"{Emisor("RazonSocial", "Bar de Tragos SRL")} - {Emisor("Domicilio", "")}",
+                $"CUIT: {Emisor("Cuit", "30-12345678-9")} - {Emisor("CondicionIva", "IVA Responsable Inscripto")}",
+                $"Ingresos Brutos: {Emisor("IngresosBrutos", "-")} - Inicio de actividades: {Emisor("InicioActividades", "-")}",
+                $"Comprobante N°: {NumeroCompleto(factura)} - Fecha: {factura.FechaHoraEmision.ToString("dd/MM/yyyy HH:mm", ar)}",
+                "Cliente: CONSUMIDOR FINAL" + (factura.NombreCliente != null ? $" - {factura.NombreCliente}" : ""),
             };
-            if (factura.TelefonoCliente != null) encabezado.Add($"Teléfono: {factura.TelefonoCliente}");
-            if (factura.CorreoCliente != null) encabezado.Add($"Correo: {factura.CorreoCliente}");
-            encabezado.Add($"Venta: {venta.IdVenta} - Vale: {venta.Vale?.IdVale}");
+            if (factura.TelefonoCliente != null || factura.CorreoCliente != null)
+                encabezado.Add($"Contacto: {factura.TelefonoCliente ?? ""} {factura.CorreoCliente ?? ""}".Trim());
+            encabezado.Add($"Condición de venta: {venta.MedioPago} - Venta N° {venta.IdVenta} - Vale N° {venta.Vale?.IdVale}");
 
-            var filas = new List<string[]> { new[] { "Producto", "Tamaño", "Cantidad", "Precio", "Subtotal" } };
+            var filas = new List<string[]> { new[] { "Producto", "Tamaño", "Cantidad", "Precio unit.", "Subtotal" } };
             foreach (var d in venta.Detalles)
             {
                 filas.Add(new[]
@@ -95,19 +120,20 @@ namespace BLL
                     d.ProductoTamanio?.Producto?.Nombre ?? d.IdProducto.ToString(),
                     d.ProductoTamanio?.Tamanio?.Nombre ?? d.IdTamanio.ToString(),
                     d.Cantidad.ToString(ar),
-                    (d.ProductoTamanio?.Precio ?? 0).ToString("N2", ar),
-                    d.MontoLinea.ToString("N2", ar)
+                    FormatoMoneda.Pesos(d.ProductoTamanio?.Precio ?? 0),
+                    FormatoMoneda.Pesos(d.MontoLinea)
                 });
             }
             var pie = new List<string>
             {
-                $"TOTAL: $ {factura.Total.ToString("N2", ar)}",
-                $"Medio de pago: {venta.MedioPago}"
+                $"TOTAL: {FormatoMoneda.Pesos(factura.Total)}",
+                $"Régimen de Transparencia Fiscal al Consumidor (Ley 27.743) - IVA contenido: {FormatoMoneda.Pesos(CalcularIvaContenido(factura.Total))}",
+                "Comprobante simulado sin validez fiscal (sin CAE, sin conexión con ARCA)."
             };
 
             string ruta = GeneradorPdf.RutaFactura(factura.NumeroComprobante);
-            GeneradorPdf.GenerarComprobante(ruta, "FACTURA C - Consumidor final", encabezado, filas,
-                new[] { 0.36, 0.2, 0.12, 0.16, 0.16 }, pie, columnasTexto: 2);
+            GeneradorPdf.GenerarComprobante(ruta, "FACTURA B", encabezado, filas,
+                new[] { 0.34, 0.2, 0.12, 0.17, 0.17 }, pie, columnasTexto: 2);
             return ruta;
         }
     }

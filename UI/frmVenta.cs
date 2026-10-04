@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using SERVICIO;
 using SERVICIO.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,7 @@ namespace UI
                 var lista = GestorVenta.ListarProductosParaVenta();
                 foreach (var pt in lista)
                 {
-                    int fila = dgvProductosfrmVenta.Rows.Add(pt.Producto.Nombre, pt.Tamanio.Nombre, pt.Precio.ToString("N2", CultureInfo.CurrentCulture));
+                    int fila = dgvProductosfrmVenta.Rows.Add(pt.Producto.Nombre, pt.Tamanio.Nombre, FormatoMoneda.Pesos(pt.Precio));
                     dgvProductosfrmVenta.Rows[fila].Tag = pt;
                 }
                 dgvProductosfrmVenta.ClearSelection();
@@ -120,7 +121,7 @@ namespace UI
             foreach (var d in venta.Detalles)
             {
                 int fila = dgvPedidofrmVenta.Rows.Add(d.ProductoTamanio.Producto.Nombre, d.ProductoTamanio.Tamanio.Nombre, d.Cantidad,
-                    (d.ProductoTamanio.Precio * d.Cantidad).ToString("N2", CultureInfo.CurrentCulture));
+                    FormatoMoneda.Pesos(d.ProductoTamanio.Precio * d.Cantidad));
                 dgvPedidofrmVenta.Rows[fila].Tag = d;
             }
             dgvPedidofrmVenta.ClearSelection();
@@ -176,7 +177,7 @@ namespace UI
                     return;
                 }
                 decimal total = GestorVenta.CalcularMontoTotal(venta);
-                lblTotalfrmVenta.Text = total.ToString("C2", CultureInfo.CurrentCulture);
+                lblTotalfrmVenta.Text = FormatoMoneda.Pesos(total);
                 verificado = true;
                 btnCobrarfrmVenta.Enabled = true;
                 txtResultadofrmVenta.Text = string.Format(g.Traducir("msgVentaStockOk"), lblTotalfrmVenta.Text);
@@ -229,7 +230,7 @@ namespace UI
             {
                 GestorVenta.RegistrarVenta(venta);
                 var texto = new StringBuilder();
-                texto.AppendLine(string.Format(g.Traducir("msgVentaRegistrada"), venta.IdVenta, venta.Vale.IdVale, venta.Monto.ToString("C2", CultureInfo.CurrentCulture)));
+                texto.AppendLine(string.Format(g.Traducir("msgVentaRegistrada"), venta.IdVenta, venta.Vale.IdVale, FormatoMoneda.Pesos(venta.Monto)));
                 if (venta.Comanda != null)
                     texto.AppendLine(string.Format(g.Traducir("msgVentaComanda"), venta.Comanda.IdComanda));
                 texto.AppendLine(g.Traducir("msgVentaPedirDatosFactura"));
@@ -297,7 +298,7 @@ namespace UI
             // CU010 paso 6: se muestran el vale, la factura y la comanda
             var texto = new StringBuilder(txtResultadofrmVenta.Text.Replace(g.Traducir("msgVentaPedirDatosFactura"), string.Empty).TrimEnd());
             texto.AppendLine();
-            texto.AppendLine(string.Format(g.Traducir("msgFacturaEmitida"), factura.NumeroComprobante.ToString("00000000"), factura.Total.ToString("C2", CultureInfo.CurrentCulture)));
+            texto.AppendLine(string.Format(g.Traducir("msgFacturaEmitida"), GestorFactura.NumeroCompleto(factura), FormatoMoneda.Pesos(factura.Total)));
             try
             {
                 string ruta = GestorFactura.GenerarPdf(factura, venta);

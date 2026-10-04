@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using SERVICIO;
 using SERVICIO.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
@@ -110,7 +111,7 @@ namespace UI
                     var marcado = marcados?.FirstOrDefault(m => m.IdTamanio == t.IdTamanio);
                     string texto = $"{t.Nombre} ({t.CantidadMagnitud.ToString("0.###", CultureInfo.CurrentCulture)} {t.UnidadMagnitud})";
                     int fila = dgvTamaniosfrmProducto.Rows.Add(marcado != null, texto,
-                        marcado != null ? marcado.Precio.ToString("0.00", CultureInfo.CurrentCulture) : string.Empty);
+                        marcado != null ? FormatoMoneda.Numero(marcado.Precio) : string.Empty);
                     dgvTamaniosfrmProducto.Rows[fila].Tag = t;
                 }
             }
@@ -136,7 +137,7 @@ namespace UI
                 if (!(fila.Cells["colVendefrmProducto"].Value is bool vende) || !vende) continue;
                 var tamanio = fila.Tag as BE.TAMANIO;
                 string texto = fila.Cells["colPreciofrmProducto"].Value?.ToString();
-                if (!decimal.TryParse(texto, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal precio))
+                if (!FormatoMoneda.TryLeer(texto, out decimal precio))
                 {
                     invalido = true;
                     precio = 0;

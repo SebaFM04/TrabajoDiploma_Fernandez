@@ -38,9 +38,11 @@ namespace UI
             // Operación del bar (N01): cada opción con su permiso, para asociarla después a los roles nuevos
             bool venta = usuario.TienePermiso("Gestion Ventas");
             bool comandas = usuario.TienePermiso("Gestion Comandas");
+            bool entregas = usuario.TienePermiso("Gestion Entregas");
             registrarVentaToolStripMenuItem.Visible = venta;
             entregaPiqueosToolStripMenuItem.Visible = comandas;
-            operacionBarToolStripMenuItem.Visible = venta || comandas;
+            entregaBebidasToolStripMenuItem.Visible = entregas;
+            operacionBarToolStripMenuItem.Visible = venta || comandas || entregas;
             adminitraciónToolStripMenuItem.Visible = usuario.TienePermiso("Auditoria");
             idiomaToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Idiomas");
             backUpToolStripMenuItem1.Visible = usuario.TienePermiso("BackUp");
@@ -106,6 +108,12 @@ namespace UI
         private void entregaPiqueosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmComanda());
+        }
+
+        // CU012 Confirmar Entrega de Bebidas
+        private void entregaBebidasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmEntrega());
         }
 
         private void admRolesToolStripMenuItem_Click(object sender, EventArgs e)

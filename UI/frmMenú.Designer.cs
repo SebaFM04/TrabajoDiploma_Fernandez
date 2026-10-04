@@ -41,6 +41,7 @@
             this.operacionBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.registrarVentaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entregaPiqueosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminitraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -151,7 +152,8 @@
             //
             this.operacionBarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.registrarVentaToolStripMenuItem,
-            this.entregaPiqueosToolStripMenuItem});
+            this.entregaPiqueosToolStripMenuItem,
+            this.entregaBebidasToolStripMenuItem});
             this.operacionBarToolStripMenuItem.Name = "operacionBarToolStripMenuItem";
             this.operacionBarToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
             this.operacionBarToolStripMenuItem.Text = "Operación del bar";
@@ -169,6 +171,13 @@
             this.entregaPiqueosToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.entregaPiqueosToolStripMenuItem.Text = "Entrega de piqueos (Cocina)";
             this.entregaPiqueosToolStripMenuItem.Click += new System.EventHandler(this.entregaPiqueosToolStripMenuItem_Click);
+            //
+            // entregaBebidasToolStripMenuItem
+            //
+            this.entregaBebidasToolStripMenuItem.Name = "entregaBebidasToolStripMenuItem";
+            this.entregaBebidasToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.entregaBebidasToolStripMenuItem.Text = "Entrega de bebidas (Barra)";
+            this.entregaBebidasToolStripMenuItem.Click += new System.EventHandler(this.entregaBebidasToolStripMenuItem_Click);
             //
             // adminitraciónToolStripMenuItem
             // 
@@ -283,6 +292,7 @@
         private System.Windows.Forms.ToolStripMenuItem operacionBarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrarVentaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaPiqueosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem entregaBebidasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adminitraciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bitacoraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem admRolesToolStripMenuItem;

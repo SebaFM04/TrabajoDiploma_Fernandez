@@ -243,7 +243,7 @@
             // 
             this.btnAltafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAltafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAltafrmInsumo.Location = new System.Drawing.Point(123, 284);
+            this.btnAltafrmInsumo.Location = new System.Drawing.Point(128, 284);
             this.btnAltafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAltafrmInsumo.Name = "btnAltafrmInsumo";
             this.btnAltafrmInsumo.Size = new System.Drawing.Size(93, 38);
@@ -256,7 +256,7 @@
             // 
             this.btnModificacionfrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnModificacionfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificacionfrmInsumo.Location = new System.Drawing.Point(224, 284);
+            this.btnModificacionfrmInsumo.Location = new System.Drawing.Point(234, 284);
             this.btnModificacionfrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnModificacionfrmInsumo.Name = "btnModificacionfrmInsumo";
             this.btnModificacionfrmInsumo.Size = new System.Drawing.Size(93, 38);
@@ -269,7 +269,7 @@
             // 
             this.btnBajafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBajafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBajafrmInsumo.Location = new System.Drawing.Point(326, 284);
+            this.btnBajafrmInsumo.Location = new System.Drawing.Point(341, 284);
             this.btnBajafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBajafrmInsumo.Name = "btnBajafrmInsumo";
             this.btnBajafrmInsumo.Size = new System.Drawing.Size(117, 38);

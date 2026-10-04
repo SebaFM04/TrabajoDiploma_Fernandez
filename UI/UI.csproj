@@ -129,6 +129,9 @@
     <EmbeddedResource Include="frmControlCambio.resx">
       <DependentUpon>frmControlCambio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmInsumo.resx">
+      <DependentUpon>frmInsumo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>

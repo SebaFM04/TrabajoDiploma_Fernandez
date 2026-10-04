@@ -42,6 +42,7 @@
             this.nudCostofrmInsumo = new System.Windows.Forms.NumericUpDown();
             this.lblStockInicialfrmInsumo = new System.Windows.Forms.Label();
             this.nudStockInicialfrmInsumo = new System.Windows.Forms.NumericUpDown();
+            this.lblStockCalculadofrmInsumo = new System.Windows.Forms.Label();
             this.btnNuevofrmInsumo = new System.Windows.Forms.Button();
             this.btnAltafrmInsumo = new System.Windows.Forms.Button();
             this.btnModificacionfrmInsumo = new System.Windows.Forms.Button();
@@ -94,6 +95,7 @@
             this.cmbUnidadMedidafrmInsumo.Location = new System.Drawing.Point(247, 62);
             this.cmbUnidadMedidafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbUnidadMedidafrmInsumo.Name = "cmbUnidadMedidafrmInsumo";
+            this.cmbUnidadMedidafrmInsumo.SelectedIndexChanged += new System.EventHandler(this.cmbUnidadMedidafrmInsumo_SelectedIndexChanged);
             this.cmbUnidadMedidafrmInsumo.Size = new System.Drawing.Size(211, 26);
             this.cmbUnidadMedidafrmInsumo.TabIndex = 3;
             // 
@@ -144,6 +146,7 @@
             this.nudEquivalenciafrmInsumo.Size = new System.Drawing.Size(210, 25);
             this.nudEquivalenciafrmInsumo.TabIndex = 7;
             this.nudEquivalenciafrmInsumo.ThousandsSeparator = true;
+            this.nudEquivalenciafrmInsumo.ValueChanged += new System.EventHandler(this.StockInicial_Changed);
             // 
             // lblUmbralfrmInsumo
             // 
@@ -222,9 +225,21 @@
             0,
             0});
             this.nudStockInicialfrmInsumo.Name = "nudStockInicialfrmInsumo";
-            this.nudStockInicialfrmInsumo.Size = new System.Drawing.Size(210, 25);
+            this.nudStockInicialfrmInsumo.Size = new System.Drawing.Size(105, 25);
             this.nudStockInicialfrmInsumo.TabIndex = 13;
             this.nudStockInicialfrmInsumo.ThousandsSeparator = true;
+            this.nudStockInicialfrmInsumo.ValueChanged += new System.EventHandler(this.StockInicial_Changed);
+            //
+            // lblStockCalculadofrmInsumo
+            //
+            this.lblStockCalculadofrmInsumo.AutoSize = true;
+            this.lblStockCalculadofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStockCalculadofrmInsumo.Location = new System.Drawing.Point(356, 240);
+            this.lblStockCalculadofrmInsumo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblStockCalculadofrmInsumo.Name = "lblStockCalculadofrmInsumo";
+            this.lblStockCalculadofrmInsumo.Size = new System.Drawing.Size(30, 19);
+            this.lblStockCalculadofrmInsumo.TabIndex = 19;
+            this.lblStockCalculadofrmInsumo.Text = "= 0";
             // 
             // btnNuevofrmInsumo
             // 
@@ -305,6 +320,7 @@
             this.Controls.Add(this.btnModificacionfrmInsumo);
             this.Controls.Add(this.btnAltafrmInsumo);
             this.Controls.Add(this.btnNuevofrmInsumo);
+            this.Controls.Add(this.lblStockCalculadofrmInsumo);
             this.Controls.Add(this.nudStockInicialfrmInsumo);
             this.Controls.Add(this.lblStockInicialfrmInsumo);
             this.Controls.Add(this.nudCostofrmInsumo);
@@ -350,6 +366,7 @@
         private System.Windows.Forms.NumericUpDown nudCostofrmInsumo;
         private System.Windows.Forms.Label lblStockInicialfrmInsumo;
         private System.Windows.Forms.NumericUpDown nudStockInicialfrmInsumo;
+        private System.Windows.Forms.Label lblStockCalculadofrmInsumo;
         private System.Windows.Forms.Button btnNuevofrmInsumo;
         private System.Windows.Forms.Button btnAltafrmInsumo;
         private System.Windows.Forms.Button btnModificacionfrmInsumo;

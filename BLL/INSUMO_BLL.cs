@@ -45,6 +45,15 @@ namespace BLL
                 throw new ArgumentException("msgInsumoValorNegativo");
         }
 
+        // CU023 paso 3 (decisión 52): el stock inicial se ingresa en unidades de compra
+        // y se lleva en la unidad de medida. Ej.: 4 botellas × 2250 ml = 9000 ml.
+        public decimal CalcularStockInicial(decimal cantidadUnidadesCompra, decimal equivalencia)
+        {
+            if (cantidadUnidadesCompra < 0)
+                throw new ArgumentException("msgInsumoValorNegativo");
+            return Math.Round(cantidadUnidadesCompra * equivalencia, 3);
+        }
+
         // CU023 Insertar Insumo
         public void InsertarInsumo(BE.INSUMO insumo)
         {

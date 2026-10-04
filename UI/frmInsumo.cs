@@ -15,11 +15,14 @@ namespace UI
 {
     // ABM de insumos: CU023 Insertar Insumo, CU024 Modificar Insumo, CU025 Dar de Baja Insumo.
     // Modo alta: todos los campos editables. Modo edición (insumo seleccionado): unidad de medida y stock de solo lectura.
+    // El stock inicial se ingresa en unidades de compra y se muestra calculado en la unidad de medida (decisión 52).
     public partial class frmInsumo : Form, IObservadorIdioma
     {
         INSUMO_BLL GestorInsumo = new INSUMO_BLL();
         // Evita que la carga de la grilla dispare el modo edición
         bool cargando = false;
+        // Stock real del insumo en edición (null en modo alta)
+        decimal? stockEdicion = null;
 
         public frmInsumo()
         {
@@ -67,6 +70,8 @@ namespace UI
 
             cmbUnidadMedidafrmInsumo.Enabled = true;
             nudStockInicialfrmInsumo.Enabled = true;
+            stockEdicion = null;
+            MostrarStockCalculado();
             btnAltafrmInsumo.Enabled = true;
             btnModificacionfrmInsumo.Enabled = false;
             btnBajafrmInsumo.Enabled = false;
@@ -81,10 +86,15 @@ namespace UI
             nudEquivalenciafrmInsumo.Value = insumo.EquivalenciaMagnitud;
             nudUmbralfrmInsumo.Value = insumo.UmbralReposicion;
             nudCostofrmInsumo.Value = insumo.CostoUnidadCompra;
-            nudStockInicialfrmInsumo.Value = insumo.VolumenPesoDisponible;
+            // El stock actual se muestra tal cual; el campo de unidades queda como referencia
+            stockEdicion = insumo.VolumenPesoDisponible;
+            nudStockInicialfrmInsumo.Value = insumo.EquivalenciaMagnitud > 0
+                ? Math.Min(nudStockInicialfrmInsumo.Maximum, Math.Round(insumo.VolumenPesoDisponible / insumo.EquivalenciaMagnitud, 3))
+                : 0;
 
             cmbUnidadMedidafrmInsumo.Enabled = false;
             nudStockInicialfrmInsumo.Enabled = false;
+            MostrarStockCalculado();
             btnAltafrmInsumo.Enabled = false;
             btnModificacionfrmInsumo.Enabled = true;
             btnBajafrmInsumo.Enabled = true;
@@ -135,6 +145,32 @@ namespace UI
             txtNombrefrmInsumo.Focus();
         }
 
+        // Stock en la unidad de medida: en alta lo calcula la BLL (unidades × equivalencia); en edición es el actual
+        private void MostrarStockCalculado()
+        {
+            var g = GestorIdioma.Instancia;
+            decimal stock;
+            if (stockEdicion.HasValue)
+                stock = stockEdicion.Value;
+            else
+            {
+                try { stock = GestorInsumo.CalcularStockInicial(nudStockInicialfrmInsumo.Value, nudEquivalenciafrmInsumo.Value); }
+                catch (ArgumentException) { stock = 0; }
+            }
+            string unidad = cmbUnidadMedidafrmInsumo.SelectedItem?.ToString() ?? string.Empty;
+            lblStockCalculadofrmInsumo.Text = string.Format(g.Traducir("msgInsumoStockCalculado"), stock.ToString("#,0.###"), unidad).Trim();
+        }
+
+        private void StockInicial_Changed(object sender, EventArgs e)
+        {
+            MostrarStockCalculado();
+        }
+
+        private void cmbUnidadMedidafrmInsumo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MostrarStockCalculado();
+        }
+
         // Datos editables del formulario. La unidad de medida y el stock solo cuentan en el alta.
         private BE.INSUMO LeerCampos()
         {
@@ -146,7 +182,8 @@ namespace UI
                 EquivalenciaMagnitud = nudEquivalenciafrmInsumo.Value,
                 UmbralReposicion = nudUmbralfrmInsumo.Value,
                 CostoUnidadCompra = nudCostofrmInsumo.Value,
-                VolumenPesoDisponible = nudStockInicialfrmInsumo.Value
+                // CU023 (decisión 52): unidades de compra × equivalencia
+                VolumenPesoDisponible = GestorInsumo.CalcularStockInicial(nudStockInicialfrmInsumo.Value, nudEquivalenciafrmInsumo.Value)
             };
         }
 
@@ -262,6 +299,7 @@ namespace UI
             {
                 col.HeaderText = g.Traducir(col.Name);
             }
+            MostrarStockCalculado();
         }
     }
 }

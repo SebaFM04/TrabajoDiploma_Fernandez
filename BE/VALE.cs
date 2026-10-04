@@ -44,6 +44,14 @@ namespace BE
             set { utilizado = value; }
         }
 
+        // Consulta de vales: la venta del vale incluye bebidas (dato calculado, no es columna de VALE)
+        private bool tieneBebidas;
+        public bool TieneBebidas
+        {
+            get { return tieneBebidas; }
+            set { tieneBebidas = value; }
+        }
+
         // CU012: líneas de bebidas de la venta del vale
         private List<VENTA_DETALLE> detalles = new List<VENTA_DETALLE>();
         public List<VENTA_DETALLE> Detalles

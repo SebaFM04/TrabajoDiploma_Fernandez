@@ -102,6 +102,36 @@ namespace DAL
             return vale;
         }
 
+        // Consulta de vales (decisión 56). estado: "" todos, "SinUsar" o "Utilizados"
+        public List<BE.VALE> ListarVales(DateTime desde, DateTime hasta, string estado)
+        {
+            acceso.Abrir();
+            DataTable tabla;
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Desde", desde),
+                    acceso.CrearParametro("@Hasta", hasta),
+                    acceso.CrearParametro("@Estado", estado ?? string.Empty)
+                };
+                tabla = acceso.Leer("ListarValesPorFecha", parametros);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            return tabla.Rows.Cast<DataRow>().Select(u => new BE.VALE
+            {
+                IdVale = Convert.ToInt32(u["IdVale"]),
+                IdVenta = Convert.ToInt32(u["IdVenta"]),
+                FechaHoraEmision = Convert.ToDateTime(u["FechaHoraEmision"]),
+                MontoCertificado = Convert.ToDecimal(u["MontoCertificado"]),
+                Utilizado = Convert.ToBoolean(u["Utilizado"]),
+                TieneBebidas = Convert.ToBoolean(u["TieneBebidas"])
+            }).ToList();
+        }
+
         // CU012 mensajes 19-22. Devuelve las filas afectadas: 0 si el vale ya estaba utilizado.
         public int ActualizarUtilizado(int idVale)
         {

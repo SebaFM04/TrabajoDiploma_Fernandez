@@ -59,5 +59,13 @@ namespace BE
             get { return comanda; }
             set { comanda = value; }
         }
+
+        // Factura B de la venta (CU015); null si todavía no se emitió. Se carga en la consulta de ventas.
+        private FACTURA factura;
+        public FACTURA Factura
+        {
+            get { return factura; }
+            set { factura = value; }
+        }
     }
 }

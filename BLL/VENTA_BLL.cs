@@ -28,6 +28,20 @@ namespace BLL
             return GestorProducto.ListarProductosConPrecios();
         }
 
+        // Consulta de ventas (decisión 56): ventas entre dos fechas (días completos)
+        public List<BE.VENTA> ListarVentas(DateTime desde, DateTime hasta)
+        {
+            if (desde.Date > hasta.Date)
+                throw new ArgumentException("msgConsultaFechasInvalidas");
+            return new MAPPER_VENTA().ListarVentas(desde.Date, hasta.Date.AddDays(1));
+        }
+
+        // Consulta de ventas: líneas de la venta con el precio al momento de la venta
+        public List<BE.VENTA_DETALLE> ObtenerDetalleVenta(int idVenta)
+        {
+            return new MAPPER_VENTA().BuscarDetalle(idVenta);
+        }
+
         // Consumo total por insumo de todo el pedido (decisión 4): suma las recetas escaladas de cada línea.
         // Cada elemento lleva en IdProducto uno de los productos que lo usan (para informar en FA1).
         private List<BE.RECETA> CalcularConsumos(BE.VENTA pedido, out Dictionary<int, List<int>> productosPorInsumo)

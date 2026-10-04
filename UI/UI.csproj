@@ -72,6 +72,18 @@
     <Compile Include="frmComanda.Designer.cs">
       <DependentUpon>frmComanda.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmConsultaVales.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultaVales.Designer.cs">
+      <DependentUpon>frmConsultaVales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultaVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultaVentas.Designer.cs">
+      <DependentUpon>frmConsultaVentas.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmControlCambio.cs">
       <SubType>Form</SubType>
     </Compile>

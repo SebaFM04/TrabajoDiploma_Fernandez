@@ -42,6 +42,9 @@
             this.registrarVentaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entregaPiqueosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaValesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminitraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +88,7 @@
             this.gestiónUsuariosToolStripMenuItem,
             this.gestiónProductosToolStripMenuItem,
             this.operacionBarToolStripMenuItem,
+            this.consultasToolStripMenuItem,
             this.adminitraciónToolStripMenuItem,
             this.idiomaToolStripMenuItem});
             this.mnstripMenu.Location = new System.Drawing.Point(0, 0);
@@ -178,6 +182,29 @@
             this.entregaBebidasToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.entregaBebidasToolStripMenuItem.Text = "Entrega de bebidas (Barra)";
             this.entregaBebidasToolStripMenuItem.Click += new System.EventHandler(this.entregaBebidasToolStripMenuItem_Click);
+            //
+            // consultasToolStripMenuItem
+            //
+            this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.consultaVentasToolStripMenuItem,
+            this.consultaValesToolStripMenuItem});
+            this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
+            this.consultasToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.consultasToolStripMenuItem.Text = "Consultas";
+            //
+            // consultaVentasToolStripMenuItem
+            //
+            this.consultaVentasToolStripMenuItem.Name = "consultaVentasToolStripMenuItem";
+            this.consultaVentasToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.consultaVentasToolStripMenuItem.Text = "Ventas realizadas";
+            this.consultaVentasToolStripMenuItem.Click += new System.EventHandler(this.consultaVentasToolStripMenuItem_Click);
+            //
+            // consultaValesToolStripMenuItem
+            //
+            this.consultaValesToolStripMenuItem.Name = "consultaValesToolStripMenuItem";
+            this.consultaValesToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.consultaValesToolStripMenuItem.Text = "Vales emitidos";
+            this.consultaValesToolStripMenuItem.Click += new System.EventHandler(this.consultaValesToolStripMenuItem_Click);
             //
             // adminitraciónToolStripMenuItem
             // 
@@ -293,6 +320,9 @@
         private System.Windows.Forms.ToolStripMenuItem registrarVentaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaPiqueosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaBebidasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaVentasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaValesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adminitraciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bitacoraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem admRolesToolStripMenuItem;

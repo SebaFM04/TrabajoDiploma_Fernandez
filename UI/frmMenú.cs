@@ -43,6 +43,12 @@ namespace UI
             entregaPiqueosToolStripMenuItem.Visible = comandas;
             entregaBebidasToolStripMenuItem.Visible = entregas;
             operacionBarToolStripMenuItem.Visible = venta || comandas || entregas;
+            // Consultas (decisión 56)
+            bool consultaVentas = usuario.TienePermiso("Consulta Ventas");
+            bool consultaVales = usuario.TienePermiso("Consulta Vales");
+            consultaVentasToolStripMenuItem.Visible = consultaVentas;
+            consultaValesToolStripMenuItem.Visible = consultaVales;
+            consultasToolStripMenuItem.Visible = consultaVentas || consultaVales;
             adminitraciónToolStripMenuItem.Visible = usuario.TienePermiso("Auditoria");
             idiomaToolStripMenuItem.Visible = usuario.TienePermiso("Gestion Idiomas");
             backUpToolStripMenuItem1.Visible = usuario.TienePermiso("BackUp");
@@ -114,6 +120,17 @@ namespace UI
         private void entregaBebidasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmEntrega());
+        }
+
+        // Consultas (decisión 56)
+        private void consultaVentasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmConsultaVentas());
+        }
+
+        private void consultaValesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmConsultaVales());
         }
 
         private void admRolesToolStripMenuItem_Click(object sender, EventArgs e)

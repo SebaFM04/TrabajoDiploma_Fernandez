@@ -21,6 +21,21 @@ namespace BLL
             });
         }
 
+        // Valores del filtro de la consulta de vales
+        public const string EstadoTodos = "";
+        public const string EstadoSinUsar = "SinUsar";
+        public const string EstadoUtilizados = "Utilizados";
+
+        // Consulta de vales (decisión 56): vales emitidos entre dos fechas (días completos), filtrados por estado
+        public List<BE.VALE> ListarVales(DateTime desde, DateTime hasta, string estado)
+        {
+            if (desde.Date > hasta.Date)
+                throw new ArgumentException("msgConsultaFechasInvalidas");
+            if (estado != EstadoTodos && estado != EstadoSinUsar && estado != EstadoUtilizados)
+                estado = EstadoTodos;
+            return new MAPPER_VALE().ListarVales(desde.Date, hasta.Date.AddDays(1), estado);
+        }
+
         // CU012 paso 1 (mensajes 2-9): el vale con las bebidas de su venta si es válido;
         // null si no existe o ya fue utilizado (FA1). Detalles vacío = venta solo de piqueos (FA2).
         public BE.VALE ValidarVale(int idVale)

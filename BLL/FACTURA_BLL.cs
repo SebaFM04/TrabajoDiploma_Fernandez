@@ -73,6 +73,17 @@ namespace BLL
             return factura;
         }
 
+        // Consulta de ventas: PDF de una factura ya emitida. Se regenera siempre desde la base,
+        // así el archivo nunca queda desactualizado (por ejemplo, si se recreó la base y se repite el número).
+        public string ObtenerPdf(BE.VENTA venta)
+        {
+            if (venta?.Factura == null)
+                throw new ArgumentException("msgConsultaSeleccionarVenta");
+            if (venta.Detalles == null || venta.Detalles.Count == 0)
+                venta.Detalles = new VENTA_BLL().ObtenerDetalleVenta(venta.IdVenta);
+            return GenerarPdf(venta.Factura, venta);
+        }
+
         // Datos del emisor (App.config, decisión 54). Si falta una clave se usa el valor por defecto.
         private static string Emisor(string clave, string porDefecto)
         {

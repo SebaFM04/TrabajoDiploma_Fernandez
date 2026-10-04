@@ -54,6 +54,10 @@
     <Compile Include="MAPPER_RESTORE.cs" />
     <Compile Include="MAPPER_TAMANIO.cs" />
     <Compile Include="MAPPER_USUARIO.cs" />
+    <Compile Include="MAPPER_COMANDA.cs" />
+    <Compile Include="MAPPER_FACTURA.cs" />
+    <Compile Include="MAPPER_VALE.cs" />
+    <Compile Include="MAPPER_VENTA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

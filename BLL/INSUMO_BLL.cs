@@ -3,6 +3,7 @@ using DAL;
 using SERVICIO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Data.SqlClient;
 
 namespace BLL
@@ -128,6 +129,59 @@ namespace BLL
         public List<BE.INSUMO> ListarInsumosActivos()
         {
             return GestorInsumo.ListarInsumosActivos();
+        }
+
+        // CU010 mensajes 9-17: hay stock para el consumo requerido. insumoRequerido.Proporcion = cantidad total (decisión 53).
+        // Con acceso != null se lee dentro de la transacción de la venta (segunda verificación del paso 5).
+        public bool VerificarDisponibilidad(BE.RECETA insumoRequerido, ACCESO acceso = null)
+        {
+            var mapper = acceso == null ? GestorInsumo : new MAPPER_INSUMO(acceso);
+            var insumo = mapper.BuscarInsumo(insumoRequerido.IdInsumo);
+            if (insumo == null || !insumo.Activo) return false;
+            insumoRequerido.Insumo = insumo;
+            return insumo.VolumenPesoDisponible >= insumoRequerido.Proporcion;
+        }
+
+        // CU010 mensajes 30-35: descuenta el consumo de cada insumo. El stock nunca queda negativo.
+        public void DescontarStock(List<BE.RECETA> consumos, ACCESO acceso)
+        {
+            var mapper = new MAPPER_INSUMO(acceso);
+            foreach (var consumo in consumos)
+            {
+                var insumo = mapper.BuscarInsumo(consumo.IdInsumo);
+                if (insumo == null || insumo.VolumenPesoDisponible < consumo.Proporcion)
+                    throw new ArgumentException("msgVentaStockInsuficiente");
+                mapper.ActualizarVolumenPeso(insumo.IdInsumo, insumo.VolumenPesoDisponible - consumo.Proporcion);
+            }
+        }
+
+        // CU010 mensajes 18-23, en el paso 5 (decisión 47): después de descontar, los insumos que quedaron
+        // bajo el umbral y no tienen aviso pendiente generan un aviso. Devuelve los insumos avisados.
+        public List<BE.INSUMO> VerificarStockBajoUmbral(List<int> idsInsumo, ACCESO acceso)
+        {
+            var mapper = new MAPPER_INSUMO(acceso);
+            var avisados = new List<BE.INSUMO>();
+            foreach (int id in idsInsumo.Distinct())
+            {
+                var insumo = mapper.BuscarInsumo(id);
+                if (insumo != null && insumo.VolumenPesoDisponible < insumo.UmbralReposicion && !insumo.AvisoStockBajo)
+                {
+                    GenerarAvisoStockBajo(insumo, mapper);
+                    avisados.Add(insumo);
+                }
+            }
+            return avisados;
+        }
+
+        // Aviso "Pendiente" para el Encargado (lo atiende CU016 en N02)
+        private BE.AVISO_STOCK_BAJO GenerarAvisoStockBajo(BE.INSUMO insumo, MAPPER_INSUMO mapper)
+        {
+            return mapper.GuardarAviso(new BE.AVISO_STOCK_BAJO
+            {
+                IdInsumo = insumo.IdInsumo,
+                FechaHora = DateTime.Now,
+                VolumenPesoAlMomento = insumo.VolumenPesoDisponible
+            });
         }
     }
 }

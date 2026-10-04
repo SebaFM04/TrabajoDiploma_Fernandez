@@ -53,6 +53,12 @@
     <Compile Include="RECETA.cs" />
     <Compile Include="TAMANIO.cs" />
     <Compile Include="USUARIO.cs" />
+    <Compile Include="AVISO_STOCK_BAJO.cs" />
+    <Compile Include="COMANDA.cs" />
+    <Compile Include="FACTURA.cs" />
+    <Compile Include="VALE.cs" />
+    <Compile Include="VENTA.cs" />
+    <Compile Include="VENTA_DETALLE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,60 @@ namespace DAL
 {
     public class MAPPER_INSUMO
     {
-        ACCESO acceso = new ACCESO();
+        ACCESO acceso;
+
+        public MAPPER_INSUMO()
+        {
+            acceso = new ACCESO();
+        }
+
+        // CU010: se usa dentro de la transacción de la venta (decisión 27)
+        public MAPPER_INSUMO(ACCESO accesoCompartido)
+        {
+            acceso = accesoCompartido;
+        }
+
+        // CU010 mensajes 31-34: nuevo stock del insumo después de descontar el consumo
+        public void ActualizarVolumenPeso(int idInsumo, decimal nuevoValor)
+        {
+            acceso.Abrir();
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                acceso.CrearParametro("@IdInsumo", idInsumo),
+                acceso.CrearParametro("@NuevoValor", nuevoValor)
+            };
+            try
+            {
+                acceso.Escribir("ActualizarVolumenPesoInsumo", parametros);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        // CU010 (decisión 47): guarda el aviso de stock bajo; el SP también pone INSUMO.AvisoStockBajo = 1
+        public BE.AVISO_STOCK_BAJO GuardarAviso(BE.AVISO_STOCK_BAJO aviso)
+        {
+            acceso.Abrir();
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                acceso.CrearParametro("@IdInsumo", aviso.IdInsumo),
+                acceso.CrearParametro("@FechaHora", aviso.FechaHora),
+                acceso.CrearParametro("@VolumenPesoAlMomento", aviso.VolumenPesoAlMomento)
+            };
+            try
+            {
+                DataTable tabla = acceso.Leer("GuardarAvisoStockBajo", parametros);
+                aviso.IdAviso = Convert.ToInt32(tabla.Rows[0]["IdAviso"]);
+                aviso.Estado = "Pendiente";
+                return aviso;
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
 
         // CU023: el SP rechaza el nombre duplicado (RAISERROR) y devuelve el Id generado
         public int AltaInsumo(BE.INSUMO Insumo)

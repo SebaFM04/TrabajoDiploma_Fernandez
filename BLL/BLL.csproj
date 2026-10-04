@@ -52,6 +52,10 @@
     <Compile Include="RECETA_BLL.cs" />
     <Compile Include="RESTORE_BLL.cs" />
     <Compile Include="USUARIO_BLL.cs" />
+    <Compile Include="COMANDA_BLL.cs" />
+    <Compile Include="FACTURA_BLL.cs" />
+    <Compile Include="VALE_BLL.cs" />
+    <Compile Include="VENTA_BLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

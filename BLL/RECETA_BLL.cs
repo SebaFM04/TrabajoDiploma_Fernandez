@@ -31,6 +31,19 @@ namespace BLL
             return GestorReceta.BuscarRecetaPorProducto(idProducto);
         }
 
+        // CU010 mensajes 3-8 y CU012 mensajes 10-15: receta escalada (decisiones 4 y 53).
+        // Cada línea devuelve en Proporcion el consumo total: Proporcion × CantidadMagnitud del tamaño × cantidad.
+        public List<BE.RECETA> ObtenerRecetaEscalada(int idProducto, decimal cantidadMagnitud, int cantidad)
+        {
+            return GestorReceta.BuscarRecetaPorProducto(idProducto).Select(l => new BE.RECETA
+            {
+                IdProducto = l.IdProducto,
+                IdInsumo = l.IdInsumo,
+                Proporcion = Math.Round(l.Proporcion * cantidadMagnitud * cantidad, 3),
+                Insumo = l.Insumo
+            }).ToList();
+        }
+
         // CU013 paso 4 / FA2. Las excepciones llevan la clave de idioma del mensaje.
         public bool ValidarReceta(List<BE.RECETA> receta)
         {

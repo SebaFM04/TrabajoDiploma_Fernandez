@@ -38,6 +38,8 @@
             this.formularioProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formularioInsumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formularioRecetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operacionBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrarVentaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminitraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,6 +82,7 @@
             this.mnstripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gestiónUsuariosToolStripMenuItem,
             this.gestiónProductosToolStripMenuItem,
+            this.operacionBarToolStripMenuItem,
             this.adminitraciónToolStripMenuItem,
             this.idiomaToolStripMenuItem});
             this.mnstripMenu.Location = new System.Drawing.Point(0, 0);
@@ -142,6 +145,21 @@
             this.formularioRecetasToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.formularioRecetasToolStripMenuItem.Text = "Formulario Recetas";
             this.formularioRecetasToolStripMenuItem.Click += new System.EventHandler(this.formularioRecetasToolStripMenuItem_Click);
+            //
+            // operacionBarToolStripMenuItem
+            //
+            this.operacionBarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.registrarVentaToolStripMenuItem});
+            this.operacionBarToolStripMenuItem.Name = "operacionBarToolStripMenuItem";
+            this.operacionBarToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.operacionBarToolStripMenuItem.Text = "Operación del bar";
+            //
+            // registrarVentaToolStripMenuItem
+            //
+            this.registrarVentaToolStripMenuItem.Name = "registrarVentaToolStripMenuItem";
+            this.registrarVentaToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.registrarVentaToolStripMenuItem.Text = "Registrar venta";
+            this.registrarVentaToolStripMenuItem.Click += new System.EventHandler(this.registrarVentaToolStripMenuItem_Click);
             //
             // adminitraciónToolStripMenuItem
             // 
@@ -253,6 +271,8 @@
         private System.Windows.Forms.ToolStripMenuItem formularioProductosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem formularioInsumosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem formularioRecetasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem operacionBarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem registrarVentaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adminitraciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bitacoraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem admRolesToolStripMenuItem;

@@ -92,11 +92,21 @@ namespace UI
             bool verComandas = usuario.TienePermiso("Gestion Comandas");
             bool verVales = usuario.TienePermiso("Gestion Entregas") || usuario.TienePermiso("Consulta Vales");
             bool verStock = usuario.TienePermiso("Ver Stock Bajo") || usuario.TienePermiso("Gestion Insumos");
+            // N02: Dueño (aprobar y pagar) y Encargado de Stock (ajustar y recibir)
+            bool verAprobacion = usuario.TienePermiso("Aprobar Ordenes Compra");
+            bool verObservadas = usuario.TienePermiso("Gestion Ordenes Compra");
+            bool verRecepcion = usuario.TienePermiso("Registrar Recepcion");
+            bool verPagos = usuario.TienePermiso("Registrar Pagos");
+            lblOrdenesAprobacionfrmMenu.Visible = verAprobacion;
+            lblOrdenesObservadasfrmMenu.Visible = verObservadas;
+            lblOrdenesRecibirfrmMenu.Visible = verRecepcion;
+            lblOrdenesPagofrmMenu.Visible = verPagos;
             lblVentasHoyfrmMenu.Visible = verVentas;
             lblComandasPendientesfrmMenu.Visible = verComandas;
             lblValesSinUsarfrmMenu.Visible = verVales;
             lnkStockBajofrmMenu.Visible = verStock;
-            lblTableroTitulofrmMenu.Visible = btnActualizarTablerofrmMenu.Visible = verVentas || verComandas || verVales || verStock;
+            lblTableroTitulofrmMenu.Visible = btnActualizarTablerofrmMenu.Visible = verVentas || verComandas || verVales || verStock
+                || verAprobacion || verObservadas || verRecepcion || verPagos;
             lblTableroTitulofrmMenu.Text = g.Traducir("lblTableroTitulofrmMenu");
             btnActualizarTablerofrmMenu.Text = g.Traducir("btnActualizarTablerofrmMenu");
 
@@ -119,6 +129,15 @@ namespace UI
                     lnkStockBajofrmMenu.LinkColor = lnkStockBajofrmMenu.ActiveLinkColor = bajos > 0 ? System.Drawing.Color.Firebrick : System.Drawing.Color.DarkGreen;
                     lnkStockBajofrmMenu.Enabled = bajos > 0;
                 }
+                var ordenes = new ORDEN_COMPRA_BLL();
+                if (verAprobacion)
+                    lblOrdenesAprobacionfrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesAprobacion"), ordenes.ListarPorEstado(ORDEN_COMPRA_BLL.EstadoPendienteAprobacion).Count);
+                if (verObservadas)
+                    lblOrdenesObservadasfrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesObservadas"), ordenes.ListarPorEstado(ORDEN_COMPRA_BLL.EstadoObservada).Count);
+                if (verRecepcion)
+                    lblOrdenesRecibirfrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesRecibir"), ordenes.ListarPendientesRecepcion().Count);
+                if (verPagos)
+                    lblOrdenesPagofrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesPago"), ordenes.ListarPorEstado(ORDEN_COMPRA_BLL.EstadoCerrada).Count);
             }
             catch (Exception ex)
             {
@@ -275,6 +294,7 @@ namespace UI
                 if (ctrl is TextBox || ctrl is MenuStrip || ctrl is ComboBox || ctrl.Name is "lblEmailTag" || ctrl.Name is "lblNombreTag" || ctrl.Name is "lblRolesTag") continue;
                 // Los indicadores del tablero se arman en ActualizarTablero
                 if (ctrl == lblVentasHoyfrmMenu || ctrl == lblComandasPendientesfrmMenu || ctrl == lblValesSinUsarfrmMenu || ctrl == lnkStockBajofrmMenu) continue;
+                if (ctrl == lblOrdenesAprobacionfrmMenu || ctrl == lblOrdenesObservadasfrmMenu || ctrl == lblOrdenesRecibirfrmMenu || ctrl == lblOrdenesPagofrmMenu) continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }
             foreach (ToolStripMenuItem item in mnstripMenu.Items)

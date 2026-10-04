@@ -66,6 +66,10 @@
             this.lblComandasPendientesfrmMenu = new System.Windows.Forms.Label();
             this.lblValesSinUsarfrmMenu = new System.Windows.Forms.Label();
             this.lnkStockBajofrmMenu = new System.Windows.Forms.LinkLabel();
+            this.lblOrdenesAprobacionfrmMenu = new System.Windows.Forms.Label();
+            this.lblOrdenesObservadasfrmMenu = new System.Windows.Forms.Label();
+            this.lblOrdenesRecibirfrmMenu = new System.Windows.Forms.Label();
+            this.lblOrdenesPagofrmMenu = new System.Windows.Forms.Label();
             this.btnActualizarTablerofrmMenu = new System.Windows.Forms.Button();
             this.mnstripMenu.SuspendLayout();
             this.SuspendLayout();
@@ -74,7 +78,7 @@
             // 
             this.btnCerrarSesionfrmMenu.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCerrarSesionfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(420, 372);
+            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(420, 482);
             this.btnCerrarSesionfrmMenu.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrarSesionfrmMenu.Name = "btnCerrarSesionfrmMenu";
             this.btnCerrarSesionfrmMenu.Size = new System.Drawing.Size(162, 38);
@@ -386,6 +390,42 @@
             this.lblValesSinUsarfrmMenu.TabIndex = 27;
             this.lblValesSinUsarfrmMenu.Text = "-";
             //
+            // lblOrdenesAprobacionfrmMenu
+            //
+            this.lblOrdenesAprobacionfrmMenu.AutoSize = true;
+            this.lblOrdenesAprobacionfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOrdenesAprobacionfrmMenu.Location = new System.Drawing.Point(14, 303);
+            this.lblOrdenesAprobacionfrmMenu.Name = "lblOrdenesAprobacionfrmMenu";
+            this.lblOrdenesAprobacionfrmMenu.TabIndex = 40;
+            this.lblOrdenesAprobacionfrmMenu.Text = "-";
+            //
+            // lblOrdenesObservadasfrmMenu
+            //
+            this.lblOrdenesObservadasfrmMenu.AutoSize = true;
+            this.lblOrdenesObservadasfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOrdenesObservadasfrmMenu.Location = new System.Drawing.Point(14, 330);
+            this.lblOrdenesObservadasfrmMenu.Name = "lblOrdenesObservadasfrmMenu";
+            this.lblOrdenesObservadasfrmMenu.TabIndex = 41;
+            this.lblOrdenesObservadasfrmMenu.Text = "-";
+            //
+            // lblOrdenesRecibirfrmMenu
+            //
+            this.lblOrdenesRecibirfrmMenu.AutoSize = true;
+            this.lblOrdenesRecibirfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOrdenesRecibirfrmMenu.Location = new System.Drawing.Point(14, 357);
+            this.lblOrdenesRecibirfrmMenu.Name = "lblOrdenesRecibirfrmMenu";
+            this.lblOrdenesRecibirfrmMenu.TabIndex = 42;
+            this.lblOrdenesRecibirfrmMenu.Text = "-";
+            //
+            // lblOrdenesPagofrmMenu
+            //
+            this.lblOrdenesPagofrmMenu.AutoSize = true;
+            this.lblOrdenesPagofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOrdenesPagofrmMenu.Location = new System.Drawing.Point(14, 384);
+            this.lblOrdenesPagofrmMenu.Name = "lblOrdenesPagofrmMenu";
+            this.lblOrdenesPagofrmMenu.TabIndex = 43;
+            this.lblOrdenesPagofrmMenu.Text = "-";
+            //
             // lnkStockBajofrmMenu
             //
             this.lnkStockBajofrmMenu.AutoSize = true;
@@ -401,7 +441,7 @@
             //
             this.btnActualizarTablerofrmMenu.BackColor = System.Drawing.Color.SandyBrown;
             this.btnActualizarTablerofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizarTablerofrmMenu.Location = new System.Drawing.Point(14, 312);
+            this.btnActualizarTablerofrmMenu.Location = new System.Drawing.Point(14, 420);
             this.btnActualizarTablerofrmMenu.Name = "btnActualizarTablerofrmMenu";
             this.btnActualizarTablerofrmMenu.Size = new System.Drawing.Size(130, 30);
             this.btnActualizarTablerofrmMenu.TabIndex = 29;
@@ -414,9 +454,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(600, 425);
+            this.ClientSize = new System.Drawing.Size(600, 535);
             this.Controls.Add(this.btnActualizarTablerofrmMenu);
             this.Controls.Add(this.lnkStockBajofrmMenu);
+            this.Controls.Add(this.lblOrdenesAprobacionfrmMenu);
+            this.Controls.Add(this.lblOrdenesObservadasfrmMenu);
+            this.Controls.Add(this.lblOrdenesRecibirfrmMenu);
+            this.Controls.Add(this.lblOrdenesPagofrmMenu);
             this.Controls.Add(this.lblValesSinUsarfrmMenu);
             this.Controls.Add(this.lblComandasPendientesfrmMenu);
             this.Controls.Add(this.lblVentasHoyfrmMenu);
@@ -483,6 +527,10 @@
         private System.Windows.Forms.Label lblComandasPendientesfrmMenu;
         private System.Windows.Forms.Label lblValesSinUsarfrmMenu;
         private System.Windows.Forms.LinkLabel lnkStockBajofrmMenu;
+        private System.Windows.Forms.Label lblOrdenesAprobacionfrmMenu;
+        private System.Windows.Forms.Label lblOrdenesObservadasfrmMenu;
+        private System.Windows.Forms.Label lblOrdenesRecibirfrmMenu;
+        private System.Windows.Forms.Label lblOrdenesPagofrmMenu;
         private System.Windows.Forms.Button btnActualizarTablerofrmMenu;
     }
 }

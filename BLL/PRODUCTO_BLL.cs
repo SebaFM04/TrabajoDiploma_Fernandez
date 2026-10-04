@@ -12,8 +12,29 @@ namespace BLL
         DIGITOVERIFICADOR_BLL dvBLL = new DIGITOVERIFICADOR_BLL();
         CONTROLCAMBIO_BLL cambiosBLL = new CONTROLCAMBIO_BLL();
 
+        // Valores de PRODUCTO.Tipo (CHECK CK_PRODUCTO_Tipo en script.sql)
+        public string[] ListarTiposProducto()
+        {
+            return new[] { "Bebida", "Piqueo" };
+        }
+
+        // Reglas de negocio del producto; el nombre duplicado lo rechaza el SP
+        private void ValidarProducto(BE.PRODUCTO producto)
+        {
+            if (string.IsNullOrWhiteSpace(producto.Nombre))
+                throw new ArgumentException("El nombre del producto es obligatorio.");
+            producto.Nombre = producto.Nombre.Trim();
+            if (producto.Nombre.Length > 100)
+                throw new ArgumentException("El nombre del producto no puede superar los 100 caracteres.");
+            if (Array.IndexOf(ListarTiposProducto(), producto.Tipo) < 0)
+                throw new ArgumentException("El tipo del producto debe ser Bebida o Piqueo.");
+        }
+
         public void InsertarProducto(BE.PRODUCTO producto)
         {
+            ValidarProducto(producto);
+            producto.Activo = true;
+
             // Obtener el ID real generado por la BD
             producto.DVH = "PENDIENTE";
             int idGenerado = GestorProducto.AltaProducto(producto);
@@ -23,22 +44,29 @@ namespace BLL
 
             dvBLL.RecalcularDV();
 
-            cambiosBLL.RegistrarCambio(SessionManager.Instancia.UsuarioActual.IdUsuario, producto.IdProducto,  "ALTA", "", producto.NombreProducto, "Alta");
+            cambiosBLL.RegistrarCambio(SessionManager.Instancia.UsuarioActual.IdUsuario, producto.IdProducto,  "ALTA", "", producto.Nombre, "Alta");
 
-            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario,"Alta de producto",$"Se agrego el producto: {producto.NombreProducto}");
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario,"Alta de producto",$"Se agrego el producto: {producto.Nombre}");
         }
 
+        // CU007 Dar de baja producto: baja lógica (Activo = 0), nunca se borra la fila
         public int EliminarProducto(BE.PRODUCTO producto)
         {
-            cambiosBLL.RegistrarCambio(SessionManager.Instancia.UsuarioActual.IdUsuario, producto.IdProducto,"BAJA", producto.NombreProducto, "", "Baja");
+            var productoActual = GestorProducto.ObtenerPorId(producto.IdProducto);
+            if (productoActual == null)
+                throw new Exception($"No se encontró el producto ID {producto.IdProducto}.");
 
-            int filas = GestorProducto.BajaProducto(producto);
+            productoActual.Activo = false;
+            productoActual.DVH = dvBLL.CalcularDVH(productoActual);
+            int filas = GestorProducto.BajaProducto(productoActual);
+
+            cambiosBLL.RegistrarCambio(SessionManager.Instancia.UsuarioActual.IdUsuario, producto.IdProducto,"BAJA", productoActual.Nombre, "", "Baja");
             try
             {
                 dvBLL.RecalcularDV();
                 if (SessionManager.Instancia != null && SessionManager.Instancia.IsLogged())
                 {
-                    new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Baja de producto", $"Se eliminó el producto: {producto.NombreProducto}");
+                    new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Baja de producto", $"Se dio de baja el producto: {productoActual.Nombre}");
                 }
             }
             catch { }
@@ -47,42 +75,30 @@ namespace BLL
 
         public int ModificarProducto(BE.PRODUCTO producto)
         {
+            ValidarProducto(producto);
             var productoAnterior = GestorProducto.ObtenerPorId(producto.IdProducto);
             int idUsuario = SessionManager.Instancia.UsuarioActual.IdUsuario;
 
-            if (productoAnterior.NombreProducto != producto.NombreProducto)
-            {
-                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "NombreProducto", productoAnterior.NombreProducto, producto.NombreProducto, "Modificación");
-            }
-            if (productoAnterior.PrecioProducto != producto.PrecioProducto)
-            {
-                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "PrecioProducto", productoAnterior.PrecioProducto.ToString(), producto.PrecioProducto.ToString(), "Modificación");
-            }
-            if (productoAnterior.TipoProducto != producto.TipoProducto)
-            {
-                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "TipoProducto", productoAnterior.TipoProducto, producto.TipoProducto, "Modificación");
-            }         
-            if (productoAnterior.Descripcion != producto.Descripcion)
-            {
-                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "Descripcion", productoAnterior.Descripcion, producto.Descripcion, "Modificación");
-            }
-            if (productoAnterior.Cantidad != producto.Cantidad)
-            {
-                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "Cantidad", productoAnterior.Cantidad.ToString(), producto.Cantidad.ToString(), "Modificación");
-            }
-            if (productoAnterior.CodigoProducto != producto.CodigoProducto)
-            {
-                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "CodigoProducto", productoAnterior.CodigoProducto.ToString(), producto.CodigoProducto.ToString(), "Modificación");
-            }
-
+            // La modificación no cambia el estado de baja
+            producto.Activo = productoAnterior.Activo;
             producto.DVH = dvBLL.CalcularDVH(producto);
             int filas = GestorProducto.EditarProducto(producto);
+
+            if (productoAnterior.Nombre != producto.Nombre)
+            {
+                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "Nombre", productoAnterior.Nombre, producto.Nombre, "Modificación");
+            }
+            if (productoAnterior.Tipo != producto.Tipo)
+            {
+                cambiosBLL.RegistrarCambio(idUsuario, producto.IdProducto, "Tipo", productoAnterior.Tipo, producto.Tipo, "Modificación");
+            }
+
             try
             {
                 dvBLL.RecalcularDV();
                 if (SessionManager.Instancia != null && SessionManager.Instancia.IsLogged())
                 {
-                    new BITACORA_BLL().RegistrarEvento(idUsuario, "Modificación de producto", $"Se modificó el producto: {producto.NombreProducto}");
+                    new BITACORA_BLL().RegistrarEvento(idUsuario, "Modificación de producto", $"Se modificó el producto: {producto.Nombre}");
                 }
             }
             catch { }
@@ -92,6 +108,11 @@ namespace BLL
         public List<BE.PRODUCTO> ListarProductos()
         {
             return GestorProducto.ListarProductos();
+        }
+
+        public List<BE.PRODUCTO> ListarProductosActivos()
+        {
+            return GestorProducto.ListarProductosActivos();
         }
 
         public BE.PRODUCTO ObtenerPorId(int id)

@@ -18,12 +18,8 @@ namespace DAL
         {
             acceso.Abrir();
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(acceso.CrearParametro("@NombreProducto", Producto.NombreProducto));
-            parametros.Add(acceso.CrearParametro("@PrecioProducto", Producto.PrecioProducto));
-            parametros.Add(acceso.CrearParametro("@TipoProducto", Producto.TipoProducto));
-            parametros.Add(acceso.CrearParametro("@Cantidad", Producto.Cantidad));
-            parametros.Add(acceso.CrearParametro("@Descripcion", Producto.Descripcion));
-            parametros.Add(acceso.CrearParametro("@CodigoProducto", Producto.CodigoProducto));
+            parametros.Add(acceso.CrearParametro("@Nombre", Producto.Nombre));
+            parametros.Add(acceso.CrearParametro("@Tipo", Producto.Tipo));
             parametros.Add(acceso.CrearParametro("@DVH", Producto.DVH));
 
             DataTable tabla = acceso.Leer("AltaProducto", parametros);
@@ -36,12 +32,14 @@ namespace DAL
             return 0;
         }
 
+        // Baja lógica: el SP pone Activo = 0 y guarda el DVH recalculado
         public int BajaProducto(BE.PRODUCTO Producto)
         {
             string NombreSp = "BajaProducto";
             acceso.Abrir();
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(acceso.CrearParametro("@IdProducto", Producto.IdProducto));
+            parametros.Add(acceso.CrearParametro("@DVH", Producto.DVH));
             int filas = acceso.Escribir(NombreSp, parametros);
             acceso.Cerrar();
             return filas;
@@ -53,22 +51,29 @@ namespace DAL
             acceso.Abrir();
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(acceso.CrearParametro("@IdProducto", Producto.IdProducto));
-            parametros.Add(acceso.CrearParametro("@NombreProducto", Producto.NombreProducto));
-            parametros.Add(acceso.CrearParametro("@PrecioProducto", Producto.PrecioProducto));
-            parametros.Add(acceso.CrearParametro("@TipoProducto", Producto.TipoProducto));
-            parametros.Add(acceso.CrearParametro("@Cantidad", Producto.Cantidad.ToString()));
-            parametros.Add(acceso.CrearParametro("@Descripcion", Producto.Descripcion));
-            parametros.Add(acceso.CrearParametro("@CodigoProducto", Producto.CodigoProducto));
+            parametros.Add(acceso.CrearParametro("@Nombre", Producto.Nombre));
+            parametros.Add(acceso.CrearParametro("@Tipo", Producto.Tipo));
             parametros.Add(acceso.CrearParametro("@DVH", Producto.DVH));
             int filas = acceso.Escribir(NombreSp, parametros);
             acceso.Cerrar();
             return filas;
         }
 
+        // Todos los productos, activos y dados de baja (lo usa el dígito verificador)
         public List<BE.PRODUCTO> ListarProductos()
         {
+            return Listar("ListarProducto");
+        }
+
+        // Solo los productos activos, para las pantallas de operación
+        public List<BE.PRODUCTO> ListarProductosActivos()
+        {
+            return Listar("ListarProductoActivo");
+        }
+
+        private List<BE.PRODUCTO> Listar(string NombreSp)
+        {
             List<BE.PRODUCTO> listaProductos = new List<BE.PRODUCTO>();
-            string NombreSp = "ListarProducto";
             acceso.Abrir();
 
             DataTable tabla = new DataTable();
@@ -76,19 +81,21 @@ namespace DAL
             acceso.Cerrar();
             foreach (DataRow u in tabla.Rows)
             {
-                BE.PRODUCTO producto = new BE.PRODUCTO();
-
-                producto.IdProducto = Convert.ToInt32(u["IdProducto"].ToString());
-                producto.NombreProducto = u["NombreProducto"].ToString();
-                producto.PrecioProducto = Convert.ToDecimal(u["PrecioProducto"].ToString());
-                producto.TipoProducto = u["TipoProducto"].ToString();               
-                producto.Descripcion = u["Descripcion"].ToString();
-                producto.Cantidad = Convert.ToInt32(u["Cantidad"].ToString());
-                producto.CodigoProducto = Convert.ToInt32(u["CodigoProducto"].ToString());
-                producto.DVH = u["DVH"] == DBNull.Value ? null : u["DVH"].ToString();
-                listaProductos.Add(producto);
+                listaProductos.Add(MapearProducto(u));
             }
             return listaProductos;
+        }
+
+        private BE.PRODUCTO MapearProducto(DataRow u)
+        {
+            return new BE.PRODUCTO
+            {
+                IdProducto = Convert.ToInt32(u["IdProducto"]),
+                Nombre = u["Nombre"].ToString(),
+                Tipo = u["Tipo"].ToString(),
+                Activo = Convert.ToBoolean(u["Activo"]),
+                DVH = u["DVH"] == DBNull.Value ? null : u["DVH"].ToString()
+            };
         }
 
         public void ActualizarDVH(int idProducto, string dvh)
@@ -115,18 +122,7 @@ namespace DAL
 
             if (tabla.Rows.Count == 0) return null;
 
-            DataRow u = tabla.Rows[0];
-            return new BE.PRODUCTO
-            {
-                IdProducto = Convert.ToInt32(u["IdProducto"]),
-                NombreProducto = u["NombreProducto"].ToString(),
-                PrecioProducto = Convert.ToDecimal(u["PrecioProducto"]),
-                TipoProducto = u["TipoProducto"].ToString(),
-                Descripcion = u["Descripcion"].ToString(),
-                Cantidad = Convert.ToInt32(u["Cantidad"]),
-                CodigoProducto = Convert.ToInt32(u["CodigoProducto"]),
-                DVH = u["DVH"] == DBNull.Value ? null : u["DVH"].ToString()
-            };
+            return MapearProducto(tabla.Rows[0]);
         }
 
     }

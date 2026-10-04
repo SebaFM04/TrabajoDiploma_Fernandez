@@ -50,23 +50,11 @@ namespace BLL
 
             switch (cambio.CampoModificado)
             {
-                case "NombreProducto":
-                    producto.NombreProducto = cambio.ValorAnterior;
+                case "Nombre":
+                    producto.Nombre = cambio.ValorAnterior;
                     break;
-                case "PrecioProducto":
-                    producto.PrecioProducto = decimal.Parse(cambio.ValorAnterior);
-                    break;
-                case "TipoProducto":
-                    producto.TipoProducto = cambio.ValorAnterior;
-                    break;
-                case "Descripcion":
-                    producto.Descripcion = cambio.ValorAnterior;
-                    break;
-                case "Cantidad":
-                    producto.Cantidad = int.Parse(cambio.ValorAnterior);
-                    break;
-                case "CodigoProducto":
-                    producto.CodigoProducto = int.Parse(cambio.ValorAnterior);
+                case "Tipo":
+                    producto.Tipo = cambio.ValorAnterior;
                     break;
                 default:
                     throw new Exception($"Campo '{cambio.CampoModificado}' no reconocido.");
@@ -106,32 +94,13 @@ namespace BLL
             {
                 switch (cambio.CampoModificado)
                 {
-                    case "NombreProducto":
-                        if (producto.NombreProducto != cambio.ValorAnterior)
-                        { producto.NombreProducto = cambio.ValorAnterior; huboCambiosReales = true; }
+                    case "Nombre":
+                        if (producto.Nombre != cambio.ValorAnterior)
+                        { producto.Nombre = cambio.ValorAnterior; huboCambiosReales = true; }
                         break;
-                    case "PrecioProducto":
-                        var precioAnterior = decimal.Parse(cambio.ValorAnterior);
-                        if (producto.PrecioProducto != precioAnterior)
-                        { producto.PrecioProducto = precioAnterior; huboCambiosReales = true; }
-                        break;
-                    case "TipoProducto":
-                        if (producto.TipoProducto != cambio.ValorAnterior)
-                        { producto.TipoProducto = cambio.ValorAnterior; huboCambiosReales = true; }
-                        break;
-                    case "Descripcion":
-                        if (producto.Descripcion != cambio.ValorAnterior)
-                        { producto.Descripcion = cambio.ValorAnterior; huboCambiosReales = true; }
-                        break;
-                    case "Cantidad":
-                        var cantidadAnterior = int.Parse(cambio.ValorAnterior);
-                        if (producto.Cantidad != cantidadAnterior)
-                        { producto.Cantidad = cantidadAnterior; huboCambiosReales = true; }
-                        break;
-                    case "CodigoProducto":
-                        var codigoAnterior = int.Parse(cambio.ValorAnterior);
-                        if (producto.CodigoProducto != codigoAnterior)
-                        { producto.CodigoProducto = codigoAnterior; huboCambiosReales = true; }
+                    case "Tipo":
+                        if (producto.Tipo != cambio.ValorAnterior)
+                        { producto.Tipo = cambio.ValorAnterior; huboCambiosReales = true; }
                         break;
                 }
             }

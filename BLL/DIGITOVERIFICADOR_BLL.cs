@@ -18,24 +18,19 @@ namespace BLL
         MAPPER_RESTORE mapperRestore = new MAPPER_RESTORE();
 
         // ── DVH: suma ponderada por posición de atributo y carácter
-        // Orden fijo de atributos:
-        //   pos 1: NombreProducto
-        //   pos 2: PrecioProducto
-        //   pos 3: TipoProducto
-        //   pos 4: Descripcion
-        //   pos 5: Cantidad
-        //   pos 6: CodigoProducto
+        // Orden fijo de atributos (los precios de PRODUCTO_TAMAÑO no entran, decisión 24):
+        //   pos 1: IdProducto
+        //   pos 2: Nombre
+        //   pos 3: Tipo
+        //   pos 4: Activo ("1" / "0")
         public string CalcularDVH(PRODUCTO producto)
         {
             var atributos = new List<string>
             {
                 producto.IdProducto.ToString(),
-                producto.NombreProducto ?? "",
-                producto.PrecioProducto.ToString("F2", CultureInfo.InvariantCulture),
-                producto.TipoProducto   ?? "",
-                producto.Descripcion    ?? "",
-                producto.Cantidad.ToString(),
-                producto.CodigoProducto.ToString()
+                producto.Nombre ?? "",
+                producto.Tipo   ?? "",
+                producto.Activo ? "1" : "0"
             };
 
             long suma = 0;
@@ -106,7 +101,7 @@ namespace BLL
                 string dvhCalculado = CalcularDVH(p);
                 if (p.DVH != dvhCalculado)
                 {
-                    errores.Add($"Error horizontal en producto ID {p.IdProducto} " + $"('{p.NombreProducto}'): la fila fue alterada.");
+                    errores.Add($"Error horizontal en producto ID {p.IdProducto} " + $"('{p.Nombre}'): la fila fue alterada.");
                 }          
             }
 

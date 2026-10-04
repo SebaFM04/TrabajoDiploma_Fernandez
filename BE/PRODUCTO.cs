@@ -15,48 +15,27 @@ namespace BE
             set { idProducto = value; }
         }
 
-        private string nombreProducto;
-
-        public string NombreProducto
+        private string nombre;
+        public string Nombre
         {
-            get { return nombreProducto; }
-            set { nombreProducto = value; }
+            get { return nombre; }
+            set { nombre = value; }
         }
 
-
-        private decimal precioProducto;
-        public decimal PrecioProducto
+        // Valores posibles: Bebida, Piqueo
+        private string tipo;
+        public string Tipo
         {
-            get { return precioProducto; }
-            set { precioProducto = value; }
+            get { return tipo; }
+            set { tipo = value; }
         }
 
-        private string tipoProducto;
-        public string TipoProducto
+        // Baja lógica: true = activo, false = dado de baja
+        private bool activo;
+        public bool Activo
         {
-            get { return tipoProducto; }
-            set { tipoProducto = value; }
-        }
-
-        private string descripcion;
-        public string Descripcion
-        {
-            get { return descripcion; }
-            set { descripcion = value; }
-        }
-
-        private int cantidad;
-        public int Cantidad
-        {
-            get { return cantidad; }
-            set { cantidad = value; }
-        }
-
-        private int codigoProducto;
-        public int CodigoProducto
-        {
-            get { return codigoProducto; }
-            set { codigoProducto = value; }
+            get { return activo; }
+            set { activo = value; }
         }
 
         private string dvh;

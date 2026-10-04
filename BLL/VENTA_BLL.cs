@@ -95,6 +95,16 @@ namespace BLL
         {
             if (Array.IndexOf(ListarMediosPago(), venta.MedioPago) < 0)
                 throw new ArgumentException("msgVentaMedioPagoObligatorio");
+            ValidarPedido(venta);
+            // Un producto o tamaño dado de baja (o sin receta, S1) no se vende; el precio es el vigente
+            var vendibles = ListarProductosParaVenta();
+            foreach (var linea in venta.Detalles)
+            {
+                var vigente = vendibles.FirstOrDefault(v => v.IdProducto == linea.IdProducto && v.IdTamanio == linea.IdTamanio);
+                if (vigente == null)
+                    throw new ArgumentException("msgVentaProductoNoDisponible");
+                linea.ProductoTamanio = vigente;
+            }
             CalcularMontoTotal(venta);
             var consumos = CalcularConsumos(venta, out _);
             venta.Fecha = DateTime.Now;

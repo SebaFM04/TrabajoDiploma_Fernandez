@@ -451,3 +451,8 @@ FodyWeavers.xsd
 *.zip
 Instalador/redist/
 Instalador/Output/
+
+# Lock de Enterprise Architect / Access
+*.ldb
+*.laccdb
+*.ldf~

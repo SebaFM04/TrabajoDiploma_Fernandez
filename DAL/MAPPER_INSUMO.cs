@@ -78,6 +78,8 @@ namespace DAL
             parametros.Add(acceso.CrearParametro("@VolumenPesoDisponible", Insumo.VolumenPesoDisponible));
             parametros.Add(acceso.CrearParametro("@UmbralReposicion", Insumo.UmbralReposicion));
             parametros.Add(acceso.CrearParametro("@CostoUnidadCompra", Insumo.CostoUnidadCompra));
+            parametros.Add(acceso.CrearParametro("@UsoBebidas", Insumo.UsoBebidas ? 1 : 0));
+            parametros.Add(acceso.CrearParametro("@UsoComidas", Insumo.UsoComidas ? 1 : 0));
 
             DataTable tabla;
             try
@@ -107,6 +109,8 @@ namespace DAL
             parametros.Add(acceso.CrearParametro("@EquivalenciaMagnitud", Insumo.EquivalenciaMagnitud));
             parametros.Add(acceso.CrearParametro("@UmbralReposicion", Insumo.UmbralReposicion));
             parametros.Add(acceso.CrearParametro("@CostoUnidadCompra", Insumo.CostoUnidadCompra));
+            parametros.Add(acceso.CrearParametro("@UsoBebidas", Insumo.UsoBebidas ? 1 : 0));
+            parametros.Add(acceso.CrearParametro("@UsoComidas", Insumo.UsoComidas ? 1 : 0));
             try
             {
                 return acceso.Escribir("ModificarInsumo", parametros);
@@ -202,7 +206,9 @@ namespace DAL
                 UmbralReposicion = Convert.ToDecimal(u["UmbralReposicion"]),
                 CostoUnidadCompra = Convert.ToDecimal(u["CostoUnidadCompra"]),
                 AvisoStockBajo = Convert.ToBoolean(u["AvisoStockBajo"]),
-                Activo = Convert.ToBoolean(u["Activo"])
+                Activo = Convert.ToBoolean(u["Activo"]),
+                UsoBebidas = Convert.ToBoolean(u["UsoBebidas"]),
+                UsoComidas = Convert.ToBoolean(u["UsoComidas"])
             };
         }
     }

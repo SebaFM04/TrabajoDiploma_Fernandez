@@ -24,6 +24,9 @@ namespace UI
         bool cargando = false;
         // Stock real del insumo en edición (null en modo alta)
         decimal? stockEdicion = null;
+        // Filtro por uso (decisión 58), en el mismo orden que el combo
+        readonly string[] usos = { INSUMO_BLL.UsoTodos, INSUMO_BLL.UsoBebidas, INSUMO_BLL.UsoComidas };
+        readonly string[] clavesUso = { "msgInsumoUsoTodos", "msgInsumoUsoBebidas", "msgInsumoUsoComidas" };
 
         public frmInsumo()
         {
@@ -36,6 +39,7 @@ namespace UI
         {
             cmbUnidadMedidafrmInsumo.Items.Clear();
             cmbUnidadMedidafrmInsumo.Items.AddRange(GestorInsumo.ListarUnidadesMedida());
+            CargarFiltroUso();
             CargarInsumos();
             ModoAlta();
         }
@@ -47,7 +51,7 @@ namespace UI
             dataGridView1.Columns.Add("colIdfrmInsumo", "Id");
             dataGridView1.Columns["colIdfrmInsumo"].Visible = false;
             foreach (string columna in new[] { "colNombrefrmInsumo", "colUnidadMedidafrmInsumo", "colUnidadComprafrmInsumo",
-                                               "colEquivalenciafrmInsumo", "colStockfrmInsumo", "colUmbralfrmInsumo", "colCostofrmInsumo" })
+                                               "colEquivalenciafrmInsumo", "colStockfrmInsumo", "colUmbralfrmInsumo", "colCostofrmInsumo", "colUsofrmInsumo" })
             {
                 dataGridView1.Columns.Add(columna, g.Traducir(columna));
             }
@@ -68,6 +72,8 @@ namespace UI
             nudUmbralfrmInsumo.Value = 0;
             nudCostofrmInsumo.Value = 0;
             nudStockInicialfrmInsumo.Value = 0;
+            chkUsoBebidasfrmInsumo.Checked = false;
+            chkUsoComidasfrmInsumo.Checked = false;
 
             cmbUnidadMedidafrmInsumo.Enabled = true;
             nudStockInicialfrmInsumo.Enabled = true;
@@ -87,6 +93,8 @@ namespace UI
             nudEquivalenciafrmInsumo.Value = insumo.EquivalenciaMagnitud;
             nudUmbralfrmInsumo.Value = insumo.UmbralReposicion;
             nudCostofrmInsumo.Value = insumo.CostoUnidadCompra;
+            chkUsoBebidasfrmInsumo.Checked = insumo.UsoBebidas;
+            chkUsoComidasfrmInsumo.Checked = insumo.UsoComidas;
             // El stock actual se muestra tal cual; el campo de unidades queda como referencia
             stockEdicion = insumo.VolumenPesoDisponible;
             nudStockInicialfrmInsumo.Value = insumo.EquivalenciaMagnitud > 0
@@ -108,11 +116,11 @@ namespace UI
             dataGridView1.Rows.Clear();
             try
             {
-                foreach (var i in GestorInsumo.ListarInsumosActivos())
+                foreach (var i in GestorInsumo.ListarInsumosPorUso(usos[Math.Max(0, cmbFiltroUsofrmInsumo.SelectedIndex)]))
                 {
                     int fila = dataGridView1.Rows.Add(i.IdInsumo, i.Nombre, i.UnidadMedida, i.UnidadCompra,
                         i.EquivalenciaMagnitud.ToString("0.###"), i.VolumenPesoDisponible.ToString("0.###"),
-                        i.UmbralReposicion.ToString("0.###"), FormatoMoneda.Pesos(i.CostoUnidadCompra));
+                        i.UmbralReposicion.ToString("0.###"), FormatoMoneda.Pesos(i.CostoUnidadCompra), TextoUso(i));
                     dataGridView1.Rows[fila].Tag = i;
                 }
                 dataGridView1.ClearSelection();
@@ -125,6 +133,32 @@ namespace UI
             {
                 cargando = false;
             }
+        }
+
+        // Decisión 58: Bebidas, Comidas o Ambos
+        private string TextoUso(BE.INSUMO i)
+        {
+            var g = GestorIdioma.Instancia;
+            if (i.UsoBebidas && i.UsoComidas) return g.Traducir("msgInsumoUsoAmbos");
+            return g.Traducir(i.UsoBebidas ? "msgInsumoUsoBebidas" : "msgInsumoUsoComidas");
+        }
+
+        private void CargarFiltroUso()
+        {
+            var g = GestorIdioma.Instancia;
+            int seleccionado = Math.Max(0, cmbFiltroUsofrmInsumo.SelectedIndex);
+            cmbFiltroUsofrmInsumo.SelectedIndexChanged -= cmbFiltroUsofrmInsumo_SelectedIndexChanged;
+            cmbFiltroUsofrmInsumo.Items.Clear();
+            foreach (string clave in clavesUso)
+                cmbFiltroUsofrmInsumo.Items.Add(g.Traducir(clave));
+            cmbFiltroUsofrmInsumo.SelectedIndex = seleccionado;
+            cmbFiltroUsofrmInsumo.SelectedIndexChanged += cmbFiltroUsofrmInsumo_SelectedIndexChanged;
+        }
+
+        private void cmbFiltroUsofrmInsumo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarInsumos();
+            ModoAlta();
         }
 
         private BE.INSUMO InsumoSeleccionado()
@@ -183,6 +217,8 @@ namespace UI
                 EquivalenciaMagnitud = nudEquivalenciafrmInsumo.Value,
                 UmbralReposicion = nudUmbralfrmInsumo.Value,
                 CostoUnidadCompra = nudCostofrmInsumo.Value,
+                UsoBebidas = chkUsoBebidasfrmInsumo.Checked,
+                UsoComidas = chkUsoComidasfrmInsumo.Checked,
                 // CU023 (decisión 52): unidades de compra × equivalencia
                 VolumenPesoDisponible = GestorInsumo.CalcularStockInicial(nudStockInicialfrmInsumo.Value, nudEquivalenciafrmInsumo.Value)
             };
@@ -300,6 +336,10 @@ namespace UI
             {
                 col.HeaderText = g.Traducir(col.Name);
             }
+            CargarFiltroUso();
+            foreach (DataGridViewRow fila in dataGridView1.Rows)
+                if (fila.Tag is BE.INSUMO insumo)
+                    fila.Cells["colUsofrmInsumo"].Value = TextoUso(insumo);
             MostrarStockCalculado();
         }
     }

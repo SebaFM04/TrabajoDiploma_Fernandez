@@ -43,6 +43,10 @@
             this.lblStockInicialfrmInsumo = new System.Windows.Forms.Label();
             this.nudStockInicialfrmInsumo = new System.Windows.Forms.NumericUpDown();
             this.lblStockCalculadofrmInsumo = new System.Windows.Forms.Label();
+            this.chkUsoBebidasfrmInsumo = new System.Windows.Forms.CheckBox();
+            this.chkUsoComidasfrmInsumo = new System.Windows.Forms.CheckBox();
+            this.lblFiltroUsofrmInsumo = new System.Windows.Forms.Label();
+            this.cmbFiltroUsofrmInsumo = new System.Windows.Forms.ComboBox();
             this.btnNuevofrmInsumo = new System.Windows.Forms.Button();
             this.btnAltafrmInsumo = new System.Windows.Forms.Button();
             this.btnModificacionfrmInsumo = new System.Windows.Forms.Button();
@@ -240,12 +244,51 @@
             this.lblStockCalculadofrmInsumo.Size = new System.Drawing.Size(30, 19);
             this.lblStockCalculadofrmInsumo.TabIndex = 19;
             this.lblStockCalculadofrmInsumo.Text = "= 0";
+            //
+            // chkUsoBebidasfrmInsumo
+            //
+            this.chkUsoBebidasfrmInsumo.AutoSize = true;
+            this.chkUsoBebidasfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkUsoBebidasfrmInsumo.Location = new System.Drawing.Point(22, 272);
+            this.chkUsoBebidasfrmInsumo.Name = "chkUsoBebidasfrmInsumo";
+            this.chkUsoBebidasfrmInsumo.TabIndex = 20;
+            this.chkUsoBebidasfrmInsumo.Text = "Se usa en bebidas";
+            this.chkUsoBebidasfrmInsumo.UseVisualStyleBackColor = true;
+            //
+            // chkUsoComidasfrmInsumo
+            //
+            this.chkUsoComidasfrmInsumo.AutoSize = true;
+            this.chkUsoComidasfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkUsoComidasfrmInsumo.Location = new System.Drawing.Point(248, 272);
+            this.chkUsoComidasfrmInsumo.Name = "chkUsoComidasfrmInsumo";
+            this.chkUsoComidasfrmInsumo.TabIndex = 21;
+            this.chkUsoComidasfrmInsumo.Text = "Se usa en comidas";
+            this.chkUsoComidasfrmInsumo.UseVisualStyleBackColor = true;
+            //
+            // lblFiltroUsofrmInsumo
+            //
+            this.lblFiltroUsofrmInsumo.AutoSize = true;
+            this.lblFiltroUsofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFiltroUsofrmInsumo.Location = new System.Drawing.Point(462, 30);
+            this.lblFiltroUsofrmInsumo.Name = "lblFiltroUsofrmInsumo";
+            this.lblFiltroUsofrmInsumo.TabIndex = 22;
+            this.lblFiltroUsofrmInsumo.Text = "Mostrar";
+            //
+            // cmbFiltroUsofrmInsumo
+            //
+            this.cmbFiltroUsofrmInsumo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFiltroUsofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbFiltroUsofrmInsumo.Location = new System.Drawing.Point(550, 26);
+            this.cmbFiltroUsofrmInsumo.Name = "cmbFiltroUsofrmInsumo";
+            this.cmbFiltroUsofrmInsumo.Size = new System.Drawing.Size(160, 26);
+            this.cmbFiltroUsofrmInsumo.TabIndex = 23;
+            this.cmbFiltroUsofrmInsumo.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroUsofrmInsumo_SelectedIndexChanged);
             // 
             // btnNuevofrmInsumo
             // 
             this.btnNuevofrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnNuevofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevofrmInsumo.Location = new System.Drawing.Point(22, 284);
+            this.btnNuevofrmInsumo.Location = new System.Drawing.Point(22, 305);
             this.btnNuevofrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNuevofrmInsumo.Name = "btnNuevofrmInsumo";
             this.btnNuevofrmInsumo.Size = new System.Drawing.Size(93, 38);
@@ -258,7 +301,7 @@
             // 
             this.btnAltafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAltafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAltafrmInsumo.Location = new System.Drawing.Point(128, 284);
+            this.btnAltafrmInsumo.Location = new System.Drawing.Point(128, 305);
             this.btnAltafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAltafrmInsumo.Name = "btnAltafrmInsumo";
             this.btnAltafrmInsumo.Size = new System.Drawing.Size(93, 38);
@@ -271,7 +314,7 @@
             // 
             this.btnModificacionfrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnModificacionfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificacionfrmInsumo.Location = new System.Drawing.Point(234, 284);
+            this.btnModificacionfrmInsumo.Location = new System.Drawing.Point(234, 305);
             this.btnModificacionfrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnModificacionfrmInsumo.Name = "btnModificacionfrmInsumo";
             this.btnModificacionfrmInsumo.Size = new System.Drawing.Size(93, 38);
@@ -284,7 +327,7 @@
             // 
             this.btnBajafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBajafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBajafrmInsumo.Location = new System.Drawing.Point(341, 284);
+            this.btnBajafrmInsumo.Location = new System.Drawing.Point(341, 305);
             this.btnBajafrmInsumo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBajafrmInsumo.Name = "btnBajafrmInsumo";
             this.btnBajafrmInsumo.Size = new System.Drawing.Size(117, 38);
@@ -298,14 +341,14 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(462, 28);
+            this.dataGridView1.Location = new System.Drawing.Point(462, 60);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(585, 311);
+            this.dataGridView1.Size = new System.Drawing.Size(585, 283);
             this.dataGridView1.TabIndex = 18;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -320,6 +363,10 @@
             this.Controls.Add(this.btnModificacionfrmInsumo);
             this.Controls.Add(this.btnAltafrmInsumo);
             this.Controls.Add(this.btnNuevofrmInsumo);
+            this.Controls.Add(this.cmbFiltroUsofrmInsumo);
+            this.Controls.Add(this.lblFiltroUsofrmInsumo);
+            this.Controls.Add(this.chkUsoComidasfrmInsumo);
+            this.Controls.Add(this.chkUsoBebidasfrmInsumo);
             this.Controls.Add(this.lblStockCalculadofrmInsumo);
             this.Controls.Add(this.nudStockInicialfrmInsumo);
             this.Controls.Add(this.lblStockInicialfrmInsumo);
@@ -367,6 +414,10 @@
         private System.Windows.Forms.Label lblStockInicialfrmInsumo;
         private System.Windows.Forms.NumericUpDown nudStockInicialfrmInsumo;
         private System.Windows.Forms.Label lblStockCalculadofrmInsumo;
+        private System.Windows.Forms.CheckBox chkUsoBebidasfrmInsumo;
+        private System.Windows.Forms.CheckBox chkUsoComidasfrmInsumo;
+        private System.Windows.Forms.Label lblFiltroUsofrmInsumo;
+        private System.Windows.Forms.ComboBox cmbFiltroUsofrmInsumo;
         private System.Windows.Forms.Button btnNuevofrmInsumo;
         private System.Windows.Forms.Button btnAltafrmInsumo;
         private System.Windows.Forms.Button btnModificacionfrmInsumo;

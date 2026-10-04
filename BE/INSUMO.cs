@@ -83,6 +83,21 @@ namespace BE
             set { activo = value; }
         }
 
+        // Decisión 58: en qué se usa (bebidas, comidas o ambos). Al menos uno de los dos.
+        private bool usoBebidas;
+        public bool UsoBebidas
+        {
+            get { return usoBebidas; }
+            set { usoBebidas = value; }
+        }
+
+        private bool usoComidas;
+        public bool UsoComidas
+        {
+            get { return usoComidas; }
+            set { usoComidas = value; }
+        }
+
         public override string ToString()
         {
             return Nombre;

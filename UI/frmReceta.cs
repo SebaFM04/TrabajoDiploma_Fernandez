@@ -55,13 +55,17 @@ namespace UI
             dgvRecetafrmReceta.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // Insumos activos para armar la receta (decisión 7)
+        // Insumos activos para armar la receta (decisión 7), filtrados por el uso que corresponde
+        // al tipo del producto (decisión 58): bebida → insumos de bebidas, piqueo → insumos de comidas
         private void CargarInsumos()
         {
             try
             {
+                string uso = productoSeleccionado?.Tipo == "Bebida" ? INSUMO_BLL.UsoBebidas
+                           : productoSeleccionado?.Tipo == "Piqueo" ? INSUMO_BLL.UsoComidas
+                           : INSUMO_BLL.UsoTodos;
                 cmbInsumofrmReceta.DataSource = null;
-                cmbInsumofrmReceta.DataSource = GestorInsumo.ListarInsumosActivos();
+                cmbInsumofrmReceta.DataSource = GestorInsumo.ListarInsumosPorUso(uso);
                 cmbInsumofrmReceta.DisplayMember = "Nombre";
                 cmbInsumofrmReceta.SelectedIndex = -1;
             }
@@ -153,6 +157,7 @@ namespace UI
         {
             if (cargando || dgvProductosfrmReceta.SelectedRows.Count == 0) return;
             productoSeleccionado = dgvProductosfrmReceta.SelectedRows[0].Tag as BE.PRODUCTO;
+            CargarInsumos();
             dgvRecetafrmReceta.Rows.Clear();
             HabilitarEdicion(productoSeleccionado != null);
             MostrarTituloReceta();

@@ -44,6 +44,9 @@ namespace BLL
 
             if (insumo.CostoUnidadCompra < 0 || insumo.UmbralReposicion < 0 || insumo.VolumenPesoDisponible < 0)
                 throw new ArgumentException("msgInsumoValorNegativo");
+            // Decisión 58: bebidas, comidas o ambos
+            if (!insumo.UsoBebidas && !insumo.UsoComidas)
+                throw new ArgumentException("msgInsumoSinUso");
         }
 
         // CU023 paso 3 (decisión 52): el stock inicial se ingresa en unidades de compra
@@ -129,6 +132,20 @@ namespace BLL
         public List<BE.INSUMO> ListarInsumosActivos()
         {
             return GestorInsumo.ListarInsumosActivos();
+        }
+
+        // Valores del filtro por uso (decisión 58)
+        public const string UsoTodos = "Todos";
+        public const string UsoBebidas = "Bebidas";
+        public const string UsoComidas = "Comidas";
+
+        // Decisión 58: insumos activos según su uso. Los de ambos usos aparecen en los dos filtros.
+        public List<BE.INSUMO> ListarInsumosPorUso(string uso)
+        {
+            var insumos = GestorInsumo.ListarInsumosActivos();
+            if (uso == UsoBebidas) return insumos.Where(i => i.UsoBebidas).ToList();
+            if (uso == UsoComidas) return insumos.Where(i => i.UsoComidas).ToList();
+            return insumos;
         }
 
         // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente

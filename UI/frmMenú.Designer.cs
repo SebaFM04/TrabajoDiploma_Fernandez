@@ -44,6 +44,7 @@
             this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ordenCompraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proveedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaValesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,9 +111,17 @@
             this.proveedoresToolStripMenuItem.Text = "Proveedores";
             this.proveedoresToolStripMenuItem.Click += new System.EventHandler(this.proveedoresToolStripMenuItem_Click);
             //
+            // ordenCompraToolStripMenuItem
+            //
+            this.ordenCompraToolStripMenuItem.Name = "ordenCompraToolStripMenuItem";
+            this.ordenCompraToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.ordenCompraToolStripMenuItem.Text = "Órdenes de compra";
+            this.ordenCompraToolStripMenuItem.Click += new System.EventHandler(this.ordenCompraToolStripMenuItem_Click);
+            //
             // comprasToolStripMenuItem
             //
             this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ordenCompraToolStripMenuItem,
             this.proveedoresToolStripMenuItem,
             });
             this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
@@ -420,6 +429,7 @@
         private System.Windows.Forms.ToolStripMenuItem formularioRecetasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operacionBarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ordenCompraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem proveedoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrarVentaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaPiqueosToolStripMenuItem;

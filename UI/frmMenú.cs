@@ -52,6 +52,7 @@ namespace UI
             controlCambiosToolStripMenuItem.Available = tiene("Control Cambios");
 
             admIdiomasToolStripMenuItem.Available = tiene("Gestion Idiomas");
+            ordenCompraToolStripMenuItem.Available = tiene("Gestion Ordenes Compra");
             proveedoresToolStripMenuItem.Available = tiene("Gestion Proveedores");
 
             foreach (ToolStripMenuItem padre in mnstripMenu.Items.OfType<ToolStripMenuItem>())
@@ -198,6 +199,12 @@ namespace UI
         private void proveedoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmProveedor());
+        }
+
+        // CU016 Generar Orden de Compra y CU018 Ajustar Orden Observada
+        private void ordenCompraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmOrdenCompra());
         }
 
         private void consultaValesToolStripMenuItem_Click(object sender, EventArgs e)

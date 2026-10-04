@@ -155,6 +155,20 @@ namespace BLL
             return insumos;
         }
 
+        // CU016 paso 2 (mensajes 2-7): insumos con aviso de stock bajo pendiente. Lista vacía = FA1.
+        public List<BE.INSUMO> ListarConAvisoPendiente()
+        {
+            return GestorInsumo.ListarConAvisoPendiente();
+        }
+
+        // CU016 mensajes 45-50: los avisos pendientes de los insumos pedidos pasan a "En compra" con la orden
+        public void AsociarAvisosAOrden(List<int> idsInsumo, int idOrdenCompra, ACCESO acceso)
+        {
+            var mapper = new MAPPER_INSUMO(acceso);
+            foreach (int id in idsInsumo.Distinct())
+                mapper.ActualizarAvisos(id, idOrdenCompra);
+        }
+
         // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente
         public List<BE.INSUMO> ListarStockBajo()
         {

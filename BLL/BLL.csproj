@@ -58,6 +58,7 @@
     <Compile Include="VALE_BLL.cs" />
     <Compile Include="VENTA_BLL.cs" />
     <Compile Include="PROVEEDOR_BLL.cs" />
+    <Compile Include="ORDEN_COMPRA_BLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

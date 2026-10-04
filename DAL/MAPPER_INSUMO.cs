@@ -193,6 +193,72 @@ namespace DAL
             return listaInsumos;
         }
 
+        // CU016 mensajes 3-6: insumos con aviso de stock bajo pendiente
+        public List<BE.INSUMO> ListarConAvisoPendiente()
+        {
+            acceso.Abrir();
+            DataTable tabla;
+            try
+            {
+                tabla = acceso.Leer("ListarInsumoConAvisoPendiente");
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            return tabla.Rows.Cast<DataRow>().Select(MapearInsumo).ToList();
+        }
+
+        // CU016 mensajes 46-49: los avisos pendientes del insumo pasan a "En compra" asociados a la orden
+        public void ActualizarAvisos(int idInsumo, int idOrdenCompra)
+        {
+            acceso.Abrir();
+            try
+            {
+                acceso.Escribir("AsociarAvisoOrdenCompra", new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@IdInsumo", idInsumo),
+                    acceso.CrearParametro("@IdOrdenCompra", idOrdenCompra)
+                });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        // CU019 (decisión 59): el insumo volvió a tener stock; sus avisos se resuelven y el flag vuelve a 0
+        public void ResolverAvisos(int idInsumo)
+        {
+            acceso.Abrir();
+            try
+            {
+                acceso.Escribir("ResolverAvisosInsumo", new List<SqlParameter> { acceso.CrearParametro("@IdInsumo", idInsumo) });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        // CU019 mensajes 34-37: costo por unidad de compra (promedio ponderado, decisión 61)
+        public void ActualizarCosto(int idInsumo, decimal costo)
+        {
+            acceso.Abrir();
+            try
+            {
+                acceso.Escribir("ActualizarCostoInsumo", new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@IdInsumo", idInsumo),
+                    acceso.CrearParametro("@CostoUnidadCompra", costo)
+                });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
         private BE.INSUMO MapearInsumo(DataRow u)
         {
             return new BE.INSUMO

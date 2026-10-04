@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace UI
 {
-    // ABM de insumos: CU023 Insertar Insumo, CU024 Modificar Insumo.
+    // ABM de insumos: CU023 Insertar Insumo, CU024 Modificar Insumo, CU025 Dar de Baja Insumo.
     // Modo alta: todos los campos editables. Modo edición (insumo seleccionado): unidad de medida y stock de solo lectura.
     public partial class frmInsumo : Form, IObservadorIdioma
     {
@@ -69,6 +69,7 @@ namespace UI
             nudStockInicialfrmInsumo.Enabled = true;
             btnAltafrmInsumo.Enabled = true;
             btnModificacionfrmInsumo.Enabled = false;
+            btnBajafrmInsumo.Enabled = false;
         }
 
         // CU024 paso 2: datos del insumo seleccionado; unidad de medida y stock solo de lectura (decisión 37)
@@ -86,6 +87,7 @@ namespace UI
             nudStockInicialfrmInsumo.Enabled = false;
             btnAltafrmInsumo.Enabled = false;
             btnModificacionfrmInsumo.Enabled = true;
+            btnBajafrmInsumo.Enabled = true;
         }
 
         private void CargarInsumos()
@@ -195,6 +197,50 @@ namespace UI
             {
                 // FA1 / FA2: vuelve al paso 3 con los datos cargados
                 MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(g.Traducir("msgInsumoErrorOperacion") + ex.GetBaseException().Message, g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // CU025 Dar de Baja Insumo
+        private void btnBajafrmInsumo_Click(object sender, EventArgs e)
+        {
+            var g = GestorIdioma.Instancia;
+            var seleccionado = InsumoSeleccionado();
+            if (seleccionado == null)
+            {
+                MessageBox.Show(g.Traducir("msgInsumoSeleccionar"), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                // Paso 2 / FA1: el insumo no puede estar en recetas de productos activos
+                var productos = GestorInsumo.VerificarBajaInsumo(seleccionado.IdInsumo);
+                if (productos.Count > 0)
+                {
+                    MessageBox.Show(string.Format(g.Traducir("msgInsumoEnReceta"), string.Join(", ", productos.Select(p => p.Nombre))),
+                        g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Paso 2: datos del insumo y pedido de confirmación. FA3: con "No" se vuelve al listado.
+                var confirmar = MessageBox.Show(
+                    string.Format(g.Traducir("msgInsumoConfirmarBaja"), seleccionado.Nombre, seleccionado.VolumenPesoDisponible.ToString("0.###"), seleccionado.UnidadMedida),
+                    g.Traducir("msgInsumoConfirmarTitulo"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirmar != DialogResult.Yes) return;
+
+                // Pasos 3 y 4
+                GestorInsumo.DarDeBajaInsumo(seleccionado.IdInsumo);
+                MessageBox.Show(g.Traducir("msgInsumoBaja"), g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarInsumos();
+                ModoAlta();
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(g.Traducir(argEx.Message).Replace("{0}", string.Empty), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {

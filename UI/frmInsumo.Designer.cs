@@ -45,6 +45,7 @@
             this.btnNuevofrmInsumo = new System.Windows.Forms.Button();
             this.btnAltafrmInsumo = new System.Windows.Forms.Button();
             this.btnModificacionfrmInsumo = new System.Windows.Forms.Button();
+            this.btnBajafrmInsumo = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.nudEquivalenciafrmInsumo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUmbralfrmInsumo)).BeginInit();
@@ -231,6 +232,18 @@
             this.btnModificacionfrmInsumo.UseVisualStyleBackColor = false;
             this.btnModificacionfrmInsumo.Click += new System.EventHandler(this.btnModificacionfrmInsumo_Click);
             //
+            // btnBajafrmInsumo
+            //
+            this.btnBajafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnBajafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBajafrmInsumo.Location = new System.Drawing.Point(434, 350);
+            this.btnBajafrmInsumo.Name = "btnBajafrmInsumo";
+            this.btnBajafrmInsumo.Size = new System.Drawing.Size(136, 47);
+            this.btnBajafrmInsumo.TabIndex = 17;
+            this.btnBajafrmInsumo.Text = "Dar de baja";
+            this.btnBajafrmInsumo.UseVisualStyleBackColor = false;
+            this.btnBajafrmInsumo.Click += new System.EventHandler(this.btnBajafrmInsumo_Click);
+            //
             // dataGridView1
             //
             this.dataGridView1.AllowUserToAddRows = false;
@@ -253,6 +266,7 @@
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(1397, 450);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btnBajafrmInsumo);
             this.Controls.Add(this.btnModificacionfrmInsumo);
             this.Controls.Add(this.btnAltafrmInsumo);
             this.Controls.Add(this.btnNuevofrmInsumo);
@@ -303,6 +317,7 @@
         private System.Windows.Forms.Button btnNuevofrmInsumo;
         private System.Windows.Forms.Button btnAltafrmInsumo;
         private System.Windows.Forms.Button btnModificacionfrmInsumo;
+        private System.Windows.Forms.Button btnBajafrmInsumo;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

@@ -78,6 +78,50 @@ namespace DAL
             return MapearInsumo(tabla.Rows[0]);
         }
 
+        // CU025: baja lógica (Activo = 0)
+        public int BajaInsumo(int idInsumo)
+        {
+            acceso.Abrir();
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                acceso.CrearParametro("@IdInsumo", idInsumo)
+            };
+            try
+            {
+                return acceso.Escribir("BajaInsumo", parametros);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        // CU025 FA1: productos activos cuya receta usa el insumo
+        public List<BE.PRODUCTO> ListarProductosActivosPorInsumo(int idInsumo)
+        {
+            List<BE.PRODUCTO> productos = new List<BE.PRODUCTO>();
+            acceso.Abrir();
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                acceso.CrearParametro("@IdInsumo", idInsumo)
+            };
+            DataTable tabla = acceso.Leer("ListarProductoActivoPorInsumo", parametros);
+            acceso.Cerrar();
+
+            foreach (DataRow u in tabla.Rows)
+            {
+                productos.Add(new BE.PRODUCTO
+                {
+                    IdProducto = Convert.ToInt32(u["IdProducto"]),
+                    Nombre = u["Nombre"].ToString(),
+                    Tipo = u["Tipo"].ToString(),
+                    Activo = Convert.ToBoolean(u["Activo"]),
+                    DVH = u["DVH"] == DBNull.Value ? null : u["DVH"].ToString()
+                });
+            }
+            return productos;
+        }
+
         // Solo los insumos activos, para las pantallas de operación
         public List<BE.INSUMO> ListarInsumosActivos()
         {

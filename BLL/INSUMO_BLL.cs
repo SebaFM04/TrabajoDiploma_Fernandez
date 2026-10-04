@@ -93,6 +93,29 @@ namespace BLL
             new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Modificación de insumo", $"Se modificó el insumo: {insumo.Nombre}");
         }
 
+        // CU025 paso 2 / FA1: productos activos que usan el insumo en su receta.
+        // Si la lista no está vacía, el insumo no se puede dar de baja.
+        public List<BE.PRODUCTO> VerificarBajaInsumo(int idInsumo)
+        {
+            // N02: acá se suma el control de órdenes de compra no cerradas (FA2), cuando exista ORDEN_COMPRA
+            return GestorInsumo.ListarProductosActivosPorInsumo(idInsumo);
+        }
+
+        // CU025 Dar de Baja Insumo: baja lógica. Un stock mayor a cero no la impide.
+        public void DarDeBajaInsumo(int idInsumo)
+        {
+            var insumo = GestorInsumo.BuscarInsumo(idInsumo);
+            if (insumo == null || !insumo.Activo)
+                throw new ArgumentException("msgInsumoInexistente");
+
+            if (VerificarBajaInsumo(idInsumo).Count > 0)
+                throw new ArgumentException("msgInsumoEnReceta");
+
+            GestorInsumo.BajaInsumo(idInsumo);
+
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Baja de insumo", $"Se dio de baja el insumo: {insumo.Nombre}");
+        }
+
         public List<BE.INSUMO> ListarInsumosActivos()
         {
             return GestorInsumo.ListarInsumosActivos();

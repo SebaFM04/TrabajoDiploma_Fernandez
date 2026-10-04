@@ -138,6 +138,12 @@
     <Compile Include="frmRolesyPermisos.Designer.cs">
       <DependentUpon>frmRolesyPermisos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmStockBajo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStockBajo.Designer.cs">
+      <DependentUpon>frmStockBajo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmUsuario.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -54,6 +54,13 @@
             this.admIdiomasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboIdiomas = new System.Windows.Forms.ComboBox();
             this.lblNombreTag = new System.Windows.Forms.Label();
+            this.lblRolesTag = new System.Windows.Forms.Label();
+            this.lblTableroTitulofrmMenu = new System.Windows.Forms.Label();
+            this.lblVentasHoyfrmMenu = new System.Windows.Forms.Label();
+            this.lblComandasPendientesfrmMenu = new System.Windows.Forms.Label();
+            this.lblValesSinUsarfrmMenu = new System.Windows.Forms.Label();
+            this.lnkStockBajofrmMenu = new System.Windows.Forms.LinkLabel();
+            this.btnActualizarTablerofrmMenu = new System.Windows.Forms.Button();
             this.mnstripMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +68,7 @@
             // 
             this.btnCerrarSesionfrmMenu.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCerrarSesionfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(215, 298);
+            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(420, 372);
             this.btnCerrarSesionfrmMenu.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrarSesionfrmMenu.Name = "btnCerrarSesionfrmMenu";
             this.btnCerrarSesionfrmMenu.Size = new System.Drawing.Size(162, 38);
@@ -278,13 +285,88 @@
             this.lblNombreTag.Size = new System.Drawing.Size(19, 15);
             this.lblNombreTag.TabIndex = 22;
             this.lblNombreTag.Text = "...";
+            //
+            // lblRolesTag
+            //
+            this.lblRolesTag.AutoSize = true;
+            this.lblRolesTag.Font = new System.Drawing.Font("MS Reference Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRolesTag.Location = new System.Drawing.Point(10, 122);
+            this.lblRolesTag.Name = "lblRolesTag";
+            this.lblRolesTag.TabIndex = 23;
+            this.lblRolesTag.Text = "...";
+            //
+            // lblTableroTitulofrmMenu
+            //
+            this.lblTableroTitulofrmMenu.AutoSize = true;
+            this.lblTableroTitulofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTableroTitulofrmMenu.Location = new System.Drawing.Point(10, 160);
+            this.lblTableroTitulofrmMenu.Name = "lblTableroTitulofrmMenu";
+            this.lblTableroTitulofrmMenu.TabIndex = 24;
+            this.lblTableroTitulofrmMenu.Text = "Resumen del día";
+            //
+            // lblVentasHoyfrmMenu
+            //
+            this.lblVentasHoyfrmMenu.AutoSize = true;
+            this.lblVentasHoyfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVentasHoyfrmMenu.Location = new System.Drawing.Point(14, 195);
+            this.lblVentasHoyfrmMenu.Name = "lblVentasHoyfrmMenu";
+            this.lblVentasHoyfrmMenu.TabIndex = 25;
+            this.lblVentasHoyfrmMenu.Text = "-";
+            //
+            // lblComandasPendientesfrmMenu
+            //
+            this.lblComandasPendientesfrmMenu.AutoSize = true;
+            this.lblComandasPendientesfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblComandasPendientesfrmMenu.Location = new System.Drawing.Point(14, 222);
+            this.lblComandasPendientesfrmMenu.Name = "lblComandasPendientesfrmMenu";
+            this.lblComandasPendientesfrmMenu.TabIndex = 26;
+            this.lblComandasPendientesfrmMenu.Text = "-";
+            //
+            // lblValesSinUsarfrmMenu
+            //
+            this.lblValesSinUsarfrmMenu.AutoSize = true;
+            this.lblValesSinUsarfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValesSinUsarfrmMenu.Location = new System.Drawing.Point(14, 249);
+            this.lblValesSinUsarfrmMenu.Name = "lblValesSinUsarfrmMenu";
+            this.lblValesSinUsarfrmMenu.TabIndex = 27;
+            this.lblValesSinUsarfrmMenu.Text = "-";
+            //
+            // lnkStockBajofrmMenu
+            //
+            this.lnkStockBajofrmMenu.AutoSize = true;
+            this.lnkStockBajofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkStockBajofrmMenu.Location = new System.Drawing.Point(14, 276);
+            this.lnkStockBajofrmMenu.Name = "lnkStockBajofrmMenu";
+            this.lnkStockBajofrmMenu.TabIndex = 28;
+            this.lnkStockBajofrmMenu.TabStop = true;
+            this.lnkStockBajofrmMenu.Text = "-";
+            this.lnkStockBajofrmMenu.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkStockBajofrmMenu_LinkClicked);
+            //
+            // btnActualizarTablerofrmMenu
+            //
+            this.btnActualizarTablerofrmMenu.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnActualizarTablerofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActualizarTablerofrmMenu.Location = new System.Drawing.Point(14, 312);
+            this.btnActualizarTablerofrmMenu.Name = "btnActualizarTablerofrmMenu";
+            this.btnActualizarTablerofrmMenu.Size = new System.Drawing.Size(130, 30);
+            this.btnActualizarTablerofrmMenu.TabIndex = 29;
+            this.btnActualizarTablerofrmMenu.Text = "Actualizar";
+            this.btnActualizarTablerofrmMenu.UseVisualStyleBackColor = false;
+            this.btnActualizarTablerofrmMenu.Click += new System.EventHandler(this.btnActualizarTablerofrmMenu_Click);
             // 
             // frmMenú
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.ClientSize = new System.Drawing.Size(600, 425);
+            this.Controls.Add(this.btnActualizarTablerofrmMenu);
+            this.Controls.Add(this.lnkStockBajofrmMenu);
+            this.Controls.Add(this.lblValesSinUsarfrmMenu);
+            this.Controls.Add(this.lblComandasPendientesfrmMenu);
+            this.Controls.Add(this.lblVentasHoyfrmMenu);
+            this.Controls.Add(this.lblTableroTitulofrmMenu);
+            this.Controls.Add(this.lblRolesTag);
             this.Controls.Add(this.lblNombreTag);
             this.Controls.Add(this.comboIdiomas);
             this.Controls.Add(this.lblEmailTag);
@@ -298,6 +380,7 @@
             this.Text = "frmMenú";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMenú_FormClosing);
             this.Load += new System.EventHandler(this.frmMenú_Load);
+            this.Activated += new System.EventHandler(this.frmMenú_Activated);
             this.mnstripMenu.ResumeLayout(false);
             this.mnstripMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -333,5 +416,12 @@
         private System.Windows.Forms.ToolStripMenuItem controlCambiosToolStripMenuItem;
         private System.Windows.Forms.ComboBox comboIdiomas;
         private System.Windows.Forms.Label lblNombreTag;
+        private System.Windows.Forms.Label lblRolesTag;
+        private System.Windows.Forms.Label lblTableroTitulofrmMenu;
+        private System.Windows.Forms.Label lblVentasHoyfrmMenu;
+        private System.Windows.Forms.Label lblComandasPendientesfrmMenu;
+        private System.Windows.Forms.Label lblValesSinUsarfrmMenu;
+        private System.Windows.Forms.LinkLabel lnkStockBajofrmMenu;
+        private System.Windows.Forms.Button btnActualizarTablerofrmMenu;
     }
 }

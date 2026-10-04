@@ -131,6 +131,14 @@ namespace BLL
             return GestorInsumo.ListarInsumosActivos();
         }
 
+        // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente
+        public List<BE.INSUMO> ListarStockBajo()
+        {
+            return GestorInsumo.ListarInsumosActivos()
+                .Where(i => i.VolumenPesoDisponible < i.UmbralReposicion || i.AvisoStockBajo)
+                .ToList();
+        }
+
         // CU010 mensajes 9-17: hay stock para el consumo requerido. insumoRequerido.Proporcion = cantidad total (decisión 53).
         // Con acceso != null se lee dentro de la transacción de la venta (segunda verificación del paso 5).
         public bool VerificarDisponibilidad(BE.RECETA insumoRequerido, ACCESO acceso = null)

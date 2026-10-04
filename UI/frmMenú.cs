@@ -70,6 +70,69 @@ namespace UI
         {
             AplicarPermisos();
             CargarComboIdiomas();
+            ActualizarTablero();
+        }
+
+        // ── Tablero del menú (decisión 56) ───────────────────────────
+        // Cada indicador se muestra según los permisos del usuario. Se actualiza al volver de cada formulario.
+        private void ActualizarTablero()
+        {
+            var g = GestorIdioma.Instancia;
+            var usuario = SessionManager.Instancia.UsuarioActual;
+            if (usuario == null) return;
+
+            bool verVentas = usuario.TienePermiso("Gestion Ventas") || usuario.TienePermiso("Consulta Ventas");
+            bool verComandas = usuario.TienePermiso("Gestion Comandas");
+            bool verVales = usuario.TienePermiso("Gestion Entregas") || usuario.TienePermiso("Consulta Vales");
+            bool verStock = usuario.TienePermiso("Ver Stock Bajo") || usuario.TienePermiso("Gestion Insumos");
+            lblVentasHoyfrmMenu.Visible = verVentas;
+            lblComandasPendientesfrmMenu.Visible = verComandas;
+            lblValesSinUsarfrmMenu.Visible = verVales;
+            lnkStockBajofrmMenu.Visible = verStock;
+            lblTableroTitulofrmMenu.Visible = btnActualizarTablerofrmMenu.Visible = verVentas || verComandas || verVales || verStock;
+            lblTableroTitulofrmMenu.Text = g.Traducir("lblTableroTitulofrmMenu");
+            btnActualizarTablerofrmMenu.Text = g.Traducir("btnActualizarTablerofrmMenu");
+
+            try
+            {
+                if (verVentas)
+                {
+                    var ventasHoy = new VENTA_BLL().ListarVentas(DateTime.Today, DateTime.Today);
+                    lblVentasHoyfrmMenu.Text = string.Format(g.Traducir("msgTableroVentasHoy"), ventasHoy.Count, FormatoMoneda.Pesos(ventasHoy.Sum(v => v.Monto)));
+                }
+                if (verComandas)
+                    lblComandasPendientesfrmMenu.Text = string.Format(g.Traducir("msgTableroComandas"), new COMANDA_BLL().ListarPendientes().Count);
+                if (verVales)
+                    lblValesSinUsarfrmMenu.Text = string.Format(g.Traducir("msgTableroVales"),
+                        new VALE_BLL().ListarVales(DateTime.Today, DateTime.Today, VALE_BLL.EstadoSinUsar).Count(v => v.TieneBebidas));
+                if (verStock)
+                {
+                    int bajos = new INSUMO_BLL().ListarStockBajo().Count;
+                    lnkStockBajofrmMenu.Text = bajos > 0 ? string.Format(g.Traducir("msgTableroStockBajo"), bajos) : g.Traducir("msgTableroStockOk");
+                    lnkStockBajofrmMenu.LinkColor = lnkStockBajofrmMenu.ActiveLinkColor = bajos > 0 ? System.Drawing.Color.Firebrick : System.Drawing.Color.DarkGreen;
+                    lnkStockBajofrmMenu.Enabled = bajos > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                // El tablero es informativo: un error no impide usar el menú
+                lblTableroTitulofrmMenu.Text = g.Traducir("lblTableroTitulofrmMenu") + " (" + ex.GetBaseException().Message + ")";
+            }
+        }
+
+        private void frmMenú_Activated(object sender, EventArgs e)
+        {
+            ActualizarTablero();
+        }
+
+        private void btnActualizarTablerofrmMenu_Click(object sender, EventArgs e)
+        {
+            ActualizarTablero();
+        }
+
+        private void lnkStockBajofrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmStockBajo());
         }
         private void formularioUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -172,7 +235,9 @@ namespace UI
 
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl is TextBox || ctrl is MenuStrip || ctrl is ComboBox || ctrl.Name is "lblEmailTag" || ctrl.Name is "lblNombreTag") continue;
+                if (ctrl is TextBox || ctrl is MenuStrip || ctrl is ComboBox || ctrl.Name is "lblEmailTag" || ctrl.Name is "lblNombreTag" || ctrl.Name is "lblRolesTag") continue;
+                // Los indicadores del tablero se arman en ActualizarTablero
+                if (ctrl == lblVentasHoyfrmMenu || ctrl == lblComandasPendientesfrmMenu || ctrl == lblValesSinUsarfrmMenu || ctrl == lnkStockBajofrmMenu) continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }
             foreach (ToolStripMenuItem item in mnstripMenu.Items)
@@ -182,6 +247,11 @@ namespace UI
             {
                 lblEmailTag.Text = $"{g.Traducir("lblEmailTag")}: {sesion.UsuarioActual.CorreoElectronico}";
                 lblNombreTag.Text = $"{g.Traducir("lblNombreTag")}: {sesion.UsuarioActual.NombreUsuario} {sesion.UsuarioActual.ApellidoUsuario}";
+                // Roles del usuario (familias de permisos asignadas)
+                var roles = (sesion.UsuarioActual.PermisosAsignados ?? new List<BE.PERMISOCOMPONENT>())
+                    .Where(p => p is BE.PERMISOCOMPOSITE).Select(p => p.NombrePermiso.Replace("Rol - ", string.Empty));
+                lblRolesTag.Text = $"{g.Traducir("lblRolesTag")}: {string.Join(", ", roles)}";
+                ActualizarTablero();
             }
         }
 

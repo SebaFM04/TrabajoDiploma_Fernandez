@@ -52,6 +52,7 @@
     <Compile Include="MAPPER_PRODUCTO.cs" />
     <Compile Include="MAPPER_RECETA.cs" />
     <Compile Include="MAPPER_RESTORE.cs" />
+    <Compile Include="MAPPER_TAMANIO.cs" />
     <Compile Include="MAPPER_USUARIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

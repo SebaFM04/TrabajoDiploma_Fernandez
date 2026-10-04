@@ -18,8 +18,16 @@ namespace DAL
             string instancia = File.Exists(ruta) ? File.ReadAllText(ruta).Trim() : @".";
             return $"Data Source={instancia};Initial Catalog=TpIngSoftware_2026;Integrated Security=True;TrustServerCertificate=True;";
         }
+        // true mientras hay una transacción en curso (decisión 27)
+        public bool EnTransaccion
+        {
+            get { return Transaccion != null; }
+        }
+
         public void Abrir()
         {
+            // En una transacción la conexión ya está abierta y se comparte: los mappers pueden llamar Abrir/Cerrar igual
+            if (EnTransaccion) return;
             Conexion = new SqlConnection();
             if (Conexion.ConnectionString == "")
             {
@@ -29,6 +37,7 @@ namespace DAL
         }
         public void Cerrar()
         {
+            if (EnTransaccion) return;
             Conexion.Close();
             GC.Collect();
             Conexion = null;

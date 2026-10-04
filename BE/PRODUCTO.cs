@@ -45,6 +45,14 @@ namespace BE
             set { dvh = value; }
         }
 
+        // CU006: tamaños en que se vende y precio de cada uno (PRODUCTO_TAMAÑO, decisión 1)
+        private List<PRODUCTO_TAMANIO> tamanios = new List<PRODUCTO_TAMANIO>();
+        public List<PRODUCTO_TAMANIO> Tamanios
+        {
+            get { return tamanios; }
+            set { tamanios = value; }
+        }
+
 
         public override string ToString()
         {

@@ -76,7 +76,6 @@ namespace UI
                         v.Comanda != null ? $"{v.Comanda.IdComanda} ({v.Comanda.Estado})" : "-");
                     dgvVentasfrmConsultaVentas.Rows[fila].Tag = v;
                 }
-                dgvVentasfrmConsultaVentas.ClearSelection();
             }
             catch (ArgumentException argEx)
             {
@@ -91,6 +90,13 @@ namespace UI
                 cargando = false;
             }
             MostrarTotales();
+            // Queda seleccionada la venta más reciente con su detalle
+            if (dgvVentasfrmConsultaVentas.Rows.Count > 0)
+            {
+                dgvVentasfrmConsultaVentas.CurrentCell = dgvVentasfrmConsultaVentas.Rows[0].Cells[0];
+                dgvVentasfrmConsultaVentas.Rows[0].Selected = true;
+            }
+            MostrarDetalle();
         }
 
         private void MostrarTotales()
@@ -99,10 +105,16 @@ namespace UI
                 ventas.Count, FormatoMoneda.Pesos(ventas.Sum(v => v.Monto)));
         }
 
+        // La fila seleccionada; si no hay selección visual, la fila actual
         private BE.VENTA VentaSeleccionada()
         {
-            if (dgvVentasfrmConsultaVentas.SelectedRows.Count == 0) return null;
-            return dgvVentasfrmConsultaVentas.SelectedRows[0].Tag as BE.VENTA;
+            var fila = dgvVentasfrmConsultaVentas.SelectedRows.Count > 0 ? dgvVentasfrmConsultaVentas.SelectedRows[0] : dgvVentasfrmConsultaVentas.CurrentRow;
+            return fila?.Tag as BE.VENTA;
+        }
+
+        private BE.VENTA VentaDeFila(int indice)
+        {
+            return indice >= 0 && indice < dgvVentasfrmConsultaVentas.Rows.Count ? dgvVentasfrmConsultaVentas.Rows[indice].Tag as BE.VENTA : null;
         }
 
         private void btnBuscarfrmConsultaVentas_Click(object sender, EventArgs e)
@@ -110,11 +122,38 @@ namespace UI
             Buscar();
         }
 
+        // El detalle sigue a la venta elegida. La fila se toma del evento: durante SelectionChanged
+        // CurrentRow todavía apunta a la fila anterior.
         private void dgvVentasfrmConsultaVentas_SelectionChanged(object sender, EventArgs e)
         {
-            if (cargando) return;
+            if (!cargando && dgvVentasfrmConsultaVentas.SelectedRows.Count > 0)
+                MostrarDetalle(dgvVentasfrmConsultaVentas.SelectedRows[0].Tag as BE.VENTA);
+        }
+
+        private void dgvVentasfrmConsultaVentas_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!cargando) MostrarDetalle(VentaDeFila(e.RowIndex));
+        }
+
+        private void dgvVentasfrmConsultaVentas_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!cargando && e.RowIndex >= 0) MostrarDetalle(VentaDeFila(e.RowIndex));
+        }
+
+        private int idVentaMostrada = -1;
+
+        private void MostrarDetalle()
+        {
+            MostrarDetalle(VentaSeleccionada());
+        }
+
+        private void MostrarDetalle(BE.VENTA venta)
+        {
+            var g = GestorIdioma.Instancia;
+            if (venta != null && venta.IdVenta == idVentaMostrada && dgvDetallefrmConsultaVentas.Rows.Count > 0) return;
             dgvDetallefrmConsultaVentas.Rows.Clear();
-            var venta = VentaSeleccionada();
+            idVentaMostrada = venta?.IdVenta ?? -1;
+            lblDetallefrmConsultaVentas.Text = g.Traducir("lblDetallefrmConsultaVentas") + (venta != null ? $" N° {venta.IdVenta}" : string.Empty);
             if (venta == null) return;
             try
             {
@@ -159,7 +198,7 @@ namespace UI
             this.Text = g.Traducir(this.Name);
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl is DataGridView || ctrl is DateTimePicker || ctrl == lblTotalesfrmConsultaVentas)
+                if (ctrl is DataGridView || ctrl is DateTimePicker || ctrl == lblTotalesfrmConsultaVentas || ctrl == lblDetallefrmConsultaVentas)
                     continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }
@@ -168,6 +207,8 @@ namespace UI
             foreach (DataGridViewColumn col in dgvDetallefrmConsultaVentas.Columns)
                 col.HeaderText = g.Traducir(col.Name);
             MostrarTotales();
+            idVentaMostrada = -1;
+            MostrarDetalle();
         }
     }
 }

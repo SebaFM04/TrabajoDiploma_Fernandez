@@ -99,6 +99,8 @@
             this.dgvVentasfrmConsultaVentas.Size = new System.Drawing.Size(960, 250);
             this.dgvVentasfrmConsultaVentas.TabIndex = 5;
             this.dgvVentasfrmConsultaVentas.SelectionChanged += new System.EventHandler(this.dgvVentasfrmConsultaVentas_SelectionChanged);
+            this.dgvVentasfrmConsultaVentas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVentasfrmConsultaVentas_CellClick);
+            this.dgvVentasfrmConsultaVentas.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVentasfrmConsultaVentas_RowEnter);
             //
             // lblTotalesfrmConsultaVentas
             //

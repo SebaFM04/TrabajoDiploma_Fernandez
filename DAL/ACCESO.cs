@@ -10,6 +10,8 @@ namespace DAL
     public class ACCESO
     {
         SqlConnection Conexion;
+        // Transacción en curso (decisión 27). Si es null, Leer y Escribir funcionan como siempre.
+        SqlTransaction Transaccion;
         public static string ObtenerCadena()
         {
             string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.txt"); 
@@ -31,12 +33,48 @@ namespace DAL
             GC.Collect();
             Conexion = null;
         }
+        // ── Transacciones (decisión 27): una sola conexión para todas las escrituras de la operación.
+        // Uso: IniciarTransaccion(); Escribir/Leer...; ConfirmarTransaccion(); y ante error DeshacerTransaccion().
+        public void IniciarTransaccion()
+        {
+            Abrir();
+            Transaccion = Conexion.BeginTransaction();
+        }
+
+        public void ConfirmarTransaccion()
+        {
+            try
+            {
+                Transaccion.Commit();
+            }
+            finally
+            {
+                Transaccion = null;
+                Cerrar();
+            }
+        }
+
+        public void DeshacerTransaccion()
+        {
+            try
+            {
+                if (Transaccion != null && Transaccion.Connection != null)
+                    Transaccion.Rollback();
+            }
+            finally
+            {
+                Transaccion = null;
+                if (Conexion != null) Cerrar();
+            }
+        }
+
         public SqlCommand CrearComando(string nombreSP, List<SqlParameter> parametros = null)
         {
             SqlCommand comando = new SqlCommand();
             comando.CommandText = nombreSP;
             comando.CommandType = CommandType.StoredProcedure;
             comando.Connection = Conexion;
+            comando.Transaction = Transaccion;
 
             if (parametros != null)
             {
@@ -54,6 +92,7 @@ namespace DAL
             comando.CommandText = sql;
             comando.CommandType = CommandType.Text;
             comando.Connection = Conexion;
+            comando.Transaction = Transaccion;
 
             if (parametros != null)
             {

@@ -49,6 +49,7 @@
     <Compile Include="INSUMO_BLL.cs" />
     <Compile Include="PERMISO_BLL.cs" />
     <Compile Include="PRODUCTO_BLL.cs" />
+    <Compile Include="RECETA_BLL.cs" />
     <Compile Include="RESTORE_BLL.cs" />
     <Compile Include="USUARIO_BLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -50,6 +50,7 @@
     <Compile Include="MAPPER_INSUMO.cs" />
     <Compile Include="MAPPER_PERMISO.cs" />
     <Compile Include="MAPPER_PRODUCTO.cs" />
+    <Compile Include="MAPPER_RECETA.cs" />
     <Compile Include="MAPPER_RESTORE.cs" />
     <Compile Include="MAPPER_USUARIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

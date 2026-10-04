@@ -49,6 +49,7 @@
     <Compile Include="PERMISOCOMPONENT.cs" />
     <Compile Include="PERMISOCOMPOSITE.cs" />
     <Compile Include="PRODUCTO.cs" />
+    <Compile Include="RECETA.cs" />
     <Compile Include="USUARIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

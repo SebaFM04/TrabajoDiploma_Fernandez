@@ -66,6 +66,33 @@ namespace BLL
             new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Alta de insumo", $"Se agrego el insumo: {insumo.Nombre}");
         }
 
+        // CU024 Modificar Insumo
+        public void ModificarInsumo(BE.INSUMO insumo)
+        {
+            var insumoActual = GestorInsumo.BuscarInsumo(insumo.IdInsumo);
+            if (insumoActual == null || !insumoActual.Activo)
+                throw new ArgumentException("msgInsumoInexistente");
+
+            // La unidad de medida y el stock no se modifican (decisión 37): se conservan los actuales
+            insumo.UnidadMedida = insumoActual.UnidadMedida;
+            insumo.VolumenPesoDisponible = insumoActual.VolumenPesoDisponible;
+            insumo.AvisoStockBajo = insumoActual.AvisoStockBajo;
+            insumo.Activo = insumoActual.Activo;
+            ValidarInsumo(insumo);
+
+            try
+            {
+                GestorInsumo.ModificarInsumo(insumo);
+            }
+            catch (SqlException ex) when (ex.Number == ErrorDeNegocioSql)
+            {
+                // FA2: otro insumo (activo o dado de baja) ya tiene ese nombre
+                throw new ArgumentException("msgInsumoDuplicado", ex);
+            }
+
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Modificación de insumo", $"Se modificó el insumo: {insumo.Nombre}");
+        }
+
         public List<BE.INSUMO> ListarInsumosActivos()
         {
             return GestorInsumo.ListarInsumosActivos();

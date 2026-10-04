@@ -42,7 +42,9 @@
             this.nudCostofrmInsumo = new System.Windows.Forms.NumericUpDown();
             this.lblStockInicialfrmInsumo = new System.Windows.Forms.Label();
             this.nudStockInicialfrmInsumo = new System.Windows.Forms.NumericUpDown();
+            this.btnNuevofrmInsumo = new System.Windows.Forms.Button();
             this.btnAltafrmInsumo = new System.Windows.Forms.Button();
+            this.btnModificacionfrmInsumo = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.nudEquivalenciafrmInsumo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUmbralfrmInsumo)).BeginInit();
@@ -193,17 +195,41 @@
             this.nudStockInicialfrmInsumo.TabIndex = 13;
             this.nudStockInicialfrmInsumo.ThousandsSeparator = true;
             //
+            // btnNuevofrmInsumo
+            //
+            this.btnNuevofrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnNuevofrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNuevofrmInsumo.Location = new System.Drawing.Point(29, 350);
+            this.btnNuevofrmInsumo.Name = "btnNuevofrmInsumo";
+            this.btnNuevofrmInsumo.Size = new System.Drawing.Size(124, 47);
+            this.btnNuevofrmInsumo.TabIndex = 14;
+            this.btnNuevofrmInsumo.Text = "Nuevo";
+            this.btnNuevofrmInsumo.UseVisualStyleBackColor = false;
+            this.btnNuevofrmInsumo.Click += new System.EventHandler(this.btnNuevofrmInsumo_Click);
+            //
             // btnAltafrmInsumo
             //
             this.btnAltafrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAltafrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAltafrmInsumo.Location = new System.Drawing.Point(29, 350);
+            this.btnAltafrmInsumo.Location = new System.Drawing.Point(164, 350);
             this.btnAltafrmInsumo.Name = "btnAltafrmInsumo";
-            this.btnAltafrmInsumo.Size = new System.Drawing.Size(147, 47);
-            this.btnAltafrmInsumo.TabIndex = 14;
+            this.btnAltafrmInsumo.Size = new System.Drawing.Size(124, 47);
+            this.btnAltafrmInsumo.TabIndex = 15;
             this.btnAltafrmInsumo.Text = "Agregar";
             this.btnAltafrmInsumo.UseVisualStyleBackColor = false;
             this.btnAltafrmInsumo.Click += new System.EventHandler(this.btnAltafrmInsumo_Click);
+            //
+            // btnModificacionfrmInsumo
+            //
+            this.btnModificacionfrmInsumo.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnModificacionfrmInsumo.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnModificacionfrmInsumo.Location = new System.Drawing.Point(299, 350);
+            this.btnModificacionfrmInsumo.Name = "btnModificacionfrmInsumo";
+            this.btnModificacionfrmInsumo.Size = new System.Drawing.Size(124, 47);
+            this.btnModificacionfrmInsumo.TabIndex = 16;
+            this.btnModificacionfrmInsumo.Text = "Modificar";
+            this.btnModificacionfrmInsumo.UseVisualStyleBackColor = false;
+            this.btnModificacionfrmInsumo.Click += new System.EventHandler(this.btnModificacionfrmInsumo_Click);
             //
             // dataGridView1
             //
@@ -217,7 +243,8 @@
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(780, 383);
-            this.dataGridView1.TabIndex = 15;
+            this.dataGridView1.TabIndex = 18;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             //
             // frmInsumo
             //
@@ -226,7 +253,9 @@
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(1397, 450);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btnModificacionfrmInsumo);
             this.Controls.Add(this.btnAltafrmInsumo);
+            this.Controls.Add(this.btnNuevofrmInsumo);
             this.Controls.Add(this.nudStockInicialfrmInsumo);
             this.Controls.Add(this.lblStockInicialfrmInsumo);
             this.Controls.Add(this.nudCostofrmInsumo);
@@ -271,7 +300,9 @@
         private System.Windows.Forms.NumericUpDown nudCostofrmInsumo;
         private System.Windows.Forms.Label lblStockInicialfrmInsumo;
         private System.Windows.Forms.NumericUpDown nudStockInicialfrmInsumo;
+        private System.Windows.Forms.Button btnNuevofrmInsumo;
         private System.Windows.Forms.Button btnAltafrmInsumo;
+        private System.Windows.Forms.Button btnModificacionfrmInsumo;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

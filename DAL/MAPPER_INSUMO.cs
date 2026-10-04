@@ -43,6 +43,41 @@ namespace DAL
             return 0;
         }
 
+        // CU024: el SP rechaza el nombre duplicado y no modifica UnidadMedida ni el stock
+        public int ModificarInsumo(BE.INSUMO Insumo)
+        {
+            acceso.Abrir();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(acceso.CrearParametro("@IdInsumo", Insumo.IdInsumo));
+            parametros.Add(acceso.CrearParametro("@Nombre", Insumo.Nombre));
+            parametros.Add(acceso.CrearParametro("@UnidadCompra", Insumo.UnidadCompra));
+            parametros.Add(acceso.CrearParametro("@EquivalenciaMagnitud", Insumo.EquivalenciaMagnitud));
+            parametros.Add(acceso.CrearParametro("@UmbralReposicion", Insumo.UmbralReposicion));
+            parametros.Add(acceso.CrearParametro("@CostoUnidadCompra", Insumo.CostoUnidadCompra));
+            try
+            {
+                return acceso.Escribir("ModificarInsumo", parametros);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        public BE.INSUMO BuscarInsumo(int idInsumo)
+        {
+            acceso.Abrir();
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                acceso.CrearParametro("@IdInsumo", idInsumo)
+            };
+            DataTable tabla = acceso.Leer("BuscarInsumo", parametros);
+            acceso.Cerrar();
+
+            if (tabla.Rows.Count == 0) return null;
+            return MapearInsumo(tabla.Rows[0]);
+        }
+
         // Solo los insumos activos, para las pantallas de operación
         public List<BE.INSUMO> ListarInsumosActivos()
         {

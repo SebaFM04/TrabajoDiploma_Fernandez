@@ -13,10 +13,13 @@ using System.Windows.Forms;
 
 namespace UI
 {
-    // ABM de insumos. Por ahora CU023 Insertar Insumo; CU024 y CU025 se agregan después.
+    // ABM de insumos: CU023 Insertar Insumo, CU024 Modificar Insumo.
+    // Modo alta: todos los campos editables. Modo edición (insumo seleccionado): unidad de medida y stock de solo lectura.
     public partial class frmInsumo : Form, IObservadorIdioma
     {
         INSUMO_BLL GestorInsumo = new INSUMO_BLL();
+        // Evita que la carga de la grilla dispare el modo edición
+        bool cargando = false;
 
         public frmInsumo()
         {
@@ -29,14 +32,16 @@ namespace UI
         {
             cmbUnidadMedidafrmInsumo.Items.Clear();
             cmbUnidadMedidafrmInsumo.Items.AddRange(GestorInsumo.ListarUnidadesMedida());
-            LimpiarCampos();
             CargarInsumos();
+            ModoAlta();
         }
 
         private void Enlazar()
         {
             var g = GestorIdioma.Instancia;
             dataGridView1.Columns.Clear();
+            dataGridView1.Columns.Add("colIdfrmInsumo", "Id");
+            dataGridView1.Columns["colIdfrmInsumo"].Visible = false;
             foreach (string columna in new[] { "colNombrefrmInsumo", "colUnidadMedidafrmInsumo", "colUnidadComprafrmInsumo",
                                                "colEquivalenciafrmInsumo", "colStockfrmInsumo", "colUmbralfrmInsumo", "colCostofrmInsumo" })
             {
@@ -45,8 +50,13 @@ namespace UI
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void LimpiarCampos()
+        // CU023 paso 1-2: formulario vacío para registrar un insumo nuevo
+        private void ModoAlta()
         {
+            cargando = true;
+            dataGridView1.ClearSelection();
+            cargando = false;
+
             txtNombrefrmInsumo.Text = string.Empty;
             cmbUnidadMedidafrmInsumo.SelectedIndex = -1;
             txtUnidadComprafrmInsumo.Text = string.Empty;
@@ -54,32 +64,79 @@ namespace UI
             nudUmbralfrmInsumo.Value = 0;
             nudCostofrmInsumo.Value = 0;
             nudStockInicialfrmInsumo.Value = 0;
+
+            cmbUnidadMedidafrmInsumo.Enabled = true;
+            nudStockInicialfrmInsumo.Enabled = true;
+            btnAltafrmInsumo.Enabled = true;
+            btnModificacionfrmInsumo.Enabled = false;
+        }
+
+        // CU024 paso 2: datos del insumo seleccionado; unidad de medida y stock solo de lectura (decisión 37)
+        private void ModoEdicion(BE.INSUMO insumo)
+        {
+            txtNombrefrmInsumo.Text = insumo.Nombre;
+            cmbUnidadMedidafrmInsumo.SelectedItem = insumo.UnidadMedida;
+            txtUnidadComprafrmInsumo.Text = insumo.UnidadCompra;
+            nudEquivalenciafrmInsumo.Value = insumo.EquivalenciaMagnitud;
+            nudUmbralfrmInsumo.Value = insumo.UmbralReposicion;
+            nudCostofrmInsumo.Value = insumo.CostoUnidadCompra;
+            nudStockInicialfrmInsumo.Value = insumo.VolumenPesoDisponible;
+
+            cmbUnidadMedidafrmInsumo.Enabled = false;
+            nudStockInicialfrmInsumo.Enabled = false;
+            btnAltafrmInsumo.Enabled = false;
+            btnModificacionfrmInsumo.Enabled = true;
         }
 
         private void CargarInsumos()
         {
             var g = GestorIdioma.Instancia;
+            cargando = true;
             dataGridView1.Rows.Clear();
             try
             {
                 foreach (var i in GestorInsumo.ListarInsumosActivos())
                 {
-                    dataGridView1.Rows.Add(i.Nombre, i.UnidadMedida, i.UnidadCompra,
+                    int fila = dataGridView1.Rows.Add(i.IdInsumo, i.Nombre, i.UnidadMedida, i.UnidadCompra,
                         i.EquivalenciaMagnitud.ToString("0.###"), i.VolumenPesoDisponible.ToString("0.###"),
                         i.UmbralReposicion.ToString("0.###"), i.CostoUnidadCompra.ToString("0.00"));
+                    dataGridView1.Rows[fila].Tag = i;
                 }
+                dataGridView1.ClearSelection();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(g.Traducir("msgInsumoError") + ex.GetBaseException().Message, g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(g.Traducir("msgInsumoErrorOperacion") + ex.GetBaseException().Message, g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                cargando = false;
             }
         }
 
-        // CU023 pasos 3 y 4. Las validaciones son de INSUMO_BLL (FA1) y del SP (FA2).
-        private void btnAltafrmInsumo_Click(object sender, EventArgs e)
+        private BE.INSUMO InsumoSeleccionado()
         {
-            var g = GestorIdioma.Instancia;
-            BE.INSUMO insumo = new BE.INSUMO
+            if (dataGridView1.SelectedRows.Count == 0) return null;
+            return dataGridView1.SelectedRows[0].Tag as BE.INSUMO;
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (cargando) return;
+            var insumo = InsumoSeleccionado();
+            if (insumo != null) ModoEdicion(insumo);
+        }
+
+        private void btnNuevofrmInsumo_Click(object sender, EventArgs e)
+        {
+            ModoAlta();
+            txtNombrefrmInsumo.Focus();
+        }
+
+        // Datos editables del formulario. La unidad de medida y el stock solo cuentan en el alta.
+        private BE.INSUMO LeerCampos()
+        {
+            return new BE.INSUMO
             {
                 Nombre = txtNombrefrmInsumo.Text,
                 UnidadMedida = cmbUnidadMedidafrmInsumo.SelectedItem?.ToString(),
@@ -89,13 +146,18 @@ namespace UI
                 CostoUnidadCompra = nudCostofrmInsumo.Value,
                 VolumenPesoDisponible = nudStockInicialfrmInsumo.Value
             };
+        }
 
+        // CU023 pasos 3 y 4. Las validaciones son de INSUMO_BLL (FA1) y del SP (FA2).
+        private void btnAltafrmInsumo_Click(object sender, EventArgs e)
+        {
+            var g = GestorIdioma.Instancia;
             try
             {
-                GestorInsumo.InsertarInsumo(insumo);
+                GestorInsumo.InsertarInsumo(LeerCampos());
                 MessageBox.Show(g.Traducir("msgInsumoAlta"), g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarInsumos();
-                LimpiarCampos();
+                ModoAlta();
                 txtNombrefrmInsumo.Focus();
             }
             catch (ArgumentException argEx)
@@ -106,6 +168,37 @@ namespace UI
             catch (Exception ex)
             {
                 MessageBox.Show(g.Traducir("msgInsumoError") + ex.GetBaseException().Message, g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // CU024 pasos 3 y 4
+        private void btnModificacionfrmInsumo_Click(object sender, EventArgs e)
+        {
+            var g = GestorIdioma.Instancia;
+            var seleccionado = InsumoSeleccionado();
+            if (seleccionado == null)
+            {
+                MessageBox.Show(g.Traducir("msgInsumoSeleccionar"), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var insumo = LeerCampos();
+            insumo.IdInsumo = seleccionado.IdInsumo;
+            try
+            {
+                GestorInsumo.ModificarInsumo(insumo);
+                MessageBox.Show(g.Traducir("msgInsumoModificado"), g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarInsumos();
+                ModoAlta();
+            }
+            catch (ArgumentException argEx)
+            {
+                // FA1 / FA2: vuelve al paso 3 con los datos cargados
+                MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(g.Traducir("msgInsumoErrorOperacion") + ex.GetBaseException().Message, g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

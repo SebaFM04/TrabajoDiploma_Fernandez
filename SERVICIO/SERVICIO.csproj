@@ -60,5 +60,11 @@
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- Generación de la factura en PDF (CU015). PDFsharp: licencia MIT, compatible con .NET Framework 4.8 -->
+    <PackageReference Include="PDFsharp">
+      <Version>1.50.5147</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

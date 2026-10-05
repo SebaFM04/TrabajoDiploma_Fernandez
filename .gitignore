@@ -456,3 +456,7 @@ Instalador/Output/
 *.ldb
 *.laccdb
 *.ldf~
+
+# Respaldos locales de la documentación (no se versionan)
+*_antes_correcciones.EAP
+*_antes_correcciones.docx

@@ -44,6 +44,8 @@ namespace UI
             dgvProveedoresfrmProveedor.Columns.Clear();
             foreach (string col in new[] { "colRazonSocialfrmProveedor", "colCuitfrmProveedor", "colTelefonofrmProveedor", "colCorreofrmProveedor" })
                 dgvProveedoresfrmProveedor.Columns.Add(col, g.Traducir(col));
+            // Decisión 64: casilla Activo (desmarcar = CU027, marcar = reactivar)
+            ColumnaActivo.Agregar(dgvProveedoresfrmProveedor, "colActivofrmProveedor", g.Traducir("colActivofrmProveedor"), CambiarActivo);
             AjusteGrilla.Configurar(dgvProveedoresfrmProveedor);
         }
 
@@ -68,10 +70,12 @@ namespace UI
             dgvProveedoresfrmProveedor.Rows.Clear();
             try
             {
-                foreach (var p in GestorProveedor.ListarProveedores())
+                // Decisión 64: activos y dados de baja (en gris), para poder reactivarlos
+                foreach (var p in GestorProveedor.ListarProveedoresConBajas().OrderByDescending(x => x.Activo).ThenBy(x => x.RazonSocial))
                 {
-                    int fila = dgvProveedoresfrmProveedor.Rows.Add(p.RazonSocial, p.CUIT, p.Telefono, p.Correo);
+                    int fila = dgvProveedoresfrmProveedor.Rows.Add(p.RazonSocial, p.CUIT, p.Telefono, p.Correo, p.Activo);
                     dgvProveedoresfrmProveedor.Rows[fila].Tag = p;
+                    ColumnaActivo.Pintar(dgvProveedoresfrmProveedor.Rows[fila], p.Activo);
                 }
                 dgvProveedoresfrmProveedor.ClearSelection();
             }
@@ -120,7 +124,8 @@ namespace UI
                 for (int i = 0; i < clbInsumosfrmProveedor.Items.Count; i++)
                     clbInsumosfrmProveedor.SetItemChecked(i, asociados.Contains(((BE.INSUMO)clbInsumosfrmProveedor.Items[i]).IdInsumo));
                 btnAltafrmProveedor.Enabled = false;
-                btnModificacionfrmProveedor.Enabled = btnBajafrmProveedor.Enabled = true;
+                // Un proveedor dado de baja solo se reactiva (casilla Activo)
+                btnModificacionfrmProveedor.Enabled = btnBajafrmProveedor.Enabled = p.Activo;
             }
             catch (Exception ex)
             {
@@ -179,6 +184,11 @@ namespace UI
                 Avisar("msgProveedorSeleccionar");
                 return;
             }
+            if (!seleccionado.Activo)
+            {
+                Avisar("msgProveedorReactivarPrimero");
+                return;
+            }
             var proveedor = LeerCampos();
             proveedor.IdProveedor = seleccionado.IdProveedor;
             try
@@ -208,13 +218,52 @@ namespace UI
         // CU027 Dar de Baja Proveedor (FA1 órdenes abiertas, FA2 cancelación)
         private void btnBajafrmProveedor_Click(object sender, EventArgs e)
         {
-            var g = GestorIdioma.Instancia;
             var seleccionado = ProveedorSeleccionado();
             if (seleccionado == null)
             {
                 Avisar("msgProveedorSeleccionar");
                 return;
             }
+            DarDeBaja(seleccionado);
+        }
+
+        // Decisión 64: la casilla Activo de la grilla da de baja o reactiva
+        private void CambiarActivo(DataGridViewRow fila, bool activar)
+        {
+            var proveedor = fila.Tag as BE.PROVEEDOR;
+            if (proveedor == null) return;
+            if (activar)
+                Reactivar(proveedor);
+            else
+                DarDeBaja(proveedor);
+        }
+
+        private void Reactivar(BE.PROVEEDOR proveedor)
+        {
+            var g = GestorIdioma.Instancia;
+            if (MessageBox.Show(string.Format(g.Traducir("msgProveedorConfirmarReactivar"), proveedor.RazonSocial, proveedor.CUIT), g.Traducir("msgProveedorConfirmarTitulo"),
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+            try
+            {
+                GestorProveedor.ReactivarProveedor(proveedor.IdProveedor);
+                MessageBox.Show(g.Traducir("msgProveedorReactivado"), g.Traducir("frmProveedor"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarProveedores();
+                ModoAlta();
+            }
+            catch (ArgumentException argEx)
+            {
+                Avisar(argEx.Message);
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
+            }
+        }
+
+        private void DarDeBaja(BE.PROVEEDOR seleccionado)
+        {
+            var g = GestorIdioma.Instancia;
             try
             {
                 var ordenes = GestorProveedor.VerificarBajaProveedor(seleccionado.IdProveedor);

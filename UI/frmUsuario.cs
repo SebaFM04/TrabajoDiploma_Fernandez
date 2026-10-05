@@ -37,6 +37,8 @@ namespace UI
             dataGridView1.Columns.Add("Apellido", "Apellido");
             dataGridView1.Columns.Add("Dni", "Dni");
             dataGridView1.Columns.Add("CorreoElectronico", "Correo Electronico");
+            // Decisión 64: casilla Activo (desmarcar = baja lógica, marcar = reactivar)
+            ColumnaActivo.Agregar(dataGridView1, "colActivofrmUsuario", GestorIdioma.Instancia.Traducir("colActivofrmUsuario"), CambiarActivo);
             AjusteGrilla.Configurar(dataGridView1);
         }
 
@@ -55,13 +57,16 @@ namespace UI
                 string nombreUsuario = dictUsuarios.ContainsKey(registro.IdUsuario)
                                        ? dictUsuarios[registro.IdUsuario]
                                        : "Desconocido";
-                dataGridView1.Rows.Add(
+                int fila = dataGridView1.Rows.Add(
                     registro.IdUsuario,
                     nombreUsuario,
                     registro.ApellidoUsuario,
                     registro.Dni,
-                    registro.CorreoElectronico  
+                    registro.CorreoElectronico,
+                    registro.Activo
                 );
+                dataGridView1.Rows[fila].Tag = registro;
+                ColumnaActivo.Pintar(dataGridView1.Rows[fila], registro.Activo);
             }
         }
 
@@ -175,30 +180,67 @@ namespace UI
                 return;
             }
 
-            string correo = row.Cells[4].Value?.ToString() ?? "";
-            var confirm = MessageBox.Show($"¿Confirma que desea borrar el usuario '{correo}'?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DarDeBaja(id, row.Cells[4].Value?.ToString() ?? "");
+        }
+
+        // Decisión 64: la casilla Activo de la grilla da de baja o reactiva
+        private void CambiarActivo(DataGridViewRow fila, bool activar)
+        {
+            var u = fila.Tag as BE.USUARIO;
+            if (u == null) return;
+            if (activar)
+                Reactivar(u);
+            else
+                DarDeBaja(u.IdUsuario, u.CorreoElectronico);
+        }
+
+        // Baja lógica (decisión 64): el usuario deja de poder iniciar sesión y conserva su historial
+        private void DarDeBaja(int id, string correo)
+        {
+            var g = GestorIdioma.Instancia;
+            var confirm = MessageBox.Show(string.Format(g.Traducir("msgUsuarioConfirmarBaja"), correo), g.Traducir("msgUsuarioConfirmarTitulo"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirm != DialogResult.Yes) return;
 
             try
             {
-                BE.USUARIO u = new BE.USUARIO();
-                u.IdUsuario = id;
-                int filas = GestorUsuario.EliminarUsuario(u);
+                int filas = GestorUsuario.EliminarUsuario(new BE.USUARIO { IdUsuario = id, CorreoElectronico = correo });
                 if (filas > 0)
                 {
-                    MessageBox.Show("Usuario borrado correctamente.", "Baja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(g.Traducir("msgUsuarioBaja"), g.Traducir("msgUsuarioConfirmarTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarUsuarios();
                     // Limpiar campos
                     textBox1.Text = textBox2.Text = textBox3.Text = textBox4.Text = textBox5.Text = string.Empty;
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo borrar el usuario.", "Baja", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(g.Traducir("msgUsuarioBajaFallida"), g.Traducir("msgUsuarioConfirmarTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("msgUsuarioConfirmarTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al borrar el usuario: " + ex.GetBaseException().Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(g.Traducir("msgUsuarioError") + ex.GetBaseException().Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Reactivar(BE.USUARIO u)
+        {
+            var g = GestorIdioma.Instancia;
+            if (MessageBox.Show(string.Format(g.Traducir("msgUsuarioConfirmarReactivar"), u.CorreoElectronico), g.Traducir("msgUsuarioConfirmarTitulo"),
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+            try
+            {
+                GestorUsuario.ReactivarUsuario(u);
+                MessageBox.Show(g.Traducir("msgUsuarioReactivado"), g.Traducir("msgUsuarioConfirmarTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarUsuarios();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(g.Traducir("msgUsuarioError") + ex.GetBaseException().Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -216,6 +258,13 @@ namespace UI
             if (!int.TryParse(row.Cells[0].Value?.ToString(), out id))
             {
                 MessageBox.Show("ID de usuario inválido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Decisión 64: un usuario dado de baja solo se reactiva (casilla Activo)
+            if (row.Tag is BE.USUARIO seleccionado && !seleccionado.Activo)
+            {
+                MessageBox.Show(GestorIdioma.Instancia.Traducir("msgUsuarioReactivarPrimero"), GestorIdioma.Instancia.Traducir("msgUsuarioConfirmarTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -283,6 +332,8 @@ namespace UI
                     continue;
                 ctrl.Text = GestorIdioma.Instancia.Traducir(ctrl.Name);
             }
+            if (dataGridView1.Columns.Contains("colActivofrmUsuario"))
+                dataGridView1.Columns["colActivofrmUsuario"].HeaderText = GestorIdioma.Instancia.Traducir("colActivofrmUsuario");
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)

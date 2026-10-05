@@ -46,8 +46,11 @@ namespace BLL
             return new MAPPER_USUARIO().BuscarUsuario(Correo, Contraseña);
         }
 
+        // Decisión 64: baja lógica (Activo = 0). Un usuario no puede darse de baja a sí mismo.
         public int EliminarUsuario(BE.USUARIO usuario)
         {
+            if (SessionManager.Instancia.IsLogged() && SessionManager.Instancia.UsuarioActual.IdUsuario == usuario.IdUsuario)
+                throw new ArgumentException("msgUsuarioBajaPropia");
             BE.USUARIO usuarioBorrado = usuario;
             int filas = GestorUsuario.BajaUsuario(usuario);
             try
@@ -56,6 +59,22 @@ namespace BLL
                 {
                     new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Baja de usuario", $"Se eliminó el usuario: {usuarioBorrado.CorreoElectronico}");
                 }
+            }
+            catch
+            {
+                // No interrumpir por fallos en bitácora
+            }
+            return filas;
+        }
+
+        // Decisión 64: reactivación de un usuario dado de baja (puede volver a iniciar sesión)
+        public int ReactivarUsuario(BE.USUARIO usuario)
+        {
+            int filas = GestorUsuario.ReactivarUsuario(usuario);
+            try
+            {
+                if (SessionManager.Instancia != null && SessionManager.Instancia.IsLogged())
+                    new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Reactivación de usuario", $"Se reactivó el usuario: {usuario.CorreoElectronico}");
             }
             catch
             {

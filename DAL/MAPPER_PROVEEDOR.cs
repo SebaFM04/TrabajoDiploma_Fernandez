@@ -27,11 +27,36 @@ namespace DAL
         // CU016 / CU026 / CU027: proveedores activos
         public List<BE.PROVEEDOR> ListarProveedores()
         {
+            return Listar("ListarProveedorActivo");
+        }
+
+        // Decisión 64: todos los proveedores, activos y dados de baja
+        public List<BE.PROVEEDOR> ListarTodos()
+        {
+            return Listar("ListarProveedor");
+        }
+
+        // Decisión 64: reactivación (Activo = 1)
+        public void ReactivarProveedor(int idProveedor)
+        {
+            acceso.Abrir();
+            try
+            {
+                acceso.Escribir("ReactivarProveedor", new List<SqlParameter> { acceso.CrearParametro("@IdProveedor", idProveedor) });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        private List<BE.PROVEEDOR> Listar(string sp)
+        {
             acceso.Abrir();
             DataTable tabla;
             try
             {
-                tabla = acceso.Leer("ListarProveedorActivo");
+                tabla = acceso.Leer(sp);
             }
             finally
             {

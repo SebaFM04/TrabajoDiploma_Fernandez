@@ -56,6 +56,24 @@ namespace DAL
             return filas;
         }
 
+        // Decisión 64: reactivación (Activo = 1) con el DVH recalculado
+        public int ReactivarProducto(BE.PRODUCTO Producto)
+        {
+            acceso.Abrir();
+            try
+            {
+                return acceso.Escribir("ReactivarProducto", new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@IdProducto", Producto.IdProducto),
+                    acceso.CrearParametro("@DVH", Producto.DVH)
+                });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
         public int EditarProducto(BE.PRODUCTO Producto)
         {
             string NombreSp = "ModificarProducto";

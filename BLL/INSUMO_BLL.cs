@@ -147,6 +147,26 @@ namespace BLL
         public const string UsoComidas = "Comidas";
 
         // Decisión 58: insumos activos según su uso. Los de ambos usos aparecen en los dos filtros.
+        // Decisión 64: ABM de insumos, activos y dados de baja del uso elegido
+        public List<BE.INSUMO> ListarInsumos(string uso)
+        {
+            var insumos = GestorInsumo.ListarInsumos();
+            if (uso == UsoBebidas) return insumos.Where(i => i.UsoBebidas).ToList();
+            if (uso == UsoComidas) return insumos.Where(i => i.UsoComidas).ToList();
+            return insumos;
+        }
+
+        // Decisión 64: reactivación de un insumo dado de baja (vuelve a estar disponible para recetas y órdenes)
+        public void ReactivarInsumo(int idInsumo)
+        {
+            var insumo = GestorInsumo.BuscarInsumo(idInsumo);
+            if (insumo == null)
+                throw new ArgumentException("msgInsumoInexistente");
+            if (insumo.Activo) return;
+            GestorInsumo.ReactivarInsumo(idInsumo);
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Reactivación de insumo", $"Se reactivó el insumo: {insumo.Nombre}");
+        }
+
         public List<BE.INSUMO> ListarInsumosPorUso(string uso)
         {
             var insumos = GestorInsumo.ListarInsumosActivos();

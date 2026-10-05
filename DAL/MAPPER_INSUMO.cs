@@ -135,6 +135,36 @@ namespace DAL
             return MapearInsumo(tabla.Rows[0]);
         }
 
+        // Decisión 64: todos los insumos, activos y dados de baja (SP ListarInsumo; el método ya figuraba en EA)
+        public List<BE.INSUMO> ListarInsumos()
+        {
+            acceso.Abrir();
+            DataTable tabla;
+            try
+            {
+                tabla = acceso.Leer("ListarInsumo");
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            return tabla.Rows.Cast<DataRow>().Select(MapearInsumo).ToList();
+        }
+
+        // Decisión 64: reactivación (Activo = 1)
+        public int ReactivarInsumo(int idInsumo)
+        {
+            acceso.Abrir();
+            try
+            {
+                return acceso.Escribir("ReactivarInsumo", new List<SqlParameter> { acceso.CrearParametro("@IdInsumo", idInsumo) });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
         // CU025: baja lógica (Activo = 0)
         public int BajaInsumo(int idInsumo)
         {

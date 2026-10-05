@@ -132,6 +132,40 @@ namespace BLL
             return filas;
         }
 
+        // Decisión 64: insumos dados de baja que usa la receta del producto. Si hay alguno, el producto no se reactiva
+        // (un producto activo nunca usa insumos dados de baja, como en CU025 FA1).
+        public List<BE.INSUMO> VerificarReactivacionProducto(int idProducto)
+        {
+            return new MAPPER_RECETA().BuscarRecetaPorProducto(idProducto)
+                .Where(r => !r.Insumo.Activo).Select(r => r.Insumo).ToList();
+        }
+
+        // Decisión 64: reactivación del producto dado de baja, con DVH, control de cambios y Bitácora como la baja
+        public int ReactivarProducto(BE.PRODUCTO producto)
+        {
+            var productoActual = GestorProducto.ObtenerPorId(producto.IdProducto);
+            if (productoActual == null)
+                throw new ArgumentException("msgProductoInexistente");
+            if (productoActual.Activo)
+                return 0;
+            if (VerificarReactivacionProducto(producto.IdProducto).Count > 0)
+                throw new ArgumentException("msgProductoReactivarInsumosInactivos");
+
+            productoActual.Activo = true;
+            productoActual.DVH = dvBLL.CalcularDVH(productoActual);
+            int filas = GestorProducto.ReactivarProducto(productoActual);
+
+            // Sin valor anterior: el control de cambios no la ofrece para revertir (como el alta y la baja)
+            cambiosBLL.RegistrarCambio(SessionManager.Instancia.UsuarioActual.IdUsuario, producto.IdProducto, "ACTIVO", "", productoActual.Nombre, "Reactivación");
+            try
+            {
+                dvBLL.RecalcularDV();
+                new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Reactivación de producto", $"Se reactivó el producto: {productoActual.Nombre}");
+            }
+            catch { }
+            return filas;
+        }
+
         // CU008 Modificar producto: nombre, tipo, tamaños y precios (decisión 51) en una sola transacción
         public int ModificarProducto(BE.PRODUCTO producto)
         {

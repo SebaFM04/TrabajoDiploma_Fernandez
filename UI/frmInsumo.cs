@@ -55,6 +55,8 @@ namespace UI
             {
                 dataGridView1.Columns.Add(columna, g.Traducir(columna));
             }
+            // Decisión 64: casilla Activo (desmarcar = CU025, marcar = reactivar)
+            ColumnaActivo.Agregar(dataGridView1, "colActivofrmInsumo", g.Traducir("colActivofrmInsumo"), CambiarActivo);
             AjusteGrilla.Configurar(dataGridView1);
         }
 
@@ -105,8 +107,9 @@ namespace UI
             nudStockInicialfrmInsumo.Enabled = false;
             MostrarStockCalculado();
             btnAltafrmInsumo.Enabled = false;
-            btnModificacionfrmInsumo.Enabled = true;
-            btnBajafrmInsumo.Enabled = true;
+            // Un insumo dado de baja solo se reactiva (casilla Activo)
+            btnModificacionfrmInsumo.Enabled = insumo.Activo;
+            btnBajafrmInsumo.Enabled = insumo.Activo;
         }
 
         private void CargarInsumos()
@@ -116,12 +119,14 @@ namespace UI
             dataGridView1.Rows.Clear();
             try
             {
-                foreach (var i in GestorInsumo.ListarInsumosPorUso(usos[Math.Max(0, cmbFiltroUsofrmInsumo.SelectedIndex)]))
+                // Decisión 64: activos y dados de baja (en gris), para poder reactivarlos
+                foreach (var i in GestorInsumo.ListarInsumos(usos[Math.Max(0, cmbFiltroUsofrmInsumo.SelectedIndex)]).OrderByDescending(x => x.Activo).ThenBy(x => x.Nombre))
                 {
                     int fila = dataGridView1.Rows.Add(i.IdInsumo, i.Nombre, i.UnidadMedida, i.UnidadCompra,
                         i.EquivalenciaMagnitud.ToString("0.###"), i.VolumenPesoDisponible.ToString("0.###"),
-                        i.UmbralReposicion.ToString("0.###"), FormatoMoneda.Pesos(i.CostoUnidadCompra), TextoUso(i));
+                        i.UmbralReposicion.ToString("0.###"), FormatoMoneda.Pesos(i.CostoUnidadCompra), TextoUso(i), i.Activo);
                     dataGridView1.Rows[fila].Tag = i;
+                    ColumnaActivo.Pintar(dataGridView1.Rows[fila], i.Activo);
                 }
                 dataGridView1.ClearSelection();
             }
@@ -258,6 +263,11 @@ namespace UI
                 return;
             }
 
+            if (!seleccionado.Activo)
+            {
+                MessageBox.Show(g.Traducir("msgInsumoReactivarPrimero"), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             var insumo = LeerCampos();
             insumo.IdInsumo = seleccionado.IdInsumo;
             try
@@ -288,7 +298,46 @@ namespace UI
                 MessageBox.Show(g.Traducir("msgInsumoSeleccionar"), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            DarDeBaja(seleccionado);
+        }
 
+        // Decisión 64: la casilla Activo de la grilla da de baja o reactiva
+        private void CambiarActivo(DataGridViewRow fila, bool activar)
+        {
+            var insumo = fila.Tag as BE.INSUMO;
+            if (insumo == null) return;
+            if (activar)
+                Reactivar(insumo);
+            else
+                DarDeBaja(insumo);
+        }
+
+        private void Reactivar(BE.INSUMO insumo)
+        {
+            var g = GestorIdioma.Instancia;
+            if (MessageBox.Show(string.Format(g.Traducir("msgInsumoConfirmarReactivar"), insumo.Nombre), g.Traducir("msgInsumoConfirmarTitulo"),
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+            try
+            {
+                GestorInsumo.ReactivarInsumo(insumo.IdInsumo);
+                MessageBox.Show(g.Traducir("msgInsumoReactivado"), g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarInsumos();
+                ModoAlta();
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("msgInsumoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(g.Traducir("msgInsumoErrorOperacion") + ex.GetBaseException().Message, g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DarDeBaja(BE.INSUMO seleccionado)
+        {
+            var g = GestorIdioma.Instancia;
             try
             {
                 // Paso 2 / FA1: el insumo no puede estar en recetas de productos activos

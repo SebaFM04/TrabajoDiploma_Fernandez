@@ -87,6 +87,20 @@ namespace DAL
             }
         }
 
+        // Decisión 64: reactivación (Activo = 1)
+        public int ReactivarUsuario(BE.USUARIO Usuario)
+        {
+            acceso.Abrir();
+            try
+            {
+                return acceso.Escribir("ReactivarUsuario", new List<SqlParameter> { acceso.CrearParametro("@IdUsuario", Usuario.IdUsuario) });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
         public List<BE.USUARIO> ListarUsuarios()
         {
             List<BE.USUARIO> listaUsuarios = new List<BE.USUARIO>();
@@ -106,6 +120,7 @@ namespace DAL
                 usuario.NombreUsuario = u["NombreUsuario"].ToString();
                 usuario.ApellidoUsuario = u["ApellidoUsuario"].ToString();
                 usuario.Dni = int.Parse(u["Dni"].ToString());
+                usuario.Activo = Convert.ToBoolean(u["Activo"]);
                 listaUsuarios.Add(usuario);
             }
             return  listaUsuarios;

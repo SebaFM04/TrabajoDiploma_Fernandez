@@ -65,6 +65,14 @@ namespace BE
             set { idIdioma = value; }
         }
 
+        // Decisión 64: baja lógica de usuarios (antes se borraban y fallaba por la Bitácora)
+        private bool activo = true;
+        public bool Activo
+        {
+            get { return activo; }
+            set { activo = value; }
+        }
+
         public bool TienePermiso(string nombrePermiso)
         {
             if (PermisosAsignados == null) return false;

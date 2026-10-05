@@ -127,6 +127,23 @@ namespace BLL
         }
 
         // CU027 Dar de Baja Proveedor: baja lógica, conserva el historial
+        // Decisión 64: ABM de proveedores, activos y dados de baja
+        public List<BE.PROVEEDOR> ListarProveedoresConBajas()
+        {
+            return GestorProveedor.ListarTodos();
+        }
+
+        // Decisión 64: reactivación de un proveedor dado de baja (vuelve a estar disponible para órdenes de compra)
+        public void ReactivarProveedor(int idProveedor)
+        {
+            var proveedor = GestorProveedor.ListarTodos().FirstOrDefault(p => p.IdProveedor == idProveedor);
+            if (proveedor == null)
+                throw new ArgumentException("msgProveedorInexistente");
+            if (proveedor.Activo) return;
+            GestorProveedor.ReactivarProveedor(idProveedor);
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Reactivación de proveedor", $"Se reactivó el proveedor: {proveedor.RazonSocial}");
+        }
+
         public void DarDeBajaProveedor(int idProveedor)
         {
             var proveedor = GestorProveedor.ListarProveedores().FirstOrDefault(p => p.IdProveedor == idProveedor);

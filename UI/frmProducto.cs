@@ -44,6 +44,8 @@ namespace UI
             dataGridView1.Columns.Add("colNombrefrmProducto", g.Traducir("colNombrefrmProducto"));
             dataGridView1.Columns.Add("colTipofrmProducto", g.Traducir("colTipofrmProducto"));
             dataGridView1.Columns["colIdfrmProducto"].Visible = false;
+            // Decisión 64: casilla Activo (desmarcar = CU007, marcar = reactivar)
+            ColumnaActivo.Agregar(dataGridView1, "colActivofrmProducto", g.Traducir("colActivofrmProducto"), CambiarActivo);
             AjusteGrilla.Configurar(dataGridView1);
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
@@ -81,11 +83,12 @@ namespace UI
             dataGridView1.Rows.Clear();
             try
             {
-                // Solo activos: los dados de baja no se operan
-                foreach (var p in GestorProducto.ListarProductosActivos())
+                // Decisión 64: activos y dados de baja (en gris), para poder reactivarlos
+                foreach (var p in GestorProducto.ListarProductos().OrderByDescending(x => x.Activo).ThenBy(x => x.Nombre))
                 {
-                    int fila = dataGridView1.Rows.Add(p.IdProducto, p.Nombre, p.Tipo);
+                    int fila = dataGridView1.Rows.Add(p.IdProducto, p.Nombre, p.Tipo, p.Activo);
                     dataGridView1.Rows[fila].Tag = p;
+                    ColumnaActivo.Pintar(dataGridView1.Rows[fila], p.Activo);
                 }
                 dataGridView1.ClearSelection();
             }
@@ -204,14 +207,60 @@ namespace UI
         // CU007 Dar de baja producto (baja lógica)
         private void btnBajafrmProducto_Click(object sender, EventArgs e)
         {
-            var g = GestorIdioma.Instancia;
             var seleccionado = ProductoSeleccionado();
             if (seleccionado == null)
             {
                 Avisar("msgProductoSeleccionar");
                 return;
             }
+            DarDeBaja(seleccionado);
+        }
 
+        // Decisión 64: la casilla Activo de la grilla da de baja o reactiva
+        private void CambiarActivo(DataGridViewRow fila, bool activar)
+        {
+            var producto = fila.Tag as BE.PRODUCTO;
+            if (producto == null) return;
+            if (activar)
+                Reactivar(producto);
+            else
+                DarDeBaja(producto);
+        }
+
+        // Decisión 64: no se reactiva si la receta usa insumos dados de baja
+        private void Reactivar(BE.PRODUCTO producto)
+        {
+            var g = GestorIdioma.Instancia;
+            try
+            {
+                var inactivos = GestorProducto.VerificarReactivacionProducto(producto.IdProducto);
+                if (inactivos.Count > 0)
+                {
+                    MessageBox.Show(string.Format(g.Traducir("msgProductoReactivarInsumosInactivos"), string.Join(", ", inactivos.Select(i => i.Nombre))),
+                        g.Traducir("msgProductoAviso"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (MessageBox.Show(string.Format(g.Traducir("msgProductoConfirmarReactivar"), producto.Nombre), g.Traducir("msgProductoConfirmarTitulo"),
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    return;
+                GestorProducto.ReactivarProducto(producto);
+                MessageBox.Show(g.Traducir("msgProductoReactivado"), g.Traducir("frmProducto"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarProductos();
+                ModoAlta();
+            }
+            catch (ArgumentException argEx)
+            {
+                Avisar(argEx.Message);
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
+            }
+        }
+
+        private void DarDeBaja(BE.PRODUCTO seleccionado)
+        {
+            var g = GestorIdioma.Instancia;
             var confirm = MessageBox.Show(string.Format(g.Traducir("msgProductoConfirmarBaja"), seleccionado.Nombre),
                 g.Traducir("msgProductoConfirmarTitulo"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirm != DialogResult.Yes) return;
@@ -244,6 +293,11 @@ namespace UI
             if (seleccionado == null)
             {
                 Avisar("msgProductoSeleccionar");
+                return;
+            }
+            if (!seleccionado.Activo)
+            {
+                Avisar("msgProductoReactivarPrimero");
                 return;
             }
             var producto = LeerProducto();
@@ -286,8 +340,9 @@ namespace UI
                 cmbTipofrmProducto.SelectedIndexChanged += cmbTipofrmProducto_SelectedIndexChanged;
                 CargarTamanios(seleccionado.Tipo, precios);
                 btnAltafrmProducto.Enabled = false;
-                btnModificacionfrmProducto.Enabled = true;
-                btnBajafrmProducto.Enabled = true;
+                // Un producto dado de baja solo se reactiva (casilla Activo)
+                btnModificacionfrmProducto.Enabled = seleccionado.Activo;
+                btnBajafrmProducto.Enabled = seleccionado.Activo;
             }
             catch (Exception ex)
             {

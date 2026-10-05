@@ -27,6 +27,22 @@ namespace BLL
             return GestorOrden.ListarPorEstado(estado);
         }
 
+        // Consulta de compras (decisión 63): estados para el filtro
+        public string[] ListarEstados()
+        {
+            return new[] { EstadoPendienteAprobacion, EstadoObservada, EstadoAprobada, EstadoRecibidaParcialmente, EstadoCerrada, EstadoPagada };
+        }
+
+        // Consulta de compras (decisión 63): órdenes generadas entre dos fechas (días completos); estado y proveedor opcionales
+        public List<BE.ORDEN_COMPRA> ListarOrdenes(DateTime desde, DateTime hasta, string estado, int? idProveedor)
+        {
+            if (desde.Date > hasta.Date)
+                throw new ArgumentException("msgConsultaFechasInvalidas");
+            if (estado != null && Array.IndexOf(ListarEstados(), estado) < 0)
+                throw new ArgumentException("msgOrdenEstadoInvalido");
+            return GestorOrden.ListarOrdenes(desde.Date, hasta.Date.AddDays(1), estado, idProveedor);
+        }
+
         // CU019 paso 2 (mensajes 2-10): órdenes "Aprobada" o "Recibida parcialmente"
         public List<BE.ORDEN_COMPRA> ListarPendientesRecepcion()
         {

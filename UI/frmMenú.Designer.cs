@@ -43,6 +43,7 @@
             this.entregaPiqueosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaComprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagoProveedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recepcionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -249,9 +250,17 @@
             this.entregaBebidasToolStripMenuItem.Text = "Entrega de bebidas (Barra)";
             this.entregaBebidasToolStripMenuItem.Click += new System.EventHandler(this.entregaBebidasToolStripMenuItem_Click);
             //
+            // consultaComprasToolStripMenuItem
+            //
+            this.consultaComprasToolStripMenuItem.Name = "consultaComprasToolStripMenuItem";
+            this.consultaComprasToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.consultaComprasToolStripMenuItem.Text = "Compras a proveedores";
+            this.consultaComprasToolStripMenuItem.Click += new System.EventHandler(this.consultaComprasToolStripMenuItem_Click);
+            //
             // consultasToolStripMenuItem
             //
             this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.consultaComprasToolStripMenuItem,
             this.consultaVentasToolStripMenuItem,
             this.consultaValesToolStripMenuItem});
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
@@ -509,6 +518,7 @@
         private System.Windows.Forms.ToolStripMenuItem entregaPiqueosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaBebidasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaComprasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaVentasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaValesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adminitraciónToolStripMenuItem;

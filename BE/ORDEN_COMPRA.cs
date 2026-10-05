@@ -67,6 +67,22 @@ namespace BE
             set { detalles = value; }
         }
 
+        // Consulta de compras: pago de la orden (null si no está pagada)
+        private PAGO_PROVEEDOR pago;
+        public PAGO_PROVEEDOR Pago
+        {
+            get { return pago; }
+            set { pago = value; }
+        }
+
+        // Consulta de compras: Σ cantidad recibida × costo de cada recepción (dato calculado)
+        private decimal totalRecibido;
+        public decimal TotalRecibido
+        {
+            get { return totalRecibido; }
+            set { totalRecibido = value; }
+        }
+
         public override string ToString()
         {
             return $"{IdOrdenCompra} - {Proveedor?.RazonSocial}";

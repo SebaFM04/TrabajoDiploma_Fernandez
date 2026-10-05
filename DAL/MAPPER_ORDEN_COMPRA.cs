@@ -107,6 +107,32 @@ namespace DAL
             return tabla.Rows.Cast<DataRow>().Select(MapearCabecera).ToList();
         }
 
+        // Consulta de compras: órdenes generadas en [desde, hasta), con el total recibido y el pago. Estado y proveedor son opcionales.
+        public List<BE.ORDEN_COMPRA> ListarOrdenes(DateTime desde, DateTime hasta, string estado, int? idProveedor)
+        {
+            var parametros = new List<SqlParameter> { acceso.CrearParametro("@Desde", desde), acceso.CrearParametro("@Hasta", hasta) };
+            // Sin filtro, el parámetro no se envía y el SP usa NULL
+            if (estado != null) parametros.Add(acceso.CrearParametro("@Estado", estado));
+            if (idProveedor.HasValue) parametros.Add(acceso.CrearParametro("@IdProveedor", idProveedor.Value));
+            DataTable tabla = LeerTabla("ListarOrdenCompraPorFecha", parametros.ToArray());
+            return tabla.Rows.Cast<DataRow>().Select(u =>
+            {
+                var orden = MapearCabecera(u);
+                orden.TotalRecibido = Convert.ToDecimal(u["TotalRecibido"]);
+                if (u["IdPago"] != DBNull.Value)
+                    orden.Pago = new BE.PAGO_PROVEEDOR
+                    {
+                        IdPago = Convert.ToInt32(u["IdPago"]),
+                        IdOrdenCompra = orden.IdOrdenCompra,
+                        FechaPago = Convert.ToDateTime(u["FechaPago"]),
+                        MedioPago = u["MedioPago"].ToString(),
+                        Monto = Convert.ToDecimal(u["Monto"]),
+                        NumeroComprobante = u["NumeroComprobante"].ToString()
+                    };
+                return orden;
+            }).ToList();
+        }
+
         // Orden con sus líneas y los datos de cada insumo. null si no existe.
         public BE.ORDEN_COMPRA BuscarOrden(int idOrdenCompra)
         {

@@ -52,6 +52,7 @@ namespace UI
             controlCambiosToolStripMenuItem.Available = tiene("Control Cambios");
 
             admIdiomasToolStripMenuItem.Available = tiene("Gestion Idiomas");
+            consultaComprasToolStripMenuItem.Available = tiene("Consulta Compras");
             pagoProveedorToolStripMenuItem.Available = tiene("Registrar Pagos");
             recepcionToolStripMenuItem.Available = tiene("Registrar Recepcion");
             aprobacionOrdenToolStripMenuItem.Available = tiene("Aprobar Ordenes Compra");
@@ -245,6 +246,12 @@ namespace UI
         private void pagoProveedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmPagoProveedor());
+        }
+
+        // Consulta de compras (decisión 63)
+        private void consultaComprasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmConsultaCompras());
         }
 
         private void consultaValesToolStripMenuItem_Click(object sender, EventArgs e)

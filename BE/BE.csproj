@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ANALISIS_ITEM.cs" />
+    <Compile Include="ANALISIS_PUNTO.cs" />
+    <Compile Include="ANALISIS_RENTABILIDAD.cs" />
+    <Compile Include="ANALISIS_SERIE.cs" />
     <Compile Include="BITACORA.cs" />
     <Compile Include="CONTROLCAMBIO.cs" />
     <Compile Include="DIGITOVERIFICADOR.cs" />

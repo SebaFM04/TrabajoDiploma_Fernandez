@@ -48,6 +48,7 @@
     <Compile Include="MAPPER_DIGITOVERIFICADOR.cs" />
     <Compile Include="MAPPER_IDIOMA.cs" />
     <Compile Include="MAPPER_INSUMO.cs" />
+    <Compile Include="MAPPER_LOTE.cs" />
     <Compile Include="MAPPER_PERMISO.cs" />
     <Compile Include="MAPPER_PRODUCTO.cs" />
     <Compile Include="MAPPER_RECETA.cs" />

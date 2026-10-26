@@ -18,7 +18,7 @@ namespace DAL
             acceso = new ACCESO();
         }
 
-        // CU010: se usa dentro de la transacción de la venta (decisión 27)
+        // CU010, CU019, CU023 y CU036: se usa dentro de la transacción de la operación (decisión 27)
         public MAPPER_INSUMO(ACCESO accesoCompartido)
         {
             acceso = accesoCompartido;
@@ -80,6 +80,7 @@ namespace DAL
             parametros.Add(acceso.CrearParametro("@CostoUnidadCompra", Insumo.CostoUnidadCompra));
             parametros.Add(acceso.CrearParametro("@UsoBebidas", Insumo.UsoBebidas ? 1 : 0));
             parametros.Add(acceso.CrearParametro("@UsoComidas", Insumo.UsoComidas ? 1 : 0));
+            parametros.Add(acceso.CrearParametro("@Perecedero", Insumo.Perecedero ? 1 : 0));
 
             DataTable tabla;
             try
@@ -111,6 +112,7 @@ namespace DAL
             parametros.Add(acceso.CrearParametro("@CostoUnidadCompra", Insumo.CostoUnidadCompra));
             parametros.Add(acceso.CrearParametro("@UsoBebidas", Insumo.UsoBebidas ? 1 : 0));
             parametros.Add(acceso.CrearParametro("@UsoComidas", Insumo.UsoComidas ? 1 : 0));
+            parametros.Add(acceso.CrearParametro("@Perecedero", Insumo.Perecedero ? 1 : 0));
             try
             {
                 return acceso.Escribir("ModificarInsumo", parametros);
@@ -318,7 +320,10 @@ namespace DAL
                 AvisoStockBajo = Convert.ToBoolean(u["AvisoStockBajo"]),
                 Activo = Convert.ToBoolean(u["Activo"]),
                 UsoBebidas = Convert.ToBoolean(u["UsoBebidas"]),
-                UsoComidas = Convert.ToBoolean(u["UsoComidas"])
+                UsoComidas = Convert.ToBoolean(u["UsoComidas"]),
+                Perecedero = Convert.ToBoolean(u["Perecedero"]),
+                StockVendible = Convert.ToDecimal(u["StockVendible"]),
+                ProximoVencimiento = u["ProximoVencimiento"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(u["ProximoVencimiento"])
             };
         }
     }

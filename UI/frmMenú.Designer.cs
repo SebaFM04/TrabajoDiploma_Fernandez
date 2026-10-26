@@ -43,6 +43,8 @@
             this.entregaPiqueosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rentabilidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simuladorVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaComprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagoProveedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,6 +113,7 @@
             this.operacionBarToolStripMenuItem,
             this.consultasToolStripMenuItem,
             this.comprasToolStripMenuItem,
+            this.rentabilidadToolStripMenuItem,
             this.adminitraciónToolStripMenuItem,
             this.idiomaToolStripMenuItem});
             this.mnstripMenu.Location = new System.Drawing.Point(0, 0);
@@ -277,6 +280,21 @@
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
             this.consultasToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.consultasToolStripMenuItem.Text = "Consultas";
+            //
+            // rentabilidadToolStripMenuItem
+            //
+            this.rentabilidadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.simuladorVentasToolStripMenuItem});
+            this.rentabilidadToolStripMenuItem.Name = "rentabilidadToolStripMenuItem";
+            this.rentabilidadToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.rentabilidadToolStripMenuItem.Text = "Rentabilidad";
+            //
+            // simuladorVentasToolStripMenuItem
+            //
+            this.simuladorVentasToolStripMenuItem.Name = "simuladorVentasToolStripMenuItem";
+            this.simuladorVentasToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.simuladorVentasToolStripMenuItem.Text = "Simulador de ventas";
+            this.simuladorVentasToolStripMenuItem.Click += new System.EventHandler(this.simuladorVentasToolStripMenuItem_Click);
             //
             // consultaVentasToolStripMenuItem
             //
@@ -554,6 +572,8 @@
         private System.Windows.Forms.ToolStripMenuItem entregaPiqueosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entregaBebidasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rentabilidadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simuladorVentasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaComprasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaVentasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaValesToolStripMenuItem;

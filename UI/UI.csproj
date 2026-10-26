@@ -144,6 +144,12 @@
     <Compile Include="frmLote.Designer.cs">
       <DependentUpon>frmLote.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSimuladorVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSimuladorVentas.Designer.cs">
+      <DependentUpon>frmSimuladorVentas.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmStockBajo.cs">
       <SubType>Form</SubType>
     </Compile>

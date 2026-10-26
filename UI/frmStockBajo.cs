@@ -35,11 +35,12 @@ namespace UI
                 foreach (var i in GestorInsumo.ListarStockBajo())
                 {
                     int fila = dgvInsumosfrmStockBajo.Rows.Add(i.Nombre,
-                        i.VolumenPesoDisponible.ToString("#,0.###", CultureInfo.CurrentCulture),
+                        // Decisión 68: stock vendible (sin lotes vencidos)
+                        i.StockVendible.ToString("#,0.###", CultureInfo.CurrentCulture),
                         i.UmbralReposicion.ToString("#,0.###", CultureInfo.CurrentCulture),
                         i.UnidadMedida,
                         g.Traducir(i.AvisoStockBajo ? "msgConsultaSi" : "msgConsultaNo"));
-                    if (i.VolumenPesoDisponible < i.UmbralReposicion)
+                    if (i.StockVendible < i.UmbralReposicion)
                         dgvInsumosfrmStockBajo.Rows[fila].DefaultCellStyle.ForeColor = Color.Firebrick;
                 }
                 dgvInsumosfrmStockBajo.ClearSelection();

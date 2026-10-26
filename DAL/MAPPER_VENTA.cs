@@ -48,7 +48,8 @@ namespace DAL
                         acceso.CrearParametro("@IdProducto", detalle.IdProducto),
                         acceso.CrearParametro("@IdTamanio", detalle.IdTamanio),
                         acceso.CrearParametro("@Cantidad", detalle.Cantidad),
-                        acceso.CrearParametro("@MontoLinea", detalle.MontoLinea)
+                        acceso.CrearParametro("@MontoLinea", detalle.MontoLinea),
+                        acceso.CrearParametro("@CostoLinea", detalle.CostoLinea)
                     };
                     DataTable tDetalle = acceso.Leer("GuardarVentaDetalle", pDetalle);
                     detalle.IdVentaDetalle = Convert.ToInt32(tDetalle.Rows[0]["IdVentaDetalle"]);
@@ -142,6 +143,7 @@ namespace DAL
                     IdTamanio = Convert.ToInt32(u["IdTamaño"]),
                     Cantidad = cantidad,
                     MontoLinea = montoLinea,
+                    CostoLinea = Convert.ToDecimal(u["CostoLinea"]),
                     ProductoTamanio = new BE.PRODUCTO_TAMANIO
                     {
                         IdProducto = Convert.ToInt32(u["IdProducto"]),

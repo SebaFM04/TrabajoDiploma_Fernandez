@@ -241,15 +241,16 @@ namespace BLL
             }
         }
 
-        // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente
+        // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente.
+        // Decisión 68: el umbral se compara contra el stock vendible (sin lotes vencidos).
         public List<BE.INSUMO> ListarStockBajo()
         {
             return GestorInsumo.ListarInsumosActivos()
-                .Where(i => i.VolumenPesoDisponible < i.UmbralReposicion || i.AvisoStockBajo)
+                .Where(i => i.StockVendible < i.UmbralReposicion || i.AvisoStockBajo)
                 .ToList();
         }
 
-        // CU010 mensajes 9-17: hay stock para el consumo requerido. insumoRequerido.Proporcion = cantidad total (decisión 53).
+        // CU010 mensajes 9-17: hay stock vendible (decisión 68) para el consumo requerido. insumoRequerido.Proporcion = cantidad total (decisión 53).
         // Con acceso != null se lee dentro de la transacción de la venta (segunda verificación del paso 5).
         public bool VerificarDisponibilidad(BE.RECETA insumoRequerido, ACCESO acceso = null)
         {
@@ -257,24 +258,42 @@ namespace BLL
             var insumo = mapper.BuscarInsumo(insumoRequerido.IdInsumo);
             if (insumo == null || !insumo.Activo) return false;
             insumoRequerido.Insumo = insumo;
-            return insumo.VolumenPesoDisponible >= insumoRequerido.Proporcion;
+            return insumo.StockVendible >= insumoRequerido.Proporcion;
         }
 
-        // CU010 mensajes 30-35: descuenta el consumo de cada insumo. El stock nunca queda negativo.
-        public void DescontarStock(List<BE.RECETA> consumos, ACCESO acceso)
+        // CU010 mensajes 30-35: descuenta el consumo de cada insumo de sus lotes no vencidos, primero los que vencen antes
+        // (FEFO, decisión 67), y el stock del insumo (decisión 70). El stock nunca queda negativo.
+        // Devuelve, por IdInsumo, el costo por unidad de medida de lo consumido (promedio de los lotes, decisiones 72 y 73).
+        public Dictionary<int, decimal> DescontarStock(List<BE.RECETA> consumos, ACCESO acceso)
         {
             var mapper = new MAPPER_INSUMO(acceso);
+            var mapperLote = new MAPPER_LOTE(acceso);
+            var costos = new Dictionary<int, decimal>();
             foreach (var consumo in consumos)
             {
                 var insumo = mapper.BuscarInsumo(consumo.IdInsumo);
-                if (insumo == null || insumo.VolumenPesoDisponible < consumo.Proporcion)
+                if (insumo == null || insumo.StockVendible < consumo.Proporcion)
+                    throw new ArgumentException("msgVentaStockInsuficiente");
+                decimal resta = consumo.Proporcion;
+                decimal costo = 0;
+                foreach (var lote in mapperLote.ListarLotesVendibles(insumo.IdInsumo))
+                {
+                    if (resta <= 0) break;
+                    decimal tomado = Math.Min(resta, lote.CantidadDisponible);
+                    mapperLote.DescontarLote(lote.IdLote, tomado);
+                    costo += tomado * lote.CostoUnidadMedida;
+                    resta -= tomado;
+                }
+                if (resta > 0)
                     throw new ArgumentException("msgVentaStockInsuficiente");
                 mapper.ActualizarVolumenPeso(insumo.IdInsumo, insumo.VolumenPesoDisponible - consumo.Proporcion);
+                costos[insumo.IdInsumo] = consumo.Proporcion > 0 ? costo / consumo.Proporcion : 0;
             }
+            return costos;
         }
 
-        // CU010 mensajes 18-23, en el paso 5 (decisión 47): después de descontar, los insumos que quedaron
-        // bajo el umbral y no tienen aviso pendiente generan un aviso. Devuelve los insumos avisados.
+        // CU010 mensajes 18-23, en el paso 5 (decisión 47): después de descontar, los insumos cuyo stock vendible
+        // (decisión 68) quedó bajo el umbral y no tienen aviso pendiente generan un aviso. Devuelve los insumos avisados.
         public List<BE.INSUMO> VerificarStockBajoUmbral(List<int> idsInsumo, ACCESO acceso)
         {
             var mapper = new MAPPER_INSUMO(acceso);
@@ -282,7 +301,7 @@ namespace BLL
             foreach (int id in idsInsumo.Distinct())
             {
                 var insumo = mapper.BuscarInsumo(id);
-                if (insumo != null && insumo.VolumenPesoDisponible < insumo.UmbralReposicion && !insumo.AvisoStockBajo)
+                if (insumo != null && insumo.StockVendible < insumo.UmbralReposicion && !insumo.AvisoStockBajo)
                 {
                     GenerarAvisoStockBajo(insumo, mapper);
                     avisados.Add(insumo);
@@ -291,14 +310,14 @@ namespace BLL
             return avisados;
         }
 
-        // Aviso "Pendiente" para el Encargado (lo atiende CU016 en N02)
+        // Aviso "Pendiente" para el Encargado (lo atiende CU016 en N02), con el stock vendible del momento
         private BE.AVISO_STOCK_BAJO GenerarAvisoStockBajo(BE.INSUMO insumo, MAPPER_INSUMO mapper)
         {
             return mapper.GuardarAviso(new BE.AVISO_STOCK_BAJO
             {
                 IdInsumo = insumo.IdInsumo,
                 FechaHora = DateTime.Now,
-                VolumenPesoAlMomento = insumo.VolumenPesoDisponible
+                VolumenPesoAlMomento = insumo.StockVendible
             });
         }
     }

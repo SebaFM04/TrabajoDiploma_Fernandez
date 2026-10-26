@@ -103,6 +103,14 @@ namespace BLL
             return pedido.Monto;
         }
 
+        // Decisión 72: CostoLinea = Σ insumos de la receta escalada (Proporcion × CantidadMagnitud × Cantidad) × costo por
+        // unidad de medida consumido de ese insumo en esta venta (promedio de los lotes FEFO; el consumo se suma por insumo).
+        private void CalcularCostoLineas(Dictionary<BE.VENTA_DETALLE, List<BE.RECETA>> recetas, Dictionary<int, decimal> costos)
+        {
+            foreach (var par in recetas)
+                par.Key.CostoLinea = Math.Round(par.Value.Sum(r => r.Proporcion * (costos.TryGetValue(r.IdInsumo, out decimal c) ? c : 0)), 2);
+        }
+
         // CU010 pasos 4 y 5 (mensajes 29-52). Todo en una sola transacción (decisiones 27, 42 y 47):
         // segunda verificación de stock, descuento, aviso de stock bajo, venta con detalles, vale y comanda.
         public BE.VENTA RegistrarVenta(BE.VENTA venta)
@@ -121,6 +129,9 @@ namespace BLL
             }
             CalcularMontoTotal(venta);
             var consumos = CalcularConsumos(venta, out _);
+            // Receta escalada de cada línea, para el costo (decisión 72). Se lee antes de la transacción:
+            // el SP de la receta lee INSUMO, que la transacción modifica.
+            var recetas = venta.Detalles.ToDictionary(l => l, l => GestorReceta.ObtenerRecetaEscalada(l.IdProducto, l.ProductoTamanio.Tamanio.CantidadMagnitud, l.Cantidad));
             venta.Fecha = DateTime.Now;
 
             var acceso = new ACCESO();
@@ -131,7 +142,8 @@ namespace BLL
                 if (consumos.Any(c => !GestorInsumo.VerificarDisponibilidad(c, acceso)))
                     throw new ArgumentException("msgVentaStockInsuficiente");
 
-                GestorInsumo.DescontarStock(consumos, acceso);
+                var costos = GestorInsumo.DescontarStock(consumos, acceso);
+                CalcularCostoLineas(recetas, costos);
                 GestorInsumo.VerificarStockBajoUmbral(consumos.Select(c => c.IdInsumo).ToList(), acceso);
                 new MAPPER_VENTA(acceso).GuardarVenta(venta);
                 venta.Vale = GestorVale.GenerarVale(venta, acceso);

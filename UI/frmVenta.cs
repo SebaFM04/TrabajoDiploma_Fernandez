@@ -205,7 +205,7 @@ namespace UI
                     f.Insumo?.Nombre ?? f.IdInsumo.ToString(),
                     f.Proporcion.ToString("#,0.###", CultureInfo.CurrentCulture),
                     f.Insumo?.UnidadMedida,
-                    (f.Insumo?.VolumenPesoDisponible ?? 0).ToString("#,0.###", CultureInfo.CurrentCulture),
+                    (f.Insumo?.StockVendible ?? 0).ToString("#,0.###", CultureInfo.CurrentCulture),
                     string.Join(", ", productos)));
             }
             return texto.ToString();

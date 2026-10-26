@@ -165,9 +165,10 @@ namespace UI
                 foreach (var i in lista)
                 {
                     int fila = dgvAvisosfrmOrdenCompra.Rows.Add(i.Nombre,
-                        i.VolumenPesoDisponible.ToString("#,0.###", CultureInfo.CurrentCulture) + " " + i.UnidadMedida,
+                        // Decisión 68: stock vendible (sin lotes vencidos)
+                        i.StockVendible.ToString("#,0.###", CultureInfo.CurrentCulture) + " " + i.UnidadMedida,
                         i.UmbralReposicion.ToString("#,0.###", CultureInfo.CurrentCulture) + " " + i.UnidadMedida);
-                    if (i.VolumenPesoDisponible < i.UmbralReposicion)
+                    if (i.StockVendible < i.UmbralReposicion)
                         dgvAvisosfrmOrdenCompra.Rows[fila].DefaultCellStyle.ForeColor = Color.Firebrick;
                 }
                 dgvAvisosfrmOrdenCompra.ClearSelection();

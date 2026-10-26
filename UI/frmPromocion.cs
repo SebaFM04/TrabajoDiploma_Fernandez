@@ -212,7 +212,15 @@ namespace UI
 
         // ── Alta (CU033) ──────────────────────────────────────────────
 
-        // CU033 paso 1: formulario vacío, o con el criterio y los productos que vienen del análisis
+        // CU035 (propuesta 5 de la Fase 6): el formulario se abre en modo renovación cuando la promoción armada trae
+        // la de origen; se guarda con PROMOCION_BLL.RenovarPromocion
+        private bool Renovacion
+        {
+            get { return armada != null && armada.IdPromocionOrigen.HasValue; }
+        }
+
+        // CU033 paso 1: formulario vacío, o con el criterio y los productos que vienen del análisis.
+        // CU035 paso 1: con los datos de la renovación (nombre, criterio, vigencia y productos con sus precios).
         private void NuevaPromocion(BE.PROMOCION desdeAnalisis)
         {
             txtNombrefrmPromocion.Text = string.Empty;
@@ -221,12 +229,24 @@ namespace UI
             lineas = new List<BE.PROMOCION_DETALLE>();
             if (desdeAnalisis != null)
             {
+                txtNombrefrmPromocion.Text = desdeAnalisis.Nombre ?? string.Empty;
                 cmbCriteriofrmPromocion.SelectedIndex = Math.Max(0, Array.IndexOf(criterios, desdeAnalisis.Criterio));
                 dtpDesdefrmPromocion.Value = desdeAnalisis.FechaDesde;
                 dtpHastafrmPromocion.Value = desdeAnalisis.FechaHasta;
                 lineas.AddRange(desdeAnalisis.Detalles.Select(Copiar));
             }
             MostrarLineas();
+            AplicarModo();
+        }
+
+        // En modo renovación el título y el botón lo indican, y el criterio es el de la promoción renovada
+        private void AplicarModo()
+        {
+            if (!Renovacion) return;
+            var g = GestorIdioma.Instancia;
+            lblNuevafrmPromocion.Text = g.Traducir("msgRenovacionTitulo");
+            btnCrearfrmPromocion.Text = g.Traducir("msgRenovacionBoton");
+            cmbCriteriofrmPromocion.Enabled = false;
         }
 
         private static BE.PROMOCION_DETALLE Copiar(BE.PROMOCION_DETALLE d)
@@ -293,7 +313,8 @@ namespace UI
 
         private void btnNuevafrmPromocion_Click(object sender, EventArgs e)
         {
-            NuevaPromocion(null);
+            // En una renovación, "Limpiar" vuelve a los datos propuestos
+            NuevaPromocion(Renovacion ? armada : null);
             txtNombrefrmPromocion.Focus();
         }
 
@@ -331,7 +352,8 @@ namespace UI
                 Criterio = criterios[Math.Max(0, cmbCriteriofrmPromocion.SelectedIndex)],
                 FechaDesde = dtpDesdefrmPromocion.Value.Date,
                 FechaHasta = dtpHastafrmPromocion.Value.Date,
-                Detalles = lineas.Select(Copiar).ToList()
+                Detalles = lineas.Select(Copiar).ToList(),
+                IdPromocionOrigen = Renovacion ? armada.IdPromocionOrigen : null
             };
             try
             {
@@ -370,6 +392,16 @@ namespace UI
             }
             try
             {
+                if (Renovacion)
+                {
+                    // CU035 pasos 2 a 4: guarda la nueva y la anterior pasa a Renovada; se vuelve a la evaluación
+                    GestorPromocion.RenovarPromocion(promocion, acepta);
+                    MessageBox.Show(string.Format(g.Traducir("msgRenovacionRealizada"), promocion.Nombre, TextoEstado(promocion.Estado)),
+                        g.Traducir("frmPromocion"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                    return;
+                }
                 GestorPromocion.CrearPromocion(promocion, acepta);
                 MessageBox.Show(string.Format(g.Traducir("msgPromocionCreada"), promocion.Nombre, TextoEstado(promocion.Estado)),
                     g.Traducir("frmPromocion"), MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -411,6 +443,7 @@ namespace UI
             foreach (var dgv in new[] { dgvPromocionesfrmPromocion, dgvDetallefrmPromocion, dgvLineasfrmPromocion })
                 foreach (DataGridViewColumn col in dgv.Columns)
                     col.HeaderText = g.Traducir(col.Name);
+            AplicarModo();
             if (IsHandleCreated)
             {
                 CargarCombos();

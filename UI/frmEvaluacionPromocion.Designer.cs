@@ -40,6 +40,7 @@
             this.lblObservacionesfrmEvaluacionPromocion = new System.Windows.Forms.Label();
             this.txtObservacionesfrmEvaluacionPromocion = new System.Windows.Forms.TextBox();
             this.btnConfirmarfrmEvaluacionPromocion = new System.Windows.Forms.Button();
+            this.btnRenovarfrmEvaluacionPromocion = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPromocionesfrmEvaluacionPromocion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComparacionfrmEvaluacionPromocion)).BeginInit();
             this.SuspendLayout();
@@ -159,12 +160,25 @@
             this.btnConfirmarfrmEvaluacionPromocion.UseVisualStyleBackColor = false;
             this.btnConfirmarfrmEvaluacionPromocion.Click += new System.EventHandler(this.btnConfirmarfrmEvaluacionPromocion_Click);
             //
+            // btnRenovarfrmEvaluacionPromocion
+            //
+            this.btnRenovarfrmEvaluacionPromocion.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnRenovarfrmEvaluacionPromocion.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRenovarfrmEvaluacionPromocion.Location = new System.Drawing.Point(915, 655);
+            this.btnRenovarfrmEvaluacionPromocion.Name = "btnRenovarfrmEvaluacionPromocion";
+            this.btnRenovarfrmEvaluacionPromocion.Size = new System.Drawing.Size(250, 40);
+            this.btnRenovarfrmEvaluacionPromocion.TabIndex = 12;
+            this.btnRenovarfrmEvaluacionPromocion.Text = "Renovar promoción";
+            this.btnRenovarfrmEvaluacionPromocion.UseVisualStyleBackColor = false;
+            this.btnRenovarfrmEvaluacionPromocion.Click += new System.EventHandler(this.btnRenovarfrmEvaluacionPromocion_Click);
+            //
             // frmEvaluacionPromocion
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(1180, 710);
+            this.Controls.Add(this.btnRenovarfrmEvaluacionPromocion);
             this.Controls.Add(this.btnConfirmarfrmEvaluacionPromocion);
             this.Controls.Add(this.txtObservacionesfrmEvaluacionPromocion);
             this.Controls.Add(this.lblObservacionesfrmEvaluacionPromocion);
@@ -203,5 +217,6 @@
         private System.Windows.Forms.Label lblObservacionesfrmEvaluacionPromocion;
         private System.Windows.Forms.TextBox txtObservacionesfrmEvaluacionPromocion;
         private System.Windows.Forms.Button btnConfirmarfrmEvaluacionPromocion;
+        private System.Windows.Forms.Button btnRenovarfrmEvaluacionPromocion;
     }
 }

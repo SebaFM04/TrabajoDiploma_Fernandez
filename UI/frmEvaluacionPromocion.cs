@@ -150,6 +150,7 @@ namespace UI
             {
                 lblPromocionfrmEvaluacionPromocion.Text = g.Traducir("msgEvaluacionElegir");
                 HabilitarResultado(false);
+                btnRenovarfrmEvaluacionPromocion.Enabled = false;
                 return;
             }
 
@@ -175,6 +176,32 @@ namespace UI
             rdbNoEfectivafrmEvaluacionPromocion.Checked = resultado == PROMOCION_BLL.ResultadoNoEfectiva;
             txtObservacionesfrmEvaluacionPromocion.Text = evaluada ? p.Observaciones : string.Empty;
             HabilitarResultado(!evaluada);
+            // CU035 «extend» CU034 (propuesta 4 de la Fase 6): se renueva una promoción finalizada y ya evaluada
+            btnRenovarfrmEvaluacionPromocion.Enabled = evaluada && p.Estado == PROMOCION_BLL.EstadoFinalizada;
+        }
+
+        // CU035 Renovar Promoción: abre Promociones en modo renovación con los datos propuestos
+        private void btnRenovarfrmEvaluacionPromocion_Click(object sender, EventArgs e)
+        {
+            if (evaluacion == null) return;
+            var g = GestorIdioma.Instancia;
+            int id = evaluacion.Promocion.IdPromocion;
+            try
+            {
+                var renovacion = GestorPromocion.ArmarRenovacion(id);
+                GUIManager.Instancia.AbrirForm(new frmPromocion(renovacion));
+                CargarPromociones();
+                evaluacion = GestorPromocion.EvaluarPromocion(id);
+                MostrarEvaluacion();
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("frmEvaluacionPromocion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
+            }
         }
 
         private void HabilitarResultado(bool habilitar)

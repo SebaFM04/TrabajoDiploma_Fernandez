@@ -44,6 +44,7 @@
             this.entregaBebidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rentabilidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.analisisRentabilidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simuladorVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaComprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -284,10 +285,18 @@
             // rentabilidadToolStripMenuItem
             //
             this.rentabilidadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.analisisRentabilidadToolStripMenuItem,
             this.simuladorVentasToolStripMenuItem});
             this.rentabilidadToolStripMenuItem.Name = "rentabilidadToolStripMenuItem";
             this.rentabilidadToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
             this.rentabilidadToolStripMenuItem.Text = "Rentabilidad";
+            //
+            // analisisRentabilidadToolStripMenuItem
+            //
+            this.analisisRentabilidadToolStripMenuItem.Name = "analisisRentabilidadToolStripMenuItem";
+            this.analisisRentabilidadToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.analisisRentabilidadToolStripMenuItem.Text = "Análisis de rentabilidad";
+            this.analisisRentabilidadToolStripMenuItem.Click += new System.EventHandler(this.analisisRentabilidadToolStripMenuItem_Click);
             //
             // simuladorVentasToolStripMenuItem
             //
@@ -573,6 +582,7 @@
         private System.Windows.Forms.ToolStripMenuItem entregaBebidasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rentabilidadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem analisisRentabilidadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simuladorVentasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaComprasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaVentasToolStripMenuItem;

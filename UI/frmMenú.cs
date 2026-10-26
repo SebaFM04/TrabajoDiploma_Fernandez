@@ -58,6 +58,7 @@ namespace UI
             lotesVencidosToolStripMenuItem.Available = tiene("Lotes Vencidos");
 
             // N03: rentabilidad y promociones
+            analisisRentabilidadToolStripMenuItem.Available = tiene("Analisis Rentabilidad");
             simuladorVentasToolStripMenuItem.Available = tiene("Simulador Ventas");
             aprobacionOrdenToolStripMenuItem.Available = tiene("Aprobar Ordenes Compra");
             ordenCompraToolStripMenuItem.Available = tiene("Gestion Ordenes Compra");
@@ -266,6 +267,12 @@ namespace UI
         private void aprobacionOrdenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmAprobacionOrden());
+        }
+
+        // N03 CU031 Generar Análisis de Rentabilidad
+        private void analisisRentabilidadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmAnalisisRentabilidad());
         }
 
         // Simulador de ventas (decisión 88): herramienta de soporte para la demo de N03

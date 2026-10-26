@@ -62,6 +62,14 @@ namespace BLL
             return GestorPromocion.BuscarPromocion(idPromocion);
         }
 
+        // CU010 (decisión 80, propuesta 2 de la Fase 5): precios promocionales vigentes hoy. Vigente = En proceso o Vigente
+        // y hoy dentro de la vigencia (no depende de que ActualizarEstados haya corrido). La decisión 79 asegura una
+        // sola promoción por producto y tamaño.
+        public List<BE.PROMOCION_DETALLE> ListarPreciosVigentes()
+        {
+            return GestorPromocion.ListarPreciosVigentes(DateTime.Today);
+        }
+
         // ── CU033 Crear Promoción ─────────────────────────────────────
 
         // Descuento con el que se propone el precio promocional al armar una promoción desde el análisis

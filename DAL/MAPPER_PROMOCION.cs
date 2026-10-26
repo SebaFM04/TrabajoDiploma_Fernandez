@@ -149,6 +149,34 @@ namespace DAL
             return tabla.Rows.Cast<DataRow>().Select(MapearPromocion).ToList();
         }
 
+        // CU010 (decisión 80): precio promocional de cada producto y tamaño con una promoción vigente hoy
+        // (En proceso o Vigente y hoy dentro de la vigencia)
+        public List<BE.PROMOCION_DETALLE> ListarPreciosVigentes(DateTime hoy)
+        {
+            acceso.Abrir();
+            DataTable tabla;
+            try
+            {
+                tabla = acceso.Leer("ListarPreciosPromocionVigentes", new List<SqlParameter>
+                {
+                    new SqlParameter("@Hoy", SqlDbType.Date) { Value = hoy.Date }
+                });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            return tabla.Rows.Cast<DataRow>().Select(u => new BE.PROMOCION_DETALLE
+            {
+                IdPromocion = Convert.ToInt32(u["IdPromocion"]),
+                IdProducto = Convert.ToInt32(u["IdProducto"]),
+                IdTamanio = Convert.ToInt32(u["IdTamaño"]),
+                PrecioOriginal = Convert.ToDecimal(u["PrecioOriginal"]),
+                PrecioPromocional = Convert.ToDecimal(u["PrecioPromocional"]),
+                CostoUnitario = Convert.ToDecimal(u["CostoUnitario"])
+            }).ToList();
+        }
+
         // Decisión 78: cambios de estado por fecha. Devuelve cuántas promociones cambiaron.
         public int ActualizarEstados(DateTime hoy)
         {

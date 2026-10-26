@@ -49,7 +49,8 @@ namespace DAL
                         acceso.CrearParametro("@IdTamanio", detalle.IdTamanio),
                         acceso.CrearParametro("@Cantidad", detalle.Cantidad),
                         acceso.CrearParametro("@MontoLinea", detalle.MontoLinea),
-                        acceso.CrearParametro("@CostoLinea", detalle.CostoLinea)
+                        acceso.CrearParametro("@CostoLinea", detalle.CostoLinea),
+                        new SqlParameter("@IdPromocion", SqlDbType.Int) { Value = (object)detalle.IdPromocion ?? DBNull.Value }
                     };
                     DataTable tDetalle = acceso.Leer("GuardarVentaDetalle", pDetalle);
                     detalle.IdVentaDetalle = Convert.ToInt32(tDetalle.Rows[0]["IdVentaDetalle"]);

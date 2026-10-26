@@ -30,6 +30,22 @@ namespace BE
             set { precio = value; }
         }
 
+        // Decisión 80 (calculados, no son columnas): en VENTA_BLL.ListarPreciosVenta, Precio es el que se cobra
+        // (el promocional si hay una promoción vigente), PrecioLista el de PRODUCTO_TAMAÑO e IdPromocion la promoción aplicada
+        private decimal precioLista;
+        public decimal PrecioLista
+        {
+            get { return precioLista; }
+            set { precioLista = value; }
+        }
+
+        private int? idPromocion;
+        public int? IdPromocion
+        {
+            get { return idPromocion; }
+            set { idPromocion = value; }
+        }
+
         // Datos del tamaño (nombre y magnitud) para mostrar y escalar la receta
         private TAMANIO tamanio;
         public TAMANIO Tamanio

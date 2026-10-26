@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ANALISIS_BLL.cs" />
     <Compile Include="BACKUP_BLL.cs" />
     <Compile Include="BITACORA_BLL.cs" />
     <Compile Include="CONTROLCAMBIO_BLL.cs" />

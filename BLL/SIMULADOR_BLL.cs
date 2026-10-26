@@ -16,8 +16,13 @@ namespace BLL
         public const int MesesMaximo = 24;
         public const int VentasMinimo = 1;
         public const int VentasMaximo = 200;
-        // Precio y costo de cada mes = actual deflactado por esta tasa mensual (TODO_N03, ítem 11)
-        const decimal InflacionMensual = 0.03m;
+        // Ventas (mesas) promedio por noche abierta que propone la pantalla
+        public const int VentasPorNocheDefecto = 40;
+        // Costo de cada mes = actual deflactado por esta tasa mensual (ítem 11b: 2,5 %). Los precios de lista se
+        // actualizan cada MesesEntreListas meses (escalones redondeados a $ 100): entre una lista y la siguiente el
+        // margen se achica y se recupera con la actualización.
+        const decimal InflacionMensual = 0.025m;
+        const int MesesEntreListas = 2;
 
         // Perfil de venta de cada producto de la carta de demostración: popularidad relativa y factor en verano
         // (diciembre a febrero) e invierno (junio a agosto). Un producto que no figura se simula con valores neutros.
@@ -42,20 +47,33 @@ namespace BLL
             { "Maní",                new Perfil { Popularidad = 0.35m } }
         };
 
-        // Ventas por día de la semana (domingo a sábado), con promedio 1: viernes y sábados venden más
-        static readonly double[] FactorDia = Normalizar(new[] { 0.8, 0.6, 0.6, 0.7, 1.1, 1.6, 1.8 });
-        // Horario de 19 a 03, con el pico entre las 23 y la 01
-        static readonly int[] Horas = { 19, 20, 21, 22, 23, 0, 1, 2 };
-        static readonly double[] PesoHora = { 0.4, 0.6, 0.8, 1.0, 1.4, 1.5, 1.2, 0.6 };
+        // Ítem 11b: el bar abre de miércoles a domingo (lunes y martes cerrado, y las noches del 24 y el 31 de diciembre).
+        // Ventas por día de la semana (domingo a sábado), con promedio 1 entre las noches abiertas.
+        static readonly double[] FactorDia = Normalizar(new[] { 0.8, 0, 0, 0.6, 0.9, 1.4, 1.6 });
+        // Horario: domingo a jueves de 20 a 02; viernes y sábado de 21 a 04, con el pico entre las 00 y las 02
+        static readonly int[] HorasSemana = { 20, 21, 22, 23, 0, 1 };
+        static readonly double[] PesoHoraSemana = { 0.5, 0.9, 1.2, 1.3, 1.1, 0.6 };
+        static readonly int[] HorasFinde = { 21, 22, 23, 0, 1, 2, 3 };
+        static readonly double[] PesoHoraFinde = { 0.5, 0.9, 1.2, 1.5, 1.5, 1.0, 0.5 };
         // Medios de pago, en el orden de VENTA_BLL.ListarMediosPago (Efectivo, Débito, Crédito, Transferencia, QR)
         static readonly double[] PesoMedioPago = { 25, 25, 15, 15, 20 };
-        // Piqueos en el 35 % de las ventas (TODO: 30 a 40 %)
-        const double ProbabilidadPiqueo = 0.35;
+        // Cada venta es una mesa de 1 a 4 personas (30 / 40 / 20 / 10 %), con 1 bebida por persona (2 en el 35 % de los
+        // casos). El piqueo sale en el 25 % de las mesas de 1 o 2 personas y en el 60 % de las de 3 o más.
+        static readonly double[] PesoPersonas = { 30, 40, 20, 10 };
+        const double ProbabilidadSegundaBebida = 0.35;
+        const double PiqueoMesaChica = 0.25;
+        const double PiqueoMesaGrande = 0.60;
 
         static double[] Normalizar(double[] pesos)
         {
-            double promedio = pesos.Average();
+            double promedio = pesos.Where(p => p > 0).Average();
             return pesos.Select(p => p / promedio).ToArray();
+        }
+
+        // Noches en que el bar está cerrado
+        static bool Cerrado(DateTime noche)
+        {
+            return FactorDia[(int)noche.DayOfWeek] == 0 || (noche.Month == 12 && (noche.Day == 24 || noche.Day == 31));
         }
 
         // Estado de la simulación: cantidad de ventas simuladas y su rango de fechas
@@ -117,7 +135,10 @@ namespace BLL
             var ventas = new List<BE.VENTA>();
             for (DateTime noche = primeraNoche; noche <= ultimaNoche; noche = noche.AddDays(1))
             {
-                double esperado = ventasPorNoche * FactorDia[(int)noche.DayOfWeek] * FactorMes(noche.Month) * (0.8 + 0.4 * rnd.NextDouble());
+                if (Cerrado(noche)) continue;
+                // ±30 % por noche (clima, eventos) y la primera semana de enero más floja
+                double esperado = ventasPorNoche * FactorDia[(int)noche.DayOfWeek] * FactorMes(noche.Month) * (0.7 + 0.6 * rnd.NextDouble())
+                                  * (noche.Month == 1 && noche.Day <= 7 ? 0.7 : 1);
                 int cantidad = (int)Math.Round(esperado);
                 for (int i = 0; i < cantidad; i++)
                     ventas.Add(ArmarVenta(noche, rnd, bebidas, piqueos, costos, mediosPago, ejemplo));
@@ -163,7 +184,6 @@ namespace BLL
 
             DateTime hasta = DateTime.Today.AddDays(-PromocionTerminaHaceDias);
             DateTime desde = hasta.AddDays(-(DiasPromocion - 1));
-            decimal deflactor = Deflactor(desde);
             var promocion = new BE.PROMOCION
             {
                 Nombre = "Promo de ejemplo: " + elegido.Producto.Nombre,
@@ -177,25 +197,39 @@ namespace BLL
             };
             foreach (var pt in opciones.Where(o => o.IdProducto == elegido.IdProducto))
             {
-                decimal original = Math.Round(pt.Precio * deflactor / 10, 0) * 10;
+                // Precio de la lista vigente al empezar la promoción, con un 20 % de descuento (redondeado a $ 100)
+                decimal original = PrecioLista(pt.Precio, desde);
                 promocion.Detalles.Add(new BE.PROMOCION_DETALLE
                 {
                     IdProducto = pt.IdProducto,
                     IdTamanio = pt.IdTamanio,
                     PrecioOriginal = original,
-                    PrecioPromocional = Math.Round(original * (1 - DescuentoPromocion) / 10, 0) * 10,
-                    CostoUnitario = Math.Round(costos[Clave(pt)] * deflactor, 2),
+                    PrecioPromocional = Math.Max(100, Math.Round(original * (1 - DescuentoPromocion) / 100, 0) * 100),
+                    CostoUnitario = Math.Round(costos[Clave(pt)] * Deflactor(desde), 2),
                     ProductoTamanio = pt
                 });
             }
             return new PromocionEjemplo { Promocion = promocion, IdProducto = elegido.IdProducto };
         }
 
-        // Precio y costo del mes de 'fecha' = actual deflactado por los meses que pasaron hasta hoy
+        static int MesesAtras(DateTime fecha)
+        {
+            return (DateTime.Today.Year - fecha.Year) * 12 + DateTime.Today.Month - fecha.Month;
+        }
+
+        // Costo del mes de 'fecha' = actual deflactado por los meses que pasaron hasta hoy (sube todos los meses)
         static decimal Deflactor(DateTime fecha)
         {
-            int mesesAtras = (DateTime.Today.Year - fecha.Year) * 12 + DateTime.Today.Month - fecha.Month;
-            return 1 / (decimal)Math.Pow(1 + (double)InflacionMensual, mesesAtras);
+            return 1 / (decimal)Math.Pow(1 + (double)InflacionMensual, MesesAtras(fecha));
+        }
+
+        // Ítem 11b: precio de la lista vigente en 'fecha'. La lista actual es la de este mes y se actualiza cada
+        // MesesEntreListas meses: un mes que quedó entre dos actualizaciones usa la lista anterior. Redondeado a $ 100.
+        static decimal PrecioLista(decimal precioActual, DateTime fecha)
+        {
+            int mesesLista = (MesesAtras(fecha) + MesesEntreListas - 1) / MesesEntreListas * MesesEntreListas;
+            decimal precio = precioActual / (decimal)Math.Pow(1 + (double)InflacionMensual, mesesLista);
+            return Math.Max(100, Math.Round(precio / 100, 0) * 100);
         }
 
         // Decisión 89: borra físicamente las ventas simuladas. FA: no hay simulación.
@@ -266,24 +300,28 @@ namespace BLL
         BE.VENTA ArmarVenta(DateTime noche, Random rnd, List<BE.PRODUCTO_TAMANIO> bebidas, List<BE.PRODUCTO_TAMANIO> piqueos,
                             Dictionary<string, decimal> costos, string[] mediosPago, PromocionEjemplo ejemplo)
         {
-            int indiceHora = Elegir(rnd, PesoHora);
-            int hora = Horas[indiceHora];
-            // Las horas de 0 a 2 son de la madrugada siguiente
+            // Viernes y sábado cierran más tarde; las horas de 0 a 3 son de la madrugada siguiente
+            bool finde = noche.DayOfWeek == DayOfWeek.Friday || noche.DayOfWeek == DayOfWeek.Saturday;
+            int hora = finde ? HorasFinde[Elegir(rnd, PesoHoraFinde)] : HorasSemana[Elegir(rnd, PesoHoraSemana)];
             DateTime fecha = noche.Date.AddDays(hora < 12 ? 1 : 0).AddHours(hora).AddMinutes(rnd.Next(60)).AddSeconds(rnd.Next(60));
             decimal deflactor = Deflactor(fecha);
             // Durante la vigencia de la promoción de ejemplo su producto se vende más y al precio promocional
             var promo = ejemplo != null && ejemplo.Vigente(fecha) ? ejemplo : null;
 
             var venta = new BE.VENTA { Fecha = fecha, MedioPago = mediosPago[Elegir(rnd, PesoMedioPago)], Simulada = true };
+            int personas = 1 + Elegir(rnd, PesoPersonas);
             if (bebidas.Count > 0)
             {
-                double r = rnd.NextDouble();
-                int lineas = r < 0.55 ? 1 : r < 0.90 ? 2 : 3;
-                for (int i = 0; i < lineas; i++)
-                    AgregarLinea(venta, ElegirProducto(rnd, bebidas, fecha.Month, promo?.IdProducto), rnd, costos, deflactor, promo);
+                for (int p = 0; p < personas; p++)
+                {
+                    int tragos = rnd.NextDouble() < ProbabilidadSegundaBebida ? 2 : 1;
+                    for (int t = 0; t < tragos; t++)
+                        AgregarLinea(venta, ElegirProducto(rnd, bebidas, fecha.Month, promo?.IdProducto), 1, costos, deflactor, promo);
+                }
             }
-            if (piqueos.Count > 0 && (bebidas.Count == 0 || rnd.NextDouble() < ProbabilidadPiqueo))
-                AgregarLinea(venta, ElegirProducto(rnd, piqueos, fecha.Month, promo?.IdProducto), rnd, costos, deflactor, promo);
+            double probabilidadPiqueo = personas >= 3 ? PiqueoMesaGrande : PiqueoMesaChica;
+            if (piqueos.Count > 0 && (bebidas.Count == 0 || rnd.NextDouble() < probabilidadPiqueo))
+                AgregarLinea(venta, ElegirProducto(rnd, piqueos, fecha.Month, promo?.IdProducto), 1, costos, deflactor, promo);
             venta.Monto = venta.Detalles.Sum(d => d.MontoLinea);
             return venta;
         }
@@ -300,13 +338,11 @@ namespace BLL
             return rnd.NextDouble() < 0.6 ? tamanios[0] : tamanios[1 + rnd.Next(tamanios.Count - 1)];
         }
 
-        // Línea con precio y costo deflactados (precio redondeado a $ 10). Si el producto y tamaño ya está, suma la cantidad.
+        // Línea con el precio de la lista vigente y el costo del mes. Si el producto y tamaño ya está, suma la cantidad.
         // Con la promoción de ejemplo vigente, su producto se cobra al precio promocional y la línea la referencia.
-        static void AgregarLinea(BE.VENTA venta, BE.PRODUCTO_TAMANIO pt, Random rnd, Dictionary<string, decimal> costos, decimal deflactor, PromocionEjemplo promo)
+        static void AgregarLinea(BE.VENTA venta, BE.PRODUCTO_TAMANIO pt, int cantidad, Dictionary<string, decimal> costos, decimal deflactor, PromocionEjemplo promo)
         {
-            double r = rnd.NextDouble();
-            int cantidad = r < 0.85 ? 1 : r < 0.97 ? 2 : 3;
-            decimal precio = Math.Round(pt.Precio * deflactor / 10, 0) * 10;
+            decimal precio = PrecioLista(pt.Precio, venta.Fecha);
             var enPromocion = promo?.Promocion.Detalles.FirstOrDefault(d => d.IdProducto == pt.IdProducto && d.IdTamanio == pt.IdTamanio);
             if (enPromocion != null)
                 precio = enPromocion.PrecioPromocional;

@@ -86,7 +86,7 @@
             this.nudVentasNochefrmSimuladorVentas.Name = "nudVentasNochefrmSimuladorVentas";
             this.nudVentasNochefrmSimuladorVentas.Size = new System.Drawing.Size(120, 23);
             this.nudVentasNochefrmSimuladorVentas.TabIndex = 4;
-            this.nudVentasNochefrmSimuladorVentas.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            this.nudVentasNochefrmSimuladorVentas.Value = new decimal(new int[] { 40, 0, 0, 0 });
             //
             // lblSemillafrmSimuladorVentas
             //

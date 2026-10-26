@@ -58,22 +58,39 @@ namespace BLL
             return Math.Round(cantidadUnidadesCompra * equivalencia, 3);
         }
 
-        // CU023 Insertar Insumo
-        public void InsertarInsumo(BE.INSUMO insumo)
+        // CU023 Insertar Insumo. Con stock inicial se crea su lote (decisión 65) en la misma transacción;
+        // fechaVencimiento es obligatoria si el insumo es perecedero (decisión 66).
+        public void InsertarInsumo(BE.INSUMO insumo, DateTime? fechaVencimiento)
         {
             ValidarInsumo(insumo);
+            var gestorLote = new LOTE_BLL();
+            if (insumo.VolumenPesoDisponible > 0)
+                gestorLote.ValidarFechaVencimiento(insumo, fechaVencimiento);
             // El aviso de stock bajo lo maneja el sistema: el insumo nace activo y sin aviso
             insumo.AvisoStockBajo = false;
             insumo.Activo = true;
 
+            var acceso = new ACCESO();
+            acceso.IniciarTransaccion();
             try
             {
-                insumo.IdInsumo = GestorInsumo.AltaInsumo(insumo);
+                insumo.IdInsumo = new MAPPER_INSUMO(acceso).AltaInsumo(insumo);
+                if (insumo.VolumenPesoDisponible > 0)
+                    gestorLote.CrearLote(insumo, null, insumo.VolumenPesoDisponible, insumo.CostoUnidadCompra, fechaVencimiento, acceso);
+                acceso.ConfirmarTransaccion();
             }
             catch (SqlException ex) when (ex.Number == ErrorDeNegocioSql)
             {
                 // FA2: el SP detectó un insumo con el mismo nombre (activo o dado de baja)
+                acceso.DeshacerTransaccion();
+                insumo.IdInsumo = 0;
                 throw new ArgumentException("msgInsumoDuplicado", ex);
+            }
+            catch
+            {
+                acceso.DeshacerTransaccion();
+                insumo.IdInsumo = 0;
+                throw;
             }
 
             new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Alta de insumo", $"Se agrego el insumo: {insumo.Nombre}");
@@ -86,7 +103,8 @@ namespace BLL
             if (insumoActual == null || !insumoActual.Activo)
                 throw new ArgumentException("msgInsumoInexistente");
 
-            // La unidad de medida y el stock no se modifican (decisión 37): se conservan los actuales
+            // La unidad de medida y el stock no se modifican (decisión 37): se conservan los actuales.
+            // Perecedero sí se puede cambiar; los lotes que ya existen quedan como están.
             insumo.UnidadMedida = insumoActual.UnidadMedida;
             insumo.VolumenPesoDisponible = insumoActual.VolumenPesoDisponible;
             insumo.AvisoStockBajo = insumoActual.AvisoStockBajo;

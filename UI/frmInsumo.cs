@@ -55,6 +55,10 @@ namespace UI
             {
                 dataGridView1.Columns.Add(columna, g.Traducir(columna));
             }
+            // Decisiones 66 y 68: perecedero, stock vendible (sin lotes vencidos) y próximo vencimiento
+            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn { Name = "colPerecederofrmInsumo", HeaderText = g.Traducir("colPerecederofrmInsumo"), ReadOnly = true });
+            dataGridView1.Columns.Add("colStockVendiblefrmInsumo", g.Traducir("colStockVendiblefrmInsumo"));
+            dataGridView1.Columns.Add("colVencimientofrmInsumo", g.Traducir("colVencimientofrmInsumo"));
             // Decisión 64: casilla Activo (desmarcar = CU025, marcar = reactivar)
             ColumnaActivo.Agregar(dataGridView1, "colActivofrmInsumo", g.Traducir("colActivofrmInsumo"), CambiarActivo);
             AjusteGrilla.Configurar(dataGridView1);
@@ -76,9 +80,14 @@ namespace UI
             nudStockInicialfrmInsumo.Value = 0;
             chkUsoBebidasfrmInsumo.Checked = false;
             chkUsoComidasfrmInsumo.Checked = false;
+            chkPerecederofrmInsumo.Checked = false;
+            // Fecha de vencimiento del stock inicial (decisión 65): sin marcar = no vence
+            dtpVencimientofrmInsumo.Value = DateTime.Today.AddDays(30);
+            dtpVencimientofrmInsumo.Checked = false;
 
             cmbUnidadMedidafrmInsumo.Enabled = true;
             nudStockInicialfrmInsumo.Enabled = true;
+            dtpVencimientofrmInsumo.Enabled = true;
             stockEdicion = null;
             MostrarStockCalculado();
             btnAltafrmInsumo.Enabled = true;
@@ -97,6 +106,7 @@ namespace UI
             nudCostofrmInsumo.Value = insumo.CostoUnidadCompra;
             chkUsoBebidasfrmInsumo.Checked = insumo.UsoBebidas;
             chkUsoComidasfrmInsumo.Checked = insumo.UsoComidas;
+            chkPerecederofrmInsumo.Checked = insumo.Perecedero;
             // El stock actual se muestra tal cual; el campo de unidades queda como referencia
             stockEdicion = insumo.VolumenPesoDisponible;
             nudStockInicialfrmInsumo.Value = insumo.EquivalenciaMagnitud > 0
@@ -105,6 +115,9 @@ namespace UI
 
             cmbUnidadMedidafrmInsumo.Enabled = false;
             nudStockInicialfrmInsumo.Enabled = false;
+            // En edición los vencimientos están en los lotes (CU019 y CU036): la fecha solo cuenta en el alta
+            dtpVencimientofrmInsumo.Checked = false;
+            dtpVencimientofrmInsumo.Enabled = false;
             MostrarStockCalculado();
             btnAltafrmInsumo.Enabled = false;
             // Un insumo dado de baja solo se reactiva (casilla Activo)
@@ -124,9 +137,13 @@ namespace UI
                 {
                     int fila = dataGridView1.Rows.Add(i.IdInsumo, i.Nombre, i.UnidadMedida, i.UnidadCompra,
                         i.EquivalenciaMagnitud.ToString("0.###"), i.VolumenPesoDisponible.ToString("0.###"),
-                        i.UmbralReposicion.ToString("0.###"), FormatoMoneda.Pesos(i.CostoUnidadCompra), TextoUso(i), i.Activo);
+                        i.UmbralReposicion.ToString("0.###"), FormatoMoneda.Pesos(i.CostoUnidadCompra), TextoUso(i),
+                        i.Perecedero, i.StockVendible.ToString("0.###"), i.ProximoVencimiento?.ToString("dd/MM/yyyy") ?? string.Empty, i.Activo);
                     dataGridView1.Rows[fila].Tag = i;
                     ColumnaActivo.Pintar(dataGridView1.Rows[fila], i.Activo);
+                    // Un lote vencido sin dar de baja (CU036) se marca en rojo
+                    if (i.ProximoVencimiento.HasValue && i.ProximoVencimiento.Value.Date < DateTime.Today)
+                        dataGridView1.Rows[fila].Cells["colVencimientofrmInsumo"].Style.ForeColor = Color.Firebrick;
                 }
                 dataGridView1.ClearSelection();
             }
@@ -211,6 +228,13 @@ namespace UI
             MostrarStockCalculado();
         }
 
+        // En el alta, un perecedero lleva fecha de vencimiento: se marca para que el usuario la elija
+        private void chkPerecederofrmInsumo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (dtpVencimientofrmInsumo.Enabled && chkPerecederofrmInsumo.Checked)
+                dtpVencimientofrmInsumo.Checked = true;
+        }
+
         // Datos editables del formulario. La unidad de medida y el stock solo cuentan en el alta.
         private BE.INSUMO LeerCampos()
         {
@@ -224,6 +248,7 @@ namespace UI
                 CostoUnidadCompra = nudCostofrmInsumo.Value,
                 UsoBebidas = chkUsoBebidasfrmInsumo.Checked,
                 UsoComidas = chkUsoComidasfrmInsumo.Checked,
+                Perecedero = chkPerecederofrmInsumo.Checked,
                 // CU023 (decisión 52): unidades de compra × equivalencia
                 VolumenPesoDisponible = GestorInsumo.CalcularStockInicial(nudStockInicialfrmInsumo.Value, nudEquivalenciafrmInsumo.Value)
             };
@@ -235,7 +260,8 @@ namespace UI
             var g = GestorIdioma.Instancia;
             try
             {
-                GestorInsumo.InsertarInsumo(LeerCampos());
+                // Decisión 66: la fecha es obligatoria para un perecedero con stock inicial (lo valida la BLL)
+                GestorInsumo.InsertarInsumo(LeerCampos(), dtpVencimientofrmInsumo.Checked ? dtpVencimientofrmInsumo.Value.Date : (DateTime?)null);
                 MessageBox.Show(g.Traducir("msgInsumoAlta"), g.Traducir("frmInsumo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarInsumos();
                 ModoAlta();
@@ -385,7 +411,7 @@ namespace UI
             this.Text = g.Traducir(this.Name);
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl is TextBox || ctrl is DataGridView || ctrl is ComboBox || ctrl is NumericUpDown)
+                if (ctrl is TextBox || ctrl is DataGridView || ctrl is ComboBox || ctrl is NumericUpDown || ctrl is DateTimePicker)
                     continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }

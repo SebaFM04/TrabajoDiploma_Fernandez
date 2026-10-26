@@ -99,6 +99,9 @@ namespace UI
             bool verObservadas = usuario.TienePermiso("Gestion Ordenes Compra");
             bool verRecepcion = usuario.TienePermiso("Registrar Recepcion");
             bool verPagos = usuario.TienePermiso("Registrar Pagos");
+            // Lotes con vencimiento (decisiones 68 y 69): Encargado de Stock
+            bool verLotes = usuario.TienePermiso("Lotes Vencidos");
+            lnkLotesPorVencerfrmMenu.Visible = lnkLotesVencidosfrmMenu.Visible = verLotes;
             lblOrdenesAprobacionfrmMenu.Visible = verAprobacion;
             lblOrdenesObservadasfrmMenu.Visible = verObservadas;
             lblOrdenesRecibirfrmMenu.Visible = verRecepcion;
@@ -108,7 +111,7 @@ namespace UI
             lblValesSinUsarfrmMenu.Visible = verVales;
             lnkStockBajofrmMenu.Visible = verStock;
             lblTableroTitulofrmMenu.Visible = btnActualizarTablerofrmMenu.Visible = verVentas || verComandas || verVales || verStock
-                || verAprobacion || verObservadas || verRecepcion || verPagos;
+                || verAprobacion || verObservadas || verRecepcion || verPagos || verLotes;
             lblTableroTitulofrmMenu.Text = g.Traducir("lblTableroTitulofrmMenu");
             btnActualizarTablerofrmMenu.Text = g.Traducir("btnActualizarTablerofrmMenu");
 
@@ -140,6 +143,18 @@ namespace UI
                     lblOrdenesRecibirfrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesRecibir"), ordenes.ListarPendientesRecepcion().Count);
                 if (verPagos)
                     lblOrdenesPagofrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesPago"), ordenes.ListarPorEstado(ORDEN_COMPRA_BLL.EstadoCerrada).Count);
+                if (verLotes)
+                {
+                    var lotes = new LOTE_BLL();
+                    int porVencer = lotes.ListarLotesPorVencer(LOTE_BLL.DiasPorVencerTablero).Count;
+                    int vencidos = lotes.ListarLotesVencidos().Count;
+                    lnkLotesPorVencerfrmMenu.Text = string.Format(g.Traducir("msgTableroLotesPorVencer"), porVencer, LOTE_BLL.DiasPorVencerTablero);
+                    lnkLotesPorVencerfrmMenu.LinkColor = lnkLotesPorVencerfrmMenu.ActiveLinkColor = porVencer > 0 ? System.Drawing.Color.DarkOrange : System.Drawing.Color.DarkGreen;
+                    lnkLotesPorVencerfrmMenu.Enabled = porVencer > 0;
+                    lnkLotesVencidosfrmMenu.Text = string.Format(g.Traducir("msgTableroLotesVencidos"), vencidos);
+                    lnkLotesVencidosfrmMenu.LinkColor = lnkLotesVencidosfrmMenu.ActiveLinkColor = vencidos > 0 ? System.Drawing.Color.Firebrick : System.Drawing.Color.DarkGreen;
+                    lnkLotesVencidosfrmMenu.Enabled = vencidos > 0;
+                }
             }
             catch (Exception ex)
             {
@@ -161,6 +176,17 @@ namespace UI
         private void lnkStockBajofrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             gestorUI.AbrirForm(new frmStockBajo());
+        }
+
+        // Tablero del Encargado: lotes por vencer (consulta) y vencidos sin dar de baja (CU036)
+        private void lnkLotesPorVencerfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmLote(true));
+        }
+
+        private void lnkLotesVencidosfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmLote(false));
         }
         private void formularioUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -241,7 +267,6 @@ namespace UI
         private void lotesVencidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmLote());
-            ActualizarTablero();
         }
 
         // CU019 Registrar Recepción y CU020 Registrar Reclamo
@@ -309,6 +334,7 @@ namespace UI
                 if (ctrl is TextBox || ctrl is MenuStrip || ctrl is ComboBox || ctrl.Name is "lblEmailTag" || ctrl.Name is "lblNombreTag" || ctrl.Name is "lblRolesTag") continue;
                 // Los indicadores del tablero se arman en ActualizarTablero
                 if (ctrl == lblVentasHoyfrmMenu || ctrl == lblComandasPendientesfrmMenu || ctrl == lblValesSinUsarfrmMenu || ctrl == lnkStockBajofrmMenu) continue;
+                if (ctrl == lnkLotesPorVencerfrmMenu || ctrl == lnkLotesVencidosfrmMenu) continue;
                 if (ctrl == lblOrdenesAprobacionfrmMenu || ctrl == lblOrdenesObservadasfrmMenu || ctrl == lblOrdenesRecibirfrmMenu || ctrl == lblOrdenesPagofrmMenu) continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }

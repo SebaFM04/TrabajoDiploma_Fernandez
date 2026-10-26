@@ -68,6 +68,8 @@
             this.lblComandasPendientesfrmMenu = new System.Windows.Forms.Label();
             this.lblValesSinUsarfrmMenu = new System.Windows.Forms.Label();
             this.lnkStockBajofrmMenu = new System.Windows.Forms.LinkLabel();
+            this.lnkLotesPorVencerfrmMenu = new System.Windows.Forms.LinkLabel();
+            this.lnkLotesVencidosfrmMenu = new System.Windows.Forms.LinkLabel();
             this.lblOrdenesAprobacionfrmMenu = new System.Windows.Forms.Label();
             this.lblOrdenesObservadasfrmMenu = new System.Windows.Forms.Label();
             this.lblOrdenesRecibirfrmMenu = new System.Windows.Forms.Label();
@@ -80,7 +82,7 @@
             // 
             this.btnCerrarSesionfrmMenu.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCerrarSesionfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(420, 482);
+            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(420, 536);
             this.btnCerrarSesionfrmMenu.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrarSesionfrmMenu.Name = "btnCerrarSesionfrmMenu";
             this.btnCerrarSesionfrmMenu.Size = new System.Drawing.Size(162, 38);
@@ -455,11 +457,33 @@
             this.lnkStockBajofrmMenu.Text = "-";
             this.lnkStockBajofrmMenu.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkStockBajofrmMenu_LinkClicked);
             //
+            // lnkLotesPorVencerfrmMenu
+            //
+            this.lnkLotesPorVencerfrmMenu.AutoSize = true;
+            this.lnkLotesPorVencerfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkLotesPorVencerfrmMenu.Location = new System.Drawing.Point(14, 411);
+            this.lnkLotesPorVencerfrmMenu.Name = "lnkLotesPorVencerfrmMenu";
+            this.lnkLotesPorVencerfrmMenu.TabIndex = 44;
+            this.lnkLotesPorVencerfrmMenu.TabStop = true;
+            this.lnkLotesPorVencerfrmMenu.Text = "-";
+            this.lnkLotesPorVencerfrmMenu.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLotesPorVencerfrmMenu_LinkClicked);
+            //
+            // lnkLotesVencidosfrmMenu
+            //
+            this.lnkLotesVencidosfrmMenu.AutoSize = true;
+            this.lnkLotesVencidosfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkLotesVencidosfrmMenu.Location = new System.Drawing.Point(14, 438);
+            this.lnkLotesVencidosfrmMenu.Name = "lnkLotesVencidosfrmMenu";
+            this.lnkLotesVencidosfrmMenu.TabIndex = 45;
+            this.lnkLotesVencidosfrmMenu.TabStop = true;
+            this.lnkLotesVencidosfrmMenu.Text = "-";
+            this.lnkLotesVencidosfrmMenu.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLotesVencidosfrmMenu_LinkClicked);
+            //
             // btnActualizarTablerofrmMenu
             //
             this.btnActualizarTablerofrmMenu.BackColor = System.Drawing.Color.SandyBrown;
             this.btnActualizarTablerofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizarTablerofrmMenu.Location = new System.Drawing.Point(14, 420);
+            this.btnActualizarTablerofrmMenu.Location = new System.Drawing.Point(14, 474);
             this.btnActualizarTablerofrmMenu.Name = "btnActualizarTablerofrmMenu";
             this.btnActualizarTablerofrmMenu.Size = new System.Drawing.Size(130, 30);
             this.btnActualizarTablerofrmMenu.TabIndex = 29;
@@ -472,9 +496,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(600, 535);
+            this.ClientSize = new System.Drawing.Size(600, 589);
             this.Controls.Add(this.btnActualizarTablerofrmMenu);
             this.Controls.Add(this.lnkStockBajofrmMenu);
+            this.Controls.Add(this.lnkLotesPorVencerfrmMenu);
+            this.Controls.Add(this.lnkLotesVencidosfrmMenu);
             this.Controls.Add(this.lblOrdenesAprobacionfrmMenu);
             this.Controls.Add(this.lblOrdenesObservadasfrmMenu);
             this.Controls.Add(this.lblOrdenesRecibirfrmMenu);
@@ -547,6 +573,8 @@
         private System.Windows.Forms.Label lblComandasPendientesfrmMenu;
         private System.Windows.Forms.Label lblValesSinUsarfrmMenu;
         private System.Windows.Forms.LinkLabel lnkStockBajofrmMenu;
+        private System.Windows.Forms.LinkLabel lnkLotesPorVencerfrmMenu;
+        private System.Windows.Forms.LinkLabel lnkLotesVencidosfrmMenu;
         private System.Windows.Forms.Label lblOrdenesAprobacionfrmMenu;
         private System.Windows.Forms.Label lblOrdenesObservadasfrmMenu;
         private System.Windows.Forms.Label lblOrdenesRecibirfrmMenu;

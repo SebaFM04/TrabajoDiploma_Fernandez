@@ -47,6 +47,7 @@
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagoProveedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recepcionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lotesVencidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aprobacionOrdenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordenCompraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proveedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,6 +141,13 @@
             this.recepcionToolStripMenuItem.Text = "Recepción de mercadería";
             this.recepcionToolStripMenuItem.Click += new System.EventHandler(this.recepcionToolStripMenuItem_Click);
             //
+            // lotesVencidosToolStripMenuItem
+            //
+            this.lotesVencidosToolStripMenuItem.Name = "lotesVencidosToolStripMenuItem";
+            this.lotesVencidosToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.lotesVencidosToolStripMenuItem.Text = "Lotes vencidos";
+            this.lotesVencidosToolStripMenuItem.Click += new System.EventHandler(this.lotesVencidosToolStripMenuItem_Click);
+            //
             // pagoProveedorToolStripMenuItem
             //
             this.pagoProveedorToolStripMenuItem.Name = "pagoProveedorToolStripMenuItem";
@@ -152,6 +160,7 @@
             this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pagoProveedorToolStripMenuItem,
             this.recepcionToolStripMenuItem,
+            this.lotesVencidosToolStripMenuItem,
             this.aprobacionOrdenToolStripMenuItem,
             this.ordenCompraToolStripMenuItem,
             this.proveedoresToolStripMenuItem,
@@ -511,6 +520,7 @@
         private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pagoProveedorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recepcionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lotesVencidosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aprobacionOrdenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordenCompraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem proveedoresToolStripMenuItem;

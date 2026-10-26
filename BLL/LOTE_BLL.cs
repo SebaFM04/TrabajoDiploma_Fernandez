@@ -53,5 +53,57 @@ namespace BLL
         {
             return new MAPPER_LOTE().ListarLotesInsumo(idInsumo);
         }
+
+        // Días que el tablero considera "por vencer"
+        public const int DiasPorVencerTablero = 15;
+
+        // Tablero y criterio Vencimiento (N03): lotes de insumos activos que vencen entre hoy y hoy + dias
+        public List<BE.LOTE_INSUMO> ListarLotesPorVencer(int dias)
+        {
+            if (dias < 0)
+                throw new ArgumentException("msgLoteDiasInvalidos");
+            return new MAPPER_LOTE().ListarLotesPorVencer(dias);
+        }
+
+        // CU036 paso 1: lotes vencidos que todavía tienen cantidad (sin dar de baja)
+        public List<BE.LOTE_INSUMO> ListarLotesVencidos()
+        {
+            return new MAPPER_LOTE().ListarLotesVencidos();
+        }
+
+        // CU036 Dar de Baja Lote Vencido (decisión 69): en una transacción, el lote pasa a Vencido con su cantidad
+        // como merma y el stock físico del insumo baja en esa cantidad (decisión 70). El stock vendible no cambia:
+        // un lote vencido ya no contaba. FA1: el lote no está vencido o ya no tiene cantidad.
+        public BE.LOTE_INSUMO DarDeBajaLoteVencido(int idLote)
+        {
+            var lote = new MAPPER_LOTE().BuscarLote(idLote);
+            if (lote == null || lote.Estado != EstadoDisponible || lote.CantidadDisponible <= 0 || !lote.Vencido)
+                throw new ArgumentException("msgLoteNoVencido");
+
+            var acceso = new ACCESO();
+            acceso.IniciarTransaccion();
+            try
+            {
+                // El SP vuelve a controlar que siga vencido y con cantidad (otro usuario pudo darlo de baja antes)
+                if (new MAPPER_LOTE(acceso).DarDeBajaLote(idLote, DateTime.Now) == 0)
+                    throw new ArgumentException("msgLoteNoVencido");
+                var mapperInsumo = new MAPPER_INSUMO(acceso);
+                var insumo = mapperInsumo.BuscarInsumo(lote.IdInsumo);
+                mapperInsumo.ActualizarVolumenPeso(insumo.IdInsumo, insumo.VolumenPesoDisponible - lote.CantidadDisponible);
+                acceso.ConfirmarTransaccion();
+            }
+            catch
+            {
+                acceso.DeshacerTransaccion();
+                throw;
+            }
+
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Baja de lote vencido",
+                $"Lote {lote.IdLote} de {lote.Insumo.Nombre}: {lote.CantidadDisponible:0.###} {lote.Insumo.UnidadMedida}, venció el {lote.FechaVencimiento:dd/MM/yyyy}");
+            lote.CantidadBaja = lote.CantidadDisponible;
+            lote.CantidadDisponible = 0;
+            lote.Estado = EstadoVencido;
+            return lote;
+        }
     }
 }

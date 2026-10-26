@@ -55,6 +55,7 @@ namespace UI
             consultaComprasToolStripMenuItem.Available = tiene("Consulta Compras");
             pagoProveedorToolStripMenuItem.Available = tiene("Registrar Pagos");
             recepcionToolStripMenuItem.Available = tiene("Registrar Recepcion");
+            lotesVencidosToolStripMenuItem.Available = tiene("Lotes Vencidos");
             aprobacionOrdenToolStripMenuItem.Available = tiene("Aprobar Ordenes Compra");
             ordenCompraToolStripMenuItem.Available = tiene("Gestion Ordenes Compra");
             proveedoresToolStripMenuItem.Available = tiene("Gestion Proveedores");
@@ -234,6 +235,13 @@ namespace UI
         private void aprobacionOrdenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gestorUI.AbrirForm(new frmAprobacionOrden());
+        }
+
+        // CU036 Dar de Baja Lote Vencido
+        private void lotesVencidosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmLote());
+            ActualizarTablero();
         }
 
         // CU019 Registrar Recepción y CU020 Registrar Reclamo

@@ -164,9 +164,213 @@ namespace BLL
             analisis.Series.Add(participacion);
         }
 
-        // Ítem 17 del TODO: cada criterio marca los productos sugeridos con su motivo
+        // Ítem 17 del TODO: cada criterio marca los productos sugeridos (solo los que están a la venta) con su motivo,
+        // y los numera en el orden del criterio
         void AplicarCriterio(BE.ANALISIS_RENTABILIDAD analisis, DateTime hastaExclusivo, Dictionary<string, List<BE.RECETA>> recetas)
         {
+            List<BE.ANALISIS_ITEM> sugeridos;
+            switch (analisis.Criterio)
+            {
+                case PROMOCION_BLL.CriterioVentas: sugeridos = CriterioVentas(analisis); break;
+                case PROMOCION_BLL.CriterioRotacion: sugeridos = CriterioRotacion(analisis, hastaExclusivo, recetas); break;
+                case PROMOCION_BLL.CriterioVencimiento: sugeridos = CriterioVencimiento(analisis, hastaExclusivo, recetas); break;
+                default: sugeridos = CriterioEstacionalidad(analisis, hastaExclusivo); break;
+            }
+            int orden = 0;
+            foreach (var i in sugeridos)
+            {
+                i.Sugerido = true;
+                i.Orden = ++orden;
+            }
+            if (sugeridos.Count == 0)
+                analisis.Avisos.Add("msgAnalisisSinSugeridos");
+        }
+
+        // Productos y tamaños que se pueden promocionar: los que están a la venta
+        static IEnumerable<BE.ANALISIS_ITEM> ALaVenta(BE.ANALISIS_RENTABILIDAD analisis)
+        {
+            return analisis.Items.Where(i => i.PrecioActual > 0);
+        }
+
+        static int DiasDelPeriodo(BE.ANALISIS_RENTABILIDAD analisis, DateTime hastaExclusivo)
+        {
+            return Math.Max(1, (hastaExclusivo - analisis.FechaDesde).Days);
+        }
+
+        // Ventas: margen unitario sobre el promedio y unidades por debajo del 70 % del promedio (alto margen, poca venta)
+        List<BE.ANALISIS_ITEM> CriterioVentas(BE.ANALISIS_RENTABILIDAD analisis)
+        {
+            decimal margenPromedio = analisis.Items.Average(MargenReferencia);
+            double unidadesPromedio = analisis.Items.Average(i => i.Unidades);
+            var sugeridos = new List<BE.ANALISIS_ITEM>();
+            foreach (var i in ALaVenta(analisis))
+            {
+                i.Indicador = MargenReferencia(i);
+                if (MargenReferencia(i) > margenPromedio && i.Unidades < unidadesPromedio * 0.7)
+                {
+                    i.Motivo = "msgMotivoVentas";
+                    i.MotivoValor1 = MargenReferencia(i);
+                    i.MotivoValor2 = Math.Round(margenPromedio, 2);
+                    sugeridos.Add(i);
+                }
+            }
+            return sugeridos.OrderByDescending(i => i.Indicador).ToList();
+        }
+
+        // Rotación: por insumo, días de cobertura = stock vendible / consumo diario del período. Hay sobrestock si la
+        // cobertura pasa de 30 días o del doble del promedio, o si el insumo no se consumió y tiene stock.
+        // Sugiere los productos con margen actual positivo que usan esos insumos.
+        List<BE.ANALISIS_ITEM> CriterioRotacion(BE.ANALISIS_RENTABILIDAD analisis, DateTime hastaExclusivo, Dictionary<string, List<BE.RECETA>> recetas)
+        {
+            int dias = DiasDelPeriodo(analisis, hastaExclusivo);
+            var consumo = GestorAnalisis.ListarConsumoInsumos(analisis.FechaDesde, hastaExclusivo);
+            // Cobertura en días por insumo; null = sin consumo en el período (cobertura sin límite)
+            var cobertura = new Dictionary<int, decimal?>();
+            var insumos = new INSUMO_BLL().ListarInsumosActivos().Where(i => i.StockVendible > 0).ToDictionary(i => i.IdInsumo);
+            foreach (var insumo in insumos.Values)
+            {
+                decimal diario = consumo.TryGetValue(insumo.IdInsumo, out decimal c) ? c / dias : 0;
+                cobertura[insumo.IdInsumo] = diario > 0 ? Math.Round(insumo.StockVendible / diario, 1) : (decimal?)null;
+            }
+            var finitas = cobertura.Values.Where(v => v.HasValue).Select(v => v.Value).ToList();
+            decimal promedio = finitas.Count > 0 ? Math.Round(finitas.Average(), 1) : 0;
+            Func<int, bool> sobrestock = id => cobertura.TryGetValue(id, out var cob) && (!cob.HasValue || cob.Value > 30 || (promedio > 0 && cob.Value > promedio * 2));
+
+            var sugeridos = new List<BE.ANALISIS_ITEM>();
+            foreach (var i in ALaVenta(analisis).Where(i => i.MargenUnitarioActual > 0))
+            {
+                if (!recetas.TryGetValue(Clave(i.IdProducto, i.IdTamanio), out var receta)) continue;
+                // El insumo con más cobertura de la receta es el que explica la sugerencia
+                var enSobrestock = receta.Where(r => sobrestock(r.IdInsumo))
+                    .OrderByDescending(r => cobertura[r.IdInsumo] ?? decimal.MaxValue).FirstOrDefault();
+                if (enSobrestock == null) continue;
+                var cob = cobertura[enSobrestock.IdInsumo];
+                var insumo = insumos[enSobrestock.IdInsumo];
+                i.Indicador = cob ?? 9999;
+                i.MotivoInsumo = insumo.Nombre;
+                i.Motivo = cob.HasValue ? "msgMotivoRotacion" : "msgMotivoRotacionSinConsumo";
+                i.MotivoValor1 = cob ?? 0;
+                i.MotivoValor2 = promedio;
+                sugeridos.Add(i);
+            }
+            return sugeridos.OrderByDescending(i => i.Indicador).ThenByDescending(i => i.MargenUnitarioActual).ToList();
+        }
+
+        // Vencimiento: lotes que vencen dentro de los días elegidos (decisión 76). El consumo esperado hasta cada vencimiento
+        // (consumo diario del período × días restantes) se descuenta primero del lote que vence antes (propuesta 4 de la
+        // Fase 4); lo que no se llega a consumir está en riesgo y vale cantidad × costo del lote. Sugiere los productos que
+        // usan esos insumos, aunque el margen sea bajo (decisión 77), primero los que sacan más valor en riesgo por unidad.
+        List<BE.ANALISIS_ITEM> CriterioVencimiento(BE.ANALISIS_RENTABILIDAD analisis, DateTime hastaExclusivo, Dictionary<string, List<BE.RECETA>> recetas)
+        {
+            int dias = DiasDelPeriodo(analisis, hastaExclusivo);
+            var consumo = GestorAnalisis.ListarConsumoInsumos(analisis.FechaDesde, hastaExclusivo);
+            var lotes = new LOTE_BLL().ListarLotesPorVencer(analisis.DiasPorVencer);
+            if (lotes.Count == 0)
+            {
+                analisis.Avisos.Add("msgAnalisisSinLotesPorVencer");
+                return new List<BE.ANALISIS_ITEM>();
+            }
+
+            // Por insumo: cantidad y valor en riesgo, y costo por unidad de medida (del lote en riesgo)
+            var riesgo = new Dictionary<int, (string nombre, string unidad, decimal cantidad, decimal valor, decimal costo)>();
+            foreach (var porInsumo in lotes.GroupBy(l => l.IdInsumo))
+            {
+                decimal diario = consumo.TryGetValue(porInsumo.Key, out decimal c) ? c / dias : 0;
+                decimal anteriores = 0;
+                foreach (var lote in porInsumo.OrderBy(l => l.FechaVencimiento).ThenBy(l => l.IdLote))
+                {
+                    int diasRestantes = Math.Max(0, (lote.FechaVencimiento.Value.Date - DateTime.Today).Days);
+                    decimal esperado = diario * diasRestantes;
+                    decimal consumido = Math.Min(lote.CantidadDisponible, Math.Max(0, esperado - anteriores));
+                    decimal enRiesgo = lote.CantidadDisponible - consumido;
+                    anteriores += lote.CantidadDisponible;
+                    if (enRiesgo <= 0) continue;
+                    riesgo.TryGetValue(porInsumo.Key, out var r);
+                    riesgo[porInsumo.Key] = (lote.Insumo.Nombre, lote.Insumo.UnidadMedida, r.cantidad + enRiesgo,
+                                             r.valor + Math.Round(enRiesgo * lote.CostoUnidadMedida, 2), lote.CostoUnidadMedida);
+                }
+            }
+            if (riesgo.Count == 0)
+            {
+                analisis.Avisos.Add("msgAnalisisSinRiesgo");
+                return new List<BE.ANALISIS_ITEM>();
+            }
+
+            var barras = new BE.ANALISIS_SERIE { Grafico = GraficoRiesgo, Nombre = "msgAnalisisSerieRiesgo", Tipo = TipoBarras };
+            foreach (var r in riesgo.Values.OrderByDescending(r => r.valor))
+                barras.Puntos.Add(new BE.ANALISIS_PUNTO { Etiqueta = r.nombre, Valor = r.valor });
+            analisis.Series.Add(barras);
+
+            var sugeridos = new List<BE.ANALISIS_ITEM>();
+            foreach (var i in ALaVenta(analisis))
+            {
+                if (!recetas.TryGetValue(Clave(i.IdProducto, i.IdTamanio), out var receta)) continue;
+                // Insumo en riesgo del que el producto saca más valor por unidad vendida
+                var usa = receta.Where(r => riesgo.ContainsKey(r.IdInsumo))
+                    .OrderByDescending(r => r.Proporcion * riesgo[r.IdInsumo].costo).FirstOrDefault();
+                if (usa == null) continue;
+                var r2 = riesgo[usa.IdInsumo];
+                i.Indicador = r2.valor;
+                i.Motivo = "msgMotivoVencimiento";
+                i.MotivoInsumo = $"{r2.nombre} ({r2.unidad})";
+                i.MotivoValor1 = Math.Round(r2.cantidad, 0);
+                i.MotivoValor2 = Math.Round(usa.Proporcion, 1);
+                sugeridos.Add(i);
+            }
+            // Orden: valor en riesgo que saca cada unidad vendida (consumo por unidad × costo del insumo)
+            return sugeridos.OrderByDescending(i => recetas[Clave(i.IdProducto, i.IdTamanio)]
+                                .Where(r => riesgo.ContainsKey(r.IdInsumo)).Max(r => r.Proporcion * riesgo[r.IdInsumo].costo))
+                            .ToList();
+        }
+
+        // Estacionalidad: índice = unidades por mes del período / promedio mensual de los 12 meses que terminan en
+        // FechaHasta (propuesta 5 de la Fase 4). Sugiere índice menor a 0,8 (temporada baja) con margen actual positivo.
+        // Con menos de 12 meses de historia usa los que haya y avisa.
+        List<BE.ANALISIS_ITEM> CriterioEstacionalidad(BE.ANALISIS_RENTABILIDAD analisis, DateTime hastaExclusivo)
+        {
+            DateTime desde12 = hastaExclusivo.AddMonths(-12);
+            var porMes = GestorAnalisis.ListarUnidadesPorMes(desde12, hastaExclusivo).ToDictionary(s => s.Nombre);
+            var meses = new List<string>();
+            for (DateTime m = new DateTime(desde12.Year, desde12.Month, 1); m < hastaExclusivo; m = m.AddMonths(1))
+                meses.Add(m.ToString("yyyy-MM"));
+            // La ventana de 12 meses toca 13 meses calendario (el primero y el último incompletos): se cuentan hasta 12
+            var mesesConVentas = Math.Min(12, porMes.Values.SelectMany(s => s.Puntos).Where(p => p.Valor > 0).Select(p => p.Etiqueta).Distinct().Count());
+            analisis.MesesHistoria = mesesConVentas;
+            if (mesesConVentas < 12)
+                analisis.Avisos.Add("msgAnalisisHistorialInsuficiente");
+
+            decimal mesesPeriodo = DiasDelPeriodo(analisis, hastaExclusivo) / 30.4m;
+            var sugeridos = new List<BE.ANALISIS_ITEM>();
+            foreach (var i in ALaVenta(analisis))
+            {
+                if (!porMes.TryGetValue(Clave(i.IdProducto, i.IdTamanio), out var serie) || mesesConVentas == 0) continue;
+                decimal promedioMensual = serie.Puntos.Sum(p => p.Valor) / mesesConVentas;
+                if (promedioMensual <= 0) continue;
+                i.Indicador = Math.Round(i.Unidades / mesesPeriodo / promedioMensual, 2);
+                if (i.Indicador < 0.8m && i.MargenUnitarioActual > 0)
+                {
+                    i.Motivo = "msgMotivoEstacionalidad";
+                    i.MotivoValor1 = i.Indicador;
+                    i.MotivoValor2 = Math.Round(promedioMensual, 0);
+                    sugeridos.Add(i);
+                }
+            }
+            sugeridos = sugeridos.OrderBy(i => i.Indicador).ToList();
+
+            // Gráfico: unidades por mes del total y de los 3 sugeridos con índice más bajo
+            var total = new BE.ANALISIS_SERIE { Grafico = GraficoEstacionalidad, Nombre = "msgAnalisisSerieUnidadesTotales", Tipo = TipoLinea };
+            foreach (var mes in meses)
+                total.Puntos.Add(new BE.ANALISIS_PUNTO { Etiqueta = mes, Valor = porMes.Values.SelectMany(s => s.Puntos).Where(p => p.Etiqueta == mes).Sum(p => p.Valor) });
+            analisis.Series.Add(total);
+            foreach (var i in sugeridos.Take(3))
+            {
+                var serie = porMes[Clave(i.IdProducto, i.IdTamanio)];
+                var linea = new BE.ANALISIS_SERIE { Grafico = GraficoEstacionalidad, Nombre = $"{i.NombreProducto} {i.NombreTamanio}", Tipo = TipoLinea };
+                foreach (var mes in meses)
+                    linea.Puntos.Add(new BE.ANALISIS_PUNTO { Etiqueta = mes, Valor = serie.Puntos.Where(p => p.Etiqueta == mes).Sum(p => p.Valor) });
+                analisis.Series.Add(linea);
+            }
+            return sugeridos;
         }
     }
 }

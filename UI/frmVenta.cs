@@ -38,6 +38,9 @@ namespace UI
         {
             cmbMedioPagofrmVenta.Items.Clear();
             cmbMedioPagofrmVenta.Items.AddRange(GestorVenta.ListarMediosPago());
+            // Decisión 78: estados de las promociones por fecha antes de listar los precios
+            try { new PROMOCION_BLL().ActualizarEstados(); }
+            catch (Exception) { /* informativo: la venta sigue; el precio promocional se busca por fecha (Fase 5) */ }
             CargarProductos();
             NuevaVenta();
         }

@@ -51,6 +51,8 @@
     <Compile Include="PERMISOCOMPOSITE.cs" />
     <Compile Include="PRODUCTO.cs" />
     <Compile Include="PRODUCTO_TAMANIO.cs" />
+    <Compile Include="PROMOCION.cs" />
+    <Compile Include="PROMOCION_DETALLE.cs" />
     <Compile Include="RECETA.cs" />
     <Compile Include="TAMANIO.cs" />
     <Compile Include="USUARIO.cs" />

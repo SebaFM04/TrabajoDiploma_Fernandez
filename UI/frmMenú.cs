@@ -120,6 +120,8 @@ namespace UI
 
             try
             {
+                // Decisión 78: los estados de las promociones se actualizan por fecha al abrir el menú
+                new PROMOCION_BLL().ActualizarEstados();
                 if (verVentas)
                 {
                     var ventasHoy = new VENTA_BLL().ListarVentas(DateTime.Today, DateTime.Today);

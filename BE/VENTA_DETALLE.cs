@@ -59,6 +59,14 @@ namespace BE
             set { costoLinea = value; }
         }
 
+        // Decisión 80: promoción aplicada a la línea (null = precio de lista)
+        private int? idPromocion;
+        public int? IdPromocion
+        {
+            get { return idPromocion; }
+            set { idPromocion = value; }
+        }
+
         // Producto, tamaño y precio de la línea (para calcular, mostrar y escalar la receta)
         private PRODUCTO_TAMANIO productoTamanio;
         public PRODUCTO_TAMANIO ProductoTamanio

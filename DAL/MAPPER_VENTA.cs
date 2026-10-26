@@ -78,13 +78,14 @@ namespace DAL
             tDetalles.Columns.Add("Cantidad", typeof(int));
             tDetalles.Columns.Add("MontoLinea", typeof(decimal));
             tDetalles.Columns.Add("CostoLinea", typeof(decimal));
+            tDetalles.Columns.Add("IdPromocion", typeof(int));
             int numero = 0;
             foreach (var venta in ventas)
             {
                 numero++;
                 tVentas.Rows.Add(numero, venta.Fecha, venta.Monto, venta.MedioPago);
                 foreach (var d in venta.Detalles)
-                    tDetalles.Rows.Add(numero, d.IdProducto, d.IdTamanio, d.Cantidad, d.MontoLinea, d.CostoLinea);
+                    tDetalles.Rows.Add(numero, d.IdProducto, d.IdTamanio, d.Cantidad, d.MontoLinea, d.CostoLinea, (object)d.IdPromocion ?? DBNull.Value);
             }
 
             acceso.Abrir();
@@ -220,6 +221,7 @@ namespace DAL
                     Cantidad = cantidad,
                     MontoLinea = montoLinea,
                     CostoLinea = Convert.ToDecimal(u["CostoLinea"]),
+                    IdPromocion = u["IdPromocion"] == DBNull.Value ? (int?)null : Convert.ToInt32(u["IdPromocion"]),
                     ProductoTamanio = new BE.PRODUCTO_TAMANIO
                     {
                         IdProducto = Convert.ToInt32(u["IdProducto"]),

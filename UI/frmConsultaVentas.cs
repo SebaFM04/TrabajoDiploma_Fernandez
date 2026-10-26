@@ -44,7 +44,8 @@ namespace UI
             var g = GestorIdioma.Instancia;
             dgvVentasfrmConsultaVentas.Columns.Clear();
             foreach (string col in new[] { "colVentafrmConsultaVentas", "colFechafrmConsultaVentas", "colTotalfrmConsultaVentas", "colMedioPagofrmConsultaVentas",
-                                           "colValefrmConsultaVentas", "colValeUsadofrmConsultaVentas", "colFacturafrmConsultaVentas", "colComandafrmConsultaVentas" })
+                                           "colValefrmConsultaVentas", "colValeUsadofrmConsultaVentas", "colFacturafrmConsultaVentas", "colComandafrmConsultaVentas",
+                                           "colSimuladafrmConsultaVentas" })
                 dgvVentasfrmConsultaVentas.Columns.Add(col, g.Traducir(col));
             AjusteGrilla.Configurar(dgvVentasfrmConsultaVentas);
 
@@ -73,8 +74,12 @@ namespace UI
                         v.Vale?.IdVale.ToString() ?? "-",
                         v.Vale == null ? "-" : g.Traducir(v.Vale.Utilizado ? "msgConsultaSi" : "msgConsultaNo"),
                         v.Factura != null ? GestorFactura.NumeroCompleto(v.Factura) : g.Traducir("msgConsultaSinFactura"),
-                        v.Comanda != null ? $"{v.Comanda.IdComanda} ({v.Comanda.Estado})" : "-");
+                        v.Comanda != null ? $"{v.Comanda.IdComanda} ({v.Comanda.Estado})" : "-",
+                        g.Traducir(v.Simulada ? "msgConsultaSi" : "msgConsultaNo"));
                     dgvVentasfrmConsultaVentas.Rows[fila].Tag = v;
+                    // Decisión 88: las ventas del simulador se distinguen en gris
+                    if (v.Simulada)
+                        dgvVentasfrmConsultaVentas.Rows[fila].DefaultCellStyle.ForeColor = Color.DimGray;
                 }
             }
             catch (ArgumentException argEx)

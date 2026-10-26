@@ -107,6 +107,9 @@ namespace UI
             // Lotes con vencimiento (decisiones 68 y 69): Encargado de Stock
             bool verLotes = usuario.TienePermiso("Lotes Vencidos");
             lnkLotesPorVencerfrmMenu.Visible = lnkLotesVencidosfrmMenu.Visible = verLotes;
+            // N03: promociones vigentes y para evaluar (Dueño)
+            bool verPromociones = usuario.TienePermiso("Gestion Promociones");
+            lnkPromocionesVigentesfrmMenu.Visible = lnkPromocionesEvaluarfrmMenu.Visible = verPromociones;
             lblOrdenesAprobacionfrmMenu.Visible = verAprobacion;
             lblOrdenesObservadasfrmMenu.Visible = verObservadas;
             lblOrdenesRecibirfrmMenu.Visible = verRecepcion;
@@ -116,7 +119,7 @@ namespace UI
             lblValesSinUsarfrmMenu.Visible = verVales;
             lnkStockBajofrmMenu.Visible = verStock;
             lblTableroTitulofrmMenu.Visible = btnActualizarTablerofrmMenu.Visible = verVentas || verComandas || verVales || verStock
-                || verAprobacion || verObservadas || verRecepcion || verPagos || verLotes;
+                || verAprobacion || verObservadas || verRecepcion || verPagos || verLotes || verPromociones;
             lblTableroTitulofrmMenu.Text = g.Traducir("lblTableroTitulofrmMenu");
             btnActualizarTablerofrmMenu.Text = g.Traducir("btnActualizarTablerofrmMenu");
 
@@ -162,6 +165,17 @@ namespace UI
                     lnkLotesVencidosfrmMenu.LinkColor = lnkLotesVencidosfrmMenu.ActiveLinkColor = vencidos > 0 ? System.Drawing.Color.Firebrick : System.Drawing.Color.DarkGreen;
                     lnkLotesVencidosfrmMenu.Enabled = vencidos > 0;
                 }
+                if (verPromociones)
+                {
+                    var promociones = new PROMOCION_BLL();
+                    int vigentes = promociones.ListarPromociones(PROMOCION_BLL.EstadoVigente).Count;
+                    int paraEvaluar = promociones.ListarParaEvaluar().Count;
+                    lnkPromocionesVigentesfrmMenu.Text = string.Format(g.Traducir("msgTableroPromocionesVigentes"), vigentes);
+                    lnkPromocionesVigentesfrmMenu.Enabled = vigentes > 0;
+                    lnkPromocionesEvaluarfrmMenu.Text = string.Format(g.Traducir("msgTableroPromocionesEvaluar"), paraEvaluar);
+                    lnkPromocionesEvaluarfrmMenu.LinkColor = lnkPromocionesEvaluarfrmMenu.ActiveLinkColor = paraEvaluar > 0 ? System.Drawing.Color.DarkOrange : System.Drawing.Color.DarkGreen;
+                    lnkPromocionesEvaluarfrmMenu.Enabled = paraEvaluar > 0;
+                }
             }
             catch (Exception ex)
             {
@@ -194,6 +208,17 @@ namespace UI
         private void lnkLotesVencidosfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             gestorUI.AbrirForm(new frmLote(false));
+        }
+
+        // Tablero del Dueño (N03): promociones vigentes y finalizadas sin evaluar (en la Fase 6 abre CU034)
+        private void lnkPromocionesVigentesfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmPromocion(PROMOCION_BLL.EstadoVigente));
+        }
+
+        private void lnkPromocionesEvaluarfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmPromocion(PROMOCION_BLL.EstadoFinalizada));
         }
         private void formularioUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -360,6 +385,7 @@ namespace UI
                 // Los indicadores del tablero se arman en ActualizarTablero
                 if (ctrl == lblVentasHoyfrmMenu || ctrl == lblComandasPendientesfrmMenu || ctrl == lblValesSinUsarfrmMenu || ctrl == lnkStockBajofrmMenu) continue;
                 if (ctrl == lnkLotesPorVencerfrmMenu || ctrl == lnkLotesVencidosfrmMenu) continue;
+                if (ctrl == lnkPromocionesVigentesfrmMenu || ctrl == lnkPromocionesEvaluarfrmMenu) continue;
                 if (ctrl == lblOrdenesAprobacionfrmMenu || ctrl == lblOrdenesObservadasfrmMenu || ctrl == lblOrdenesRecibirfrmMenu || ctrl == lblOrdenesPagofrmMenu) continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }

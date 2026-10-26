@@ -56,6 +56,12 @@ namespace BLL
             return GestorPromocion.ListarPromociones(estado);
         }
 
+        // Tablero y CU034: promociones finalizadas que todavía no se evaluaron
+        public List<BE.PROMOCION> ListarParaEvaluar()
+        {
+            return GestorPromocion.ListarPromociones(EstadoFinalizada).Where(p => p.Resultado == null).ToList();
+        }
+
         // Promoción con sus productos y tamaños
         public BE.PROMOCION ObtenerPromocion(int idPromocion)
         {

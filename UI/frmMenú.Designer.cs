@@ -46,6 +46,7 @@
             this.rentabilidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analisisRentabilidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.promocionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.evaluarPromocionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simuladorVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaComprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -290,6 +291,7 @@
             this.rentabilidadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.analisisRentabilidadToolStripMenuItem,
             this.promocionesToolStripMenuItem,
+            this.evaluarPromocionesToolStripMenuItem,
             this.simuladorVentasToolStripMenuItem});
             this.rentabilidadToolStripMenuItem.Name = "rentabilidadToolStripMenuItem";
             this.rentabilidadToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
@@ -308,6 +310,13 @@
             this.promocionesToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.promocionesToolStripMenuItem.Text = "Promociones";
             this.promocionesToolStripMenuItem.Click += new System.EventHandler(this.promocionesToolStripMenuItem_Click);
+            //
+            // evaluarPromocionesToolStripMenuItem
+            //
+            this.evaluarPromocionesToolStripMenuItem.Name = "evaluarPromocionesToolStripMenuItem";
+            this.evaluarPromocionesToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.evaluarPromocionesToolStripMenuItem.Text = "Evaluar promociones";
+            this.evaluarPromocionesToolStripMenuItem.Click += new System.EventHandler(this.evaluarPromocionesToolStripMenuItem_Click);
             //
             // simuladorVentasToolStripMenuItem
             //
@@ -619,6 +628,7 @@
         private System.Windows.Forms.ToolStripMenuItem rentabilidadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem analisisRentabilidadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem promocionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem evaluarPromocionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simuladorVentasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaComprasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaVentasToolStripMenuItem;

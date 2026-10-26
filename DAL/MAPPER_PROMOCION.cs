@@ -177,6 +177,52 @@ namespace DAL
             }).ToList();
         }
 
+        // CU034: unidades por día (etiqueta aaaa-MM-dd) de los productos y tamaños de la promoción en [desde, hasta)
+        public List<BE.ANALISIS_PUNTO> ListarUnidadesDiarias(int idPromocion, DateTime desde, DateTime hasta)
+        {
+            acceso.Abrir();
+            DataTable tabla;
+            try
+            {
+                tabla = acceso.Leer("ListarUnidadesDiariasPromocion", new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@IdPromocion", idPromocion),
+                    acceso.CrearParametro("@Desde", desde),
+                    acceso.CrearParametro("@Hasta", hasta)
+                });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            return tabla.Rows.Cast<DataRow>().Select(u => new BE.ANALISIS_PUNTO
+            {
+                Etiqueta = Convert.ToDateTime(u["Dia"]).ToString("yyyy-MM-dd"),
+                Valor = Convert.ToDecimal(u["Unidades"])
+            }).ToList();
+        }
+
+        // CU034: guarda el resultado de la evaluación. Devuelve 0 si la promoción no está Finalizada o ya tenía resultado.
+        public int GuardarEvaluacion(int idPromocion, string resultado, DateTime fechaEvaluacion, string observaciones)
+        {
+            acceso.Abrir();
+            try
+            {
+                DataTable tabla = acceso.Leer("GuardarEvaluacionPromocion", new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@IdPromocion", idPromocion),
+                    acceso.CrearParametro("@Resultado", resultado),
+                    acceso.CrearParametro("@FechaEvaluacion", fechaEvaluacion),
+                    new SqlParameter("@Observaciones", SqlDbType.NVarChar, 500) { Value = (object)observaciones ?? DBNull.Value }
+                });
+                return Convert.ToInt32(tabla.Rows[0]["Filas"]);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
         // Decisión 78: cambios de estado por fecha. Devuelve cuántas promociones cambiaron.
         public int ActualizarEstados(DateTime hoy)
         {

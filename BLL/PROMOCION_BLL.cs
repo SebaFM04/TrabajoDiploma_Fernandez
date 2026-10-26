@@ -203,5 +203,115 @@ namespace BLL
                 + $"{promocion.Detalles.Count} productos, {promocion.Estado}" + (margenNegativo ? ", aceptada con margen negativo" : ""));
             return promocion;
         }
+
+        // ── CU034 Evaluar Resultado de Promoción ──────────────────────
+
+        // CU034 pasos 2 y 3 (decisión 81): compara la vigencia contra el período anterior de igual duración, solo para los
+        // productos y tamaños de la promoción, con todas sus ventas en cada período (propuesta 2 de la Fase 6).
+        // Sugiere Efectiva si el margen total no bajó y las unidades subieron. FA1: la promoción todavía no terminó.
+        // FA2: sin ventas en ninguno de los dos períodos (aviso y sugerencia No efectiva).
+        public BE.EVALUACION_PROMOCION EvaluarPromocion(int idPromocion)
+        {
+            var promocion = GestorPromocion.BuscarPromocion(idPromocion);
+            if (promocion == null)
+                throw new ArgumentException("msgPromocionInexistente");
+            if (promocion.Estado == EstadoEnProceso || promocion.Estado == EstadoVigente)
+                throw new ArgumentException("msgEvaluacionNoTermino");
+
+            int dias = (promocion.FechaHasta.Date - promocion.FechaDesde.Date).Days + 1;
+            var evaluacion = new BE.EVALUACION_PROMOCION
+            {
+                Promocion = promocion,
+                AntesDesde = promocion.FechaDesde.Date.AddDays(-dias),
+                AntesHasta = promocion.FechaDesde.Date.AddDays(-1)
+            };
+            var mapper = new MAPPER_ANALISIS();
+            var antes = mapper.ListarVentasPorProducto(evaluacion.AntesDesde, promocion.FechaDesde.Date);
+            var durante = mapper.ListarVentasPorProducto(promocion.FechaDesde.Date, promocion.FechaHasta.Date.AddDays(1));
+            foreach (var d in promocion.Detalles)
+            {
+                var a = antes.FirstOrDefault(v => v.IdProducto == d.IdProducto && v.IdTamanio == d.IdTamanio);
+                var b = durante.FirstOrDefault(v => v.IdProducto == d.IdProducto && v.IdTamanio == d.IdTamanio);
+                var item = new BE.EVALUACION_ITEM
+                {
+                    IdProducto = d.IdProducto,
+                    IdTamanio = d.IdTamanio,
+                    NombreProducto = d.ProductoTamanio.Producto.Nombre,
+                    NombreTamanio = d.ProductoTamanio.Tamanio.Nombre,
+                    UnidadesAntes = a?.Unidades ?? 0,
+                    UnidadesDurante = b?.Unidades ?? 0,
+                    IngresosAntes = a?.Ingresos ?? 0,
+                    IngresosDurante = b?.Ingresos ?? 0,
+                    MargenAntes = a == null ? 0 : a.Ingresos - a.Costo,
+                    MargenDurante = b == null ? 0 : b.Ingresos - b.Costo
+                };
+                CalcularVariaciones(item);
+                evaluacion.Items.Add(item);
+            }
+            evaluacion.Total = new BE.EVALUACION_ITEM
+            {
+                UnidadesAntes = evaluacion.Items.Sum(i => i.UnidadesAntes),
+                UnidadesDurante = evaluacion.Items.Sum(i => i.UnidadesDurante),
+                IngresosAntes = evaluacion.Items.Sum(i => i.IngresosAntes),
+                IngresosDurante = evaluacion.Items.Sum(i => i.IngresosDurante),
+                MargenAntes = evaluacion.Items.Sum(i => i.MargenAntes),
+                MargenDurante = evaluacion.Items.Sum(i => i.MargenDurante)
+            };
+            CalcularVariaciones(evaluacion.Total);
+
+            var t = evaluacion.Total;
+            if (t.UnidadesAntes == 0 && t.UnidadesDurante == 0)
+            {
+                evaluacion.Avisos.Add("msgEvaluacionSinVentas");
+                evaluacion.ResultadoSugerido = ResultadoNoEfectiva;
+            }
+            else
+                evaluacion.ResultadoSugerido = t.MargenDurante >= t.MargenAntes && t.UnidadesDurante > t.UnidadesAntes ? ResultadoEfectiva : ResultadoNoEfectiva;
+
+            // Gráfico (propuesta 7): unidades por día de los dos períodos; la pantalla marca la vigencia con una franja
+            var diarias = GestorPromocion.ListarUnidadesDiarias(idPromocion, evaluacion.AntesDesde, promocion.FechaHasta.Date.AddDays(1))
+                .ToDictionary(p => p.Etiqueta, p => p.Valor);
+            evaluacion.Serie = new BE.ANALISIS_SERIE { Grafico = "Evaluacion", Nombre = "msgEvaluacionSerieUnidades", Tipo = ANALISIS_BLL.TipoLinea };
+            for (DateTime dia = evaluacion.AntesDesde; dia <= promocion.FechaHasta.Date; dia = dia.AddDays(1))
+            {
+                string etiqueta = dia.ToString("yyyy-MM-dd");
+                evaluacion.Serie.Puntos.Add(new BE.ANALISIS_PUNTO { Etiqueta = etiqueta, Valor = diarias.TryGetValue(etiqueta, out decimal v) ? v : 0 });
+            }
+            return evaluacion;
+        }
+
+        // Variación % durante contra antes; null si antes fue 0 (sin base, propuesta 8 de la Fase 6)
+        static void CalcularVariaciones(BE.EVALUACION_ITEM i)
+        {
+            i.VariacionUnidades = Variacion(i.UnidadesAntes, i.UnidadesDurante);
+            i.VariacionIngresos = Variacion(i.IngresosAntes, i.IngresosDurante);
+            i.VariacionMargen = Variacion(i.MargenAntes, i.MargenDurante);
+        }
+
+        static decimal? Variacion(decimal antes, decimal durante)
+        {
+            return antes == 0 ? (decimal?)null : Math.Round((durante - antes) / Math.Abs(antes) * 100, 1);
+        }
+
+        // CU034 pasos 4 y 5: el Dueño confirma Efectiva o No efectiva; se guardan el resultado y la fecha de evaluación
+        public void RegistrarEvaluacion(int idPromocion, string resultado, string observaciones)
+        {
+            if (resultado != ResultadoEfectiva && resultado != ResultadoNoEfectiva)
+                throw new ArgumentException("msgEvaluacionResultadoObligatorio");
+            observaciones = string.IsNullOrWhiteSpace(observaciones) ? null : observaciones.Trim();
+            if (observaciones != null && observaciones.Length > 500)
+                throw new ArgumentException("msgEvaluacionObservacionesLargas");
+            var promocion = GestorPromocion.BuscarPromocion(idPromocion);
+            if (promocion == null)
+                throw new ArgumentException("msgPromocionInexistente");
+            if (promocion.Estado == EstadoEnProceso || promocion.Estado == EstadoVigente)
+                throw new ArgumentException("msgEvaluacionNoTermino");
+            // El SP vuelve a controlar que siga Finalizada y sin resultado (otro usuario pudo evaluarla antes)
+            if (GestorPromocion.GuardarEvaluacion(idPromocion, resultado, DateTime.Now, observaciones) == 0)
+                throw new ArgumentException("msgEvaluacionYaEvaluada");
+
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Promoción evaluada",
+                $"Promoción {promocion.IdPromocion} ({promocion.Nombre}): {resultado}");
+        }
     }
 }

@@ -46,6 +46,8 @@
     <Compile Include="ANALISIS_RENTABILIDAD.cs" />
     <Compile Include="ANALISIS_SERIE.cs" />
     <Compile Include="BITACORA.cs" />
+    <Compile Include="EVALUACION_ITEM.cs" />
+    <Compile Include="EVALUACION_PROMOCION.cs" />
     <Compile Include="CONTROLCAMBIO.cs" />
     <Compile Include="DIGITOVERIFICADOR.cs" />
     <Compile Include="INSUMO.cs" />

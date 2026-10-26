@@ -60,6 +60,7 @@ namespace UI
             // N03: rentabilidad y promociones
             analisisRentabilidadToolStripMenuItem.Available = tiene("Analisis Rentabilidad");
             promocionesToolStripMenuItem.Available = tiene("Gestion Promociones");
+            evaluarPromocionesToolStripMenuItem.Available = tiene("Evaluar Promociones");
             simuladorVentasToolStripMenuItem.Available = tiene("Simulador Ventas");
             aprobacionOrdenToolStripMenuItem.Available = tiene("Aprobar Ordenes Compra");
             ordenCompraToolStripMenuItem.Available = tiene("Gestion Ordenes Compra");
@@ -210,7 +211,7 @@ namespace UI
             gestorUI.AbrirForm(new frmLote(false));
         }
 
-        // Tablero del Dueño (N03): promociones vigentes y finalizadas sin evaluar (en la Fase 6 abre CU034)
+        // Tablero del Dueño (N03): promociones vigentes y finalizadas sin evaluar (abre CU034)
         private void lnkPromocionesVigentesfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             gestorUI.AbrirForm(new frmPromocion(PROMOCION_BLL.EstadoVigente));
@@ -218,7 +219,13 @@ namespace UI
 
         private void lnkPromocionesEvaluarfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            gestorUI.AbrirForm(new frmPromocion(PROMOCION_BLL.EstadoFinalizada));
+            gestorUI.AbrirForm(new frmEvaluacionPromocion());
+        }
+
+        // N03 CU034 Evaluar Resultado de Promoción (y CU035 Renovar)
+        private void evaluarPromocionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmEvaluacionPromocion());
         }
         private void formularioUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {

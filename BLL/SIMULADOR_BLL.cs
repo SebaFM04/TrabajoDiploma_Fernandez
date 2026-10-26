@@ -64,15 +64,41 @@ namespace BLL
             return new MAPPER_VENTA().ContarVentasSimuladas(out desde, out hasta);
         }
 
+        // Promoción de ejemplo (decisión 80): 15 días que terminaron hace 60, 20 % de descuento y 1,8 veces más ventas
+        // del producto. CU034 compara con el período anterior de igual duración: hacen falta al menos 4 meses simulados.
+        public const int PromocionMesesMinimo = 4;
+        const int DiasPromocion = 15;
+        const int PromocionTerminaHaceDias = 60;
+        const decimal DescuentoPromocion = 0.20m;
+        const double AumentoPromocion = 1.8;
+
+        // Promoción de ejemplo en armado: la promoción, su producto y las líneas de venta que la usan
+        // (reciben el IdPromocion cuando se guarda la promoción, dentro de la transacción)
+        class PromocionEjemplo
+        {
+            public BE.PROMOCION Promocion;
+            public int IdProducto;
+            public List<BE.VENTA_DETALLE> Lineas = new List<BE.VENTA_DETALLE>();
+
+            public bool Vigente(DateTime fecha)
+            {
+                return fecha.Date >= Promocion.FechaDesde && fecha.Date <= Promocion.FechaHasta;
+            }
+        }
+
         // Genera la simulación y devuelve la cantidad de ventas. Las noches van desde 'meses' atrás hasta anteayer,
         // así la última venta (hasta las 03) queda en ayer y el tablero de hoy no cambia.
-        // Todo en una transacción: un llamado al SP por mes (inserción en bloque).
-        public int GenerarSimulacion(int meses, int ventasPorNoche, int semilla)
+        // Con incluirPromocion crea además la promoción de ejemplo (Finalizada, sin evaluar), que se devuelve en 'promocion'.
+        // Todo en una transacción: la promoción y un llamado al SP de ventas por mes (inserción en bloque).
+        public int GenerarSimulacion(int meses, int ventasPorNoche, int semilla, bool incluirPromocion, out BE.PROMOCION promocion)
         {
+            promocion = null;
             if (meses < MesesMinimo || meses > MesesMaximo)
                 throw new ArgumentException("msgSimuladorMesesInvalidos");
             if (ventasPorNoche < VentasMinimo || ventasPorNoche > VentasMaximo)
                 throw new ArgumentException("msgSimuladorVentasInvalidas");
+            if (incluirPromocion && meses < PromocionMesesMinimo)
+                throw new ArgumentException("msgSimuladorPromocionMeses");
             if (ObtenerEstado(out _, out _) > 0)
                 throw new ArgumentException("msgSimuladorYaExiste");
             var productos = new VENTA_BLL().ListarProductosParaVenta();
@@ -83,6 +109,7 @@ namespace BLL
             var bebidas = productos.Where(p => p.Producto.Tipo != "Piqueo").ToList();
             var piqueos = productos.Where(p => p.Producto.Tipo == "Piqueo").ToList();
             var mediosPago = new VENTA_BLL().ListarMediosPago();
+            var ejemplo = incluirPromocion ? ArmarPromocionEjemplo(bebidas.Count > 0 ? bebidas : productos, costos) : null;
             var rnd = new Random(semilla);
 
             DateTime primeraNoche = DateTime.Today.AddMonths(-meses);
@@ -93,7 +120,7 @@ namespace BLL
                 double esperado = ventasPorNoche * FactorDia[(int)noche.DayOfWeek] * FactorMes(noche.Month) * (0.8 + 0.4 * rnd.NextDouble());
                 int cantidad = (int)Math.Round(esperado);
                 for (int i = 0; i < cantidad; i++)
-                    ventas.Add(ArmarVenta(noche, rnd, bebidas, piqueos, costos, mediosPago));
+                    ventas.Add(ArmarVenta(noche, rnd, bebidas, piqueos, costos, mediosPago, ejemplo));
             }
 
             int guardadas = 0;
@@ -101,6 +128,12 @@ namespace BLL
             acceso.IniciarTransaccion();
             try
             {
+                if (ejemplo != null)
+                {
+                    new MAPPER_PROMOCION(acceso).GuardarPromocion(ejemplo.Promocion);
+                    foreach (var linea in ejemplo.Lineas)
+                        linea.IdPromocion = ejemplo.Promocion.IdPromocion;
+                }
                 var mapper = new MAPPER_VENTA(acceso);
                 foreach (var mes in ventas.GroupBy(v => new { v.Fecha.Year, v.Fecha.Month }))
                     guardadas += mapper.GuardarVentasSimuladas(mes.ToList());
@@ -112,9 +145,57 @@ namespace BLL
                 throw;
             }
 
+            promocion = ejemplo?.Promocion;
             new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Simulación de ventas generada",
-                $"{guardadas} ventas simuladas del {primeraNoche:dd/MM/yyyy} al {ultimaNoche.AddDays(1):dd/MM/yyyy} ({meses} meses, {ventasPorNoche} por noche, semilla {semilla})");
+                $"{guardadas} ventas simuladas del {primeraNoche:dd/MM/yyyy} al {ultimaNoche.AddDays(1):dd/MM/yyyy} ({meses} meses, {ventasPorNoche} por noche, semilla {semilla})"
+                + (promocion != null ? $"; promoción de ejemplo {promocion.IdPromocion} ({promocion.Nombre}, {promocion.FechaDesde:dd/MM/yyyy} al {promocion.FechaHasta:dd/MM/yyyy})" : ""));
             return guardadas;
+        }
+
+        // Promoción de ejemplo (propuesta 2 de la Fase 3): el producto de mayor margen unitario entre los que se venden
+        // poco (popularidad hasta 1), con todos sus tamaños a 20 % menos del precio de ese mes, criterio Ventas,
+        // Finalizada y sin evaluar (para CU034).
+        PromocionEjemplo ArmarPromocionEjemplo(List<BE.PRODUCTO_TAMANIO> opciones, Dictionary<string, decimal> costos)
+        {
+            var candidatos = opciones.Where(o => Popularidad(o.Producto) <= 1).ToList();
+            if (candidatos.Count == 0) candidatos = opciones;
+            var elegido = candidatos.OrderByDescending(o => o.Precio - costos[Clave(o)]).First();
+
+            DateTime hasta = DateTime.Today.AddDays(-PromocionTerminaHaceDias);
+            DateTime desde = hasta.AddDays(-(DiasPromocion - 1));
+            decimal deflactor = Deflactor(desde);
+            var promocion = new BE.PROMOCION
+            {
+                Nombre = "Promo de ejemplo: " + elegido.Producto.Nombre,
+                Criterio = PROMOCION_BLL.CriterioVentas,
+                FechaDesde = desde,
+                FechaHasta = hasta,
+                Estado = PROMOCION_BLL.EstadoFinalizada,
+                FechaCreacion = desde.AddDays(-3).AddHours(18),
+                Observaciones = "Generada por el simulador de ventas",
+                Simulada = true
+            };
+            foreach (var pt in opciones.Where(o => o.IdProducto == elegido.IdProducto))
+            {
+                decimal original = Math.Round(pt.Precio * deflactor / 10, 0) * 10;
+                promocion.Detalles.Add(new BE.PROMOCION_DETALLE
+                {
+                    IdProducto = pt.IdProducto,
+                    IdTamanio = pt.IdTamanio,
+                    PrecioOriginal = original,
+                    PrecioPromocional = Math.Round(original * (1 - DescuentoPromocion) / 10, 0) * 10,
+                    CostoUnitario = Math.Round(costos[Clave(pt)] * deflactor, 2),
+                    ProductoTamanio = pt
+                });
+            }
+            return new PromocionEjemplo { Promocion = promocion, IdProducto = elegido.IdProducto };
+        }
+
+        // Precio y costo del mes de 'fecha' = actual deflactado por los meses que pasaron hasta hoy
+        static decimal Deflactor(DateTime fecha)
+        {
+            int mesesAtras = (DateTime.Today.Year - fecha.Year) * 12 + DateTime.Today.Month - fecha.Month;
+            return 1 / (decimal)Math.Pow(1 + (double)InflacionMensual, mesesAtras);
         }
 
         // Decisión 89: borra físicamente las ventas simuladas. FA: no hay simulación.
@@ -183,15 +264,15 @@ namespace BLL
         }
 
         BE.VENTA ArmarVenta(DateTime noche, Random rnd, List<BE.PRODUCTO_TAMANIO> bebidas, List<BE.PRODUCTO_TAMANIO> piqueos,
-                            Dictionary<string, decimal> costos, string[] mediosPago)
+                            Dictionary<string, decimal> costos, string[] mediosPago, PromocionEjemplo ejemplo)
         {
             int indiceHora = Elegir(rnd, PesoHora);
             int hora = Horas[indiceHora];
             // Las horas de 0 a 2 son de la madrugada siguiente
             DateTime fecha = noche.Date.AddDays(hora < 12 ? 1 : 0).AddHours(hora).AddMinutes(rnd.Next(60)).AddSeconds(rnd.Next(60));
-            // Meses entre la venta y el mes actual, para deflactar precio y costo
-            int mesesAtras = (DateTime.Today.Year - fecha.Year) * 12 + DateTime.Today.Month - fecha.Month;
-            decimal deflactor = 1 / (decimal)Math.Pow(1 + (double)InflacionMensual, mesesAtras);
+            decimal deflactor = Deflactor(fecha);
+            // Durante la vigencia de la promoción de ejemplo su producto se vende más y al precio promocional
+            var promo = ejemplo != null && ejemplo.Vigente(fecha) ? ejemplo : null;
 
             var venta = new BE.VENTA { Fecha = fecha, MedioPago = mediosPago[Elegir(rnd, PesoMedioPago)], Simulada = true };
             if (bebidas.Count > 0)
@@ -199,36 +280,44 @@ namespace BLL
                 double r = rnd.NextDouble();
                 int lineas = r < 0.55 ? 1 : r < 0.90 ? 2 : 3;
                 for (int i = 0; i < lineas; i++)
-                    AgregarLinea(venta, ElegirProducto(rnd, bebidas, fecha.Month), rnd, costos, deflactor);
+                    AgregarLinea(venta, ElegirProducto(rnd, bebidas, fecha.Month, promo?.IdProducto), rnd, costos, deflactor, promo);
             }
             if (piqueos.Count > 0 && (bebidas.Count == 0 || rnd.NextDouble() < ProbabilidadPiqueo))
-                AgregarLinea(venta, ElegirProducto(rnd, piqueos, fecha.Month), rnd, costos, deflactor);
+                AgregarLinea(venta, ElegirProducto(rnd, piqueos, fecha.Month, promo?.IdProducto), rnd, costos, deflactor, promo);
             venta.Monto = venta.Detalles.Sum(d => d.MontoLinea);
             return venta;
         }
 
-        // Producto según popularidad y temporada; el tamaño más chico sale el 60 % de las veces
-        static BE.PRODUCTO_TAMANIO ElegirProducto(Random rnd, List<BE.PRODUCTO_TAMANIO> opciones, int mes)
+        // Producto según popularidad y temporada (y el de la promoción vigente, 1,8 veces más); el tamaño más chico
+        // sale el 60 % de las veces
+        static BE.PRODUCTO_TAMANIO ElegirProducto(Random rnd, List<BE.PRODUCTO_TAMANIO> opciones, int mes, int? idProductoPromocion)
         {
             var porProducto = opciones.GroupBy(o => o.IdProducto).ToList();
-            var pesos = porProducto.Select(g => (double)(Popularidad(g.First().Producto) * FactorTemporada(g.First().Producto, mes))).ToArray();
+            var pesos = porProducto.Select(g => (double)(Popularidad(g.First().Producto) * FactorTemporada(g.First().Producto, mes))
+                                                * (g.Key == idProductoPromocion ? AumentoPromocion : 1)).ToArray();
             var tamanios = porProducto[Elegir(rnd, pesos)].OrderBy(t => t.Tamanio.CantidadMagnitud).ToList();
             if (tamanios.Count == 1) return tamanios[0];
             return rnd.NextDouble() < 0.6 ? tamanios[0] : tamanios[1 + rnd.Next(tamanios.Count - 1)];
         }
 
         // Línea con precio y costo deflactados (precio redondeado a $ 10). Si el producto y tamaño ya está, suma la cantidad.
-        static void AgregarLinea(BE.VENTA venta, BE.PRODUCTO_TAMANIO pt, Random rnd, Dictionary<string, decimal> costos, decimal deflactor)
+        // Con la promoción de ejemplo vigente, su producto se cobra al precio promocional y la línea la referencia.
+        static void AgregarLinea(BE.VENTA venta, BE.PRODUCTO_TAMANIO pt, Random rnd, Dictionary<string, decimal> costos, decimal deflactor, PromocionEjemplo promo)
         {
             double r = rnd.NextDouble();
             int cantidad = r < 0.85 ? 1 : r < 0.97 ? 2 : 3;
             decimal precio = Math.Round(pt.Precio * deflactor / 10, 0) * 10;
+            var enPromocion = promo?.Promocion.Detalles.FirstOrDefault(d => d.IdProducto == pt.IdProducto && d.IdTamanio == pt.IdTamanio);
+            if (enPromocion != null)
+                precio = enPromocion.PrecioPromocional;
             decimal costo = costos[Clave(pt)] * deflactor;
             var linea = venta.Detalles.FirstOrDefault(d => d.IdProducto == pt.IdProducto && d.IdTamanio == pt.IdTamanio);
             if (linea == null)
             {
                 linea = new BE.VENTA_DETALLE { IdProducto = pt.IdProducto, IdTamanio = pt.IdTamanio, ProductoTamanio = pt };
                 venta.Detalles.Add(linea);
+                if (enPromocion != null)
+                    promo.Lineas.Add(linea);
             }
             linea.Cantidad += cantidad;
             linea.MontoLinea = precio * linea.Cantidad;

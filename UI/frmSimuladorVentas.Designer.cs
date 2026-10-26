@@ -35,6 +35,7 @@
             this.nudVentasNochefrmSimuladorVentas = new System.Windows.Forms.NumericUpDown();
             this.lblSemillafrmSimuladorVentas = new System.Windows.Forms.Label();
             this.nudSemillafrmSimuladorVentas = new System.Windows.Forms.NumericUpDown();
+            this.chkPromocionEjemplofrmSimuladorVentas = new System.Windows.Forms.CheckBox();
             this.btnGenerarfrmSimuladorVentas = new System.Windows.Forms.Button();
             this.btnBorrarfrmSimuladorVentas = new System.Windows.Forms.Button();
             this.lblEstadofrmSimuladorVentas = new System.Windows.Forms.Label();
@@ -104,11 +105,22 @@
             this.nudSemillafrmSimuladorVentas.TabIndex = 6;
             this.nudSemillafrmSimuladorVentas.Value = new decimal(new int[] { 2026, 0, 0, 0 });
             //
+            // chkPromocionEjemplofrmSimuladorVentas
+            //
+            this.chkPromocionEjemplofrmSimuladorVentas.AutoSize = true;
+            this.chkPromocionEjemplofrmSimuladorVentas.Checked = true;
+            this.chkPromocionEjemplofrmSimuladorVentas.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPromocionEjemplofrmSimuladorVentas.Location = new System.Drawing.Point(20, 188);
+            this.chkPromocionEjemplofrmSimuladorVentas.Name = "chkPromocionEjemplofrmSimuladorVentas";
+            this.chkPromocionEjemplofrmSimuladorVentas.TabIndex = 10;
+            this.chkPromocionEjemplofrmSimuladorVentas.Text = "Incluir una promoción de ejemplo";
+            this.chkPromocionEjemplofrmSimuladorVentas.UseVisualStyleBackColor = true;
+            //
             // btnGenerarfrmSimuladorVentas
             //
             this.btnGenerarfrmSimuladorVentas.BackColor = System.Drawing.Color.SandyBrown;
             this.btnGenerarfrmSimuladorVentas.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerarfrmSimuladorVentas.Location = new System.Drawing.Point(20, 195);
+            this.btnGenerarfrmSimuladorVentas.Location = new System.Drawing.Point(20, 225);
             this.btnGenerarfrmSimuladorVentas.Name = "btnGenerarfrmSimuladorVentas";
             this.btnGenerarfrmSimuladorVentas.Size = new System.Drawing.Size(250, 38);
             this.btnGenerarfrmSimuladorVentas.TabIndex = 7;
@@ -120,7 +132,7 @@
             //
             this.btnBorrarfrmSimuladorVentas.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBorrarfrmSimuladorVentas.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBorrarfrmSimuladorVentas.Location = new System.Drawing.Point(290, 195);
+            this.btnBorrarfrmSimuladorVentas.Location = new System.Drawing.Point(290, 225);
             this.btnBorrarfrmSimuladorVentas.Name = "btnBorrarfrmSimuladorVentas";
             this.btnBorrarfrmSimuladorVentas.Size = new System.Drawing.Size(250, 38);
             this.btnBorrarfrmSimuladorVentas.TabIndex = 8;
@@ -130,7 +142,7 @@
             //
             // lblEstadofrmSimuladorVentas
             //
-            this.lblEstadofrmSimuladorVentas.Location = new System.Drawing.Point(20, 250);
+            this.lblEstadofrmSimuladorVentas.Location = new System.Drawing.Point(20, 280);
             this.lblEstadofrmSimuladorVentas.Name = "lblEstadofrmSimuladorVentas";
             this.lblEstadofrmSimuladorVentas.Size = new System.Drawing.Size(520, 40);
             this.lblEstadofrmSimuladorVentas.TabIndex = 9;
@@ -141,7 +153,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(560, 305);
+            this.ClientSize = new System.Drawing.Size(560, 335);
+            this.Controls.Add(this.chkPromocionEjemplofrmSimuladorVentas);
             this.Controls.Add(this.lblEstadofrmSimuladorVentas);
             this.Controls.Add(this.btnBorrarfrmSimuladorVentas);
             this.Controls.Add(this.btnGenerarfrmSimuladorVentas);
@@ -174,6 +187,7 @@
         private System.Windows.Forms.NumericUpDown nudVentasNochefrmSimuladorVentas;
         private System.Windows.Forms.Label lblSemillafrmSimuladorVentas;
         private System.Windows.Forms.NumericUpDown nudSemillafrmSimuladorVentas;
+        private System.Windows.Forms.CheckBox chkPromocionEjemplofrmSimuladorVentas;
         private System.Windows.Forms.Button btnGenerarfrmSimuladorVentas;
         private System.Windows.Forms.Button btnBorrarfrmSimuladorVentas;
         private System.Windows.Forms.Label lblEstadofrmSimuladorVentas;

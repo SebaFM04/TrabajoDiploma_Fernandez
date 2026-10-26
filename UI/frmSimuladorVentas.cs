@@ -52,9 +52,14 @@ namespace UI
             Cursor = Cursors.WaitCursor;
             try
             {
-                int ventas = GestorSimulador.GenerarSimulacion((int)nudMesesfrmSimuladorVentas.Value, (int)nudVentasNochefrmSimuladorVentas.Value, (int)nudSemillafrmSimuladorVentas.Value);
+                int ventas = GestorSimulador.GenerarSimulacion((int)nudMesesfrmSimuladorVentas.Value, (int)nudVentasNochefrmSimuladorVentas.Value,
+                    (int)nudSemillafrmSimuladorVentas.Value, chkPromocionEjemplofrmSimuladorVentas.Checked, out BE.PROMOCION promocion);
                 Cursor = Cursors.Default;
-                MessageBox.Show(string.Format(g.Traducir("msgSimuladorGenerada"), ventas), g.Traducir("frmSimuladorVentas"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string mensaje = string.Format(g.Traducir("msgSimuladorGenerada"), ventas);
+                if (promocion != null)
+                    mensaje += Environment.NewLine + string.Format(g.Traducir("msgSimuladorPromocionGenerada"), promocion.Nombre,
+                        promocion.FechaDesde.ToString("dd/MM/yyyy"), promocion.FechaHasta.ToString("dd/MM/yyyy"));
+                MessageBox.Show(mensaje, g.Traducir("frmSimuladorVentas"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (ArgumentException argEx)
             {

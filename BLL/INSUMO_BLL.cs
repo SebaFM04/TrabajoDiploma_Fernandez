@@ -215,10 +215,12 @@ namespace BLL
         }
 
         // CU019 mensajes 29-38: ingresa lo recibido (decisión 61): stock += cantidad × equivalencia y costo promedio ponderado.
-        // Decisión 59: si el insumo queda en o sobre el umbral, sus avisos se resuelven y el flag vuelve a 0.
+        // Decisión 65: cada insumo recibido genera un lote con su vencimiento y su costo.
+        // Decisión 59: si el stock vendible (decisión 68) queda en o sobre el umbral, sus avisos se resuelven y el flag vuelve a 0.
         public void IngresarStock(List<BE.RECEPCION_DETALLE> recibidos, ACCESO acceso)
         {
             var mapper = new MAPPER_INSUMO(acceso);
+            var gestorLote = new LOTE_BLL();
             foreach (var r in recibidos)
             {
                 var insumo = mapper.BuscarInsumo(r.IdInsumo);
@@ -228,10 +230,13 @@ namespace BLL
                 decimal costo = stockEnUnidades + r.CantidadRecibida > 0
                     ? (stockEnUnidades * insumo.CostoUnidadCompra + r.CantidadRecibida * r.CostoUnidadCompra) / (stockEnUnidades + r.CantidadRecibida)
                     : r.CostoUnidadCompra;
-                decimal nuevoStock = insumo.VolumenPesoDisponible + r.CantidadRecibida * insumo.EquivalenciaMagnitud;
+                decimal ingresado = r.CantidadRecibida * insumo.EquivalenciaMagnitud;
+                decimal nuevoStock = insumo.VolumenPesoDisponible + ingresado;
                 mapper.ActualizarVolumenPeso(insumo.IdInsumo, nuevoStock);
                 mapper.ActualizarCosto(insumo.IdInsumo, Math.Round(costo, 2));
-                if (nuevoStock >= insumo.UmbralReposicion)
+                gestorLote.CrearLote(insumo, r.IdRecepcion, ingresado, r.CostoUnidadCompra, r.FechaVencimiento, acceso);
+                // El lote nuevo no está vencido (la fecha es posterior a hoy): suma al stock vendible
+                if (insumo.StockVendible + ingresado >= insumo.UmbralReposicion)
                     mapper.ResolverAvisos(insumo.IdInsumo);
             }
         }

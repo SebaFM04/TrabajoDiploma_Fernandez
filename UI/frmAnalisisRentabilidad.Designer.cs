@@ -43,6 +43,7 @@
             this.dgvSugeridosfrmAnalisisRentabilidad = new System.Windows.Forms.DataGridView();
             this.lblAvisosfrmAnalisisRentabilidad = new System.Windows.Forms.Label();
             this.tabGraficosfrmAnalisisRentabilidad = new System.Windows.Forms.TabControl();
+            this.btnCrearPromocionfrmAnalisisRentabilidad = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultadosfrmAnalisisRentabilidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSugeridosfrmAnalisisRentabilidad)).BeginInit();
             this.SuspendLayout();
@@ -182,12 +183,24 @@
             this.tabGraficosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(435, 650);
             this.tabGraficosfrmAnalisisRentabilidad.TabIndex = 14;
             //
+            // btnCrearPromocionfrmAnalisisRentabilidad
+            //
+            this.btnCrearPromocionfrmAnalisisRentabilidad.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Location = new System.Drawing.Point(445, 443);
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Name = "btnCrearPromocionfrmAnalisisRentabilidad";
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Size = new System.Drawing.Size(270, 27);
+            this.btnCrearPromocionfrmAnalisisRentabilidad.TabIndex = 15;
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Text = "Crear promoción con los seleccionados";
+            this.btnCrearPromocionfrmAnalisisRentabilidad.UseVisualStyleBackColor = false;
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Click += new System.EventHandler(this.btnCrearPromocionfrmAnalisisRentabilidad_Click);
+            //
             // frmAnalisisRentabilidad
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(1180, 745);
+            this.Controls.Add(this.btnCrearPromocionfrmAnalisisRentabilidad);
             this.Controls.Add(this.tabGraficosfrmAnalisisRentabilidad);
             this.Controls.Add(this.lblAvisosfrmAnalisisRentabilidad);
             this.Controls.Add(this.dgvSugeridosfrmAnalisisRentabilidad);
@@ -232,5 +245,6 @@
         private System.Windows.Forms.DataGridView dgvSugeridosfrmAnalisisRentabilidad;
         private System.Windows.Forms.Label lblAvisosfrmAnalisisRentabilidad;
         private System.Windows.Forms.TabControl tabGraficosfrmAnalisisRentabilidad;
+        private System.Windows.Forms.Button btnCrearPromocionfrmAnalisisRentabilidad;
     }
 }

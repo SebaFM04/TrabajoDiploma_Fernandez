@@ -47,8 +47,31 @@ namespace UI
             foreach (int dias in GestorAnalisis.ListarDiasPorVencer())
                 cmbDiasfrmAnalisisRentabilidad.Items.Add(dias);
             cmbDiasfrmAnalisisRentabilidad.SelectedItem = ANALISIS_BLL.DiasPorVencerDefecto;
+            // CU033 se ofrece solo a quien tiene el permiso de promociones
+            var usuario = SessionManager.Instancia.UsuarioActual;
+            btnCrearPromocionfrmAnalisisRentabilidad.Visible = usuario != null && usuario.TienePermiso("Gestion Promociones");
             CargarCriterios();
             MostrarAnalisis();
+        }
+
+        // CU031 → CU033 («extend»): promoción con los sugeridos marcados en la grilla (si no hay ninguno, todos)
+        private void btnCrearPromocionfrmAnalisisRentabilidad_Click(object sender, EventArgs e)
+        {
+            if (analisis == null) return;
+            var elegidos = dgvSugeridosfrmAnalisisRentabilidad.SelectedRows.Cast<DataGridViewRow>()
+                .Select(f => f.Tag as BE.ANALISIS_ITEM).Where(i => i != null).OrderBy(i => i.Orden).ToList();
+            if (elegidos.Count == 0)
+                elegidos = analisis.ObtenerSugeridos();
+            try
+            {
+                var promocion = new PROMOCION_BLL().ArmarPromocionDesdeAnalisis(analisis, elegidos);
+                GUIManager.Instancia.AbrirForm(new frmPromocion(promocion));
+            }
+            catch (Exception ex)
+            {
+                var g = GestorIdioma.Instancia;
+                MessageBox.Show(g.Traducir("msgAnalisisError") + ex.GetBaseException().Message, g.Traducir("frmAnalisisRentabilidad"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Enlazar()
@@ -158,6 +181,7 @@ namespace UI
             dgvSugeridosfrmAnalisisRentabilidad.Rows.Clear();
             tabGraficosfrmAnalisisRentabilidad.TabPages.Clear();
             lblAvisosfrmAnalisisRentabilidad.Text = string.Empty;
+            btnCrearPromocionfrmAnalisisRentabilidad.Enabled = false;
             if (analisis == null)
             {
                 lblResumenfrmAnalisisRentabilidad.Text = g.Traducir("msgAnalisisSinGenerar");
@@ -193,6 +217,8 @@ namespace UI
                 dgvSugeridosfrmAnalisisRentabilidad.Rows[fila].Tag = i;
             }
             dgvSugeridosfrmAnalisisRentabilidad.ClearSelection();
+            // CU033 «extend» CU031: se puede crear una promoción con los sugeridos (con permiso de promociones)
+            btnCrearPromocionfrmAnalisisRentabilidad.Enabled = analisis.ObtenerSugeridos().Count > 0;
 
             lblAvisosfrmAnalisisRentabilidad.Text = string.Join(Environment.NewLine,
                 analisis.Avisos.Select(a => string.Format(g.Traducir(a), analisis.MesesHistoria, analisis.DiasPorVencer)));

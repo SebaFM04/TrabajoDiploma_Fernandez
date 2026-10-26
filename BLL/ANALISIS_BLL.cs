@@ -99,12 +99,28 @@ namespace BLL
                 item.PrecioActual = pt.Precio;
                 var receta = gestorReceta.ObtenerRecetaEscalada(pt.IdProducto, pt.Tamanio.CantidadMagnitud, 1);
                 recetas[clave] = receta;
-                item.CostoUnitarioActual = Math.Round(receta.Sum(r => r.Proporcion * (costosInsumo.TryGetValue(r.IdInsumo, out decimal c) ? c : 0)), 2);
+                item.CostoUnitarioActual = CostoUnitario(receta, costosInsumo);
                 items.Add(item);
                 porClave.Remove(clave);
             }
             items.AddRange(porClave.Values);
             return items.OrderBy(i => i.NombreProducto).ThenBy(i => i.NombreTamanio).ToList();
+        }
+
+        // Costo de una unidad: receta por unidad × costo por unidad de medida de cada insumo
+        static decimal CostoUnitario(List<BE.RECETA> receta, Dictionary<int, decimal> costosInsumo)
+        {
+            return Math.Round(receta.Sum(r => r.Proporcion * (costosInsumo.TryGetValue(r.IdInsumo, out decimal c) ? c : 0)), 2);
+        }
+
+        // Propuesta 8 de la Fase 5: costo unitario actual de cada producto y tamaño (clave "IdProducto-IdTamanio"),
+        // con el mismo cálculo del análisis. Lo usa CU033 para mostrar el margen de la promoción.
+        public Dictionary<string, decimal> CalcularCostosActuales(List<BE.PRODUCTO_TAMANIO> productos)
+        {
+            var costosInsumo = GestorAnalisis.ListarCostoActualInsumos();
+            var gestorReceta = new RECETA_BLL();
+            return productos.ToDictionary(pt => Clave(pt.IdProducto, pt.IdTamanio),
+                pt => CostoUnitario(gestorReceta.ObtenerRecetaEscalada(pt.IdProducto, pt.Tamanio.CantidadMagnitud, 1), costosInsumo));
         }
 
         // Base del ítem 16 del TODO: margen total, unitario, %, participación y margen unitario actual

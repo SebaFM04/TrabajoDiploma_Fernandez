@@ -97,6 +97,12 @@
     <Compile Include="frmAnalisisRentabilidad.Designer.cs">
       <DependentUpon>frmAnalisisRentabilidad.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPromocion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPromocion.Designer.cs">
+      <DependentUpon>frmPromocion.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEntrega.cs">
       <SubType>Form</SubType>
     </Compile>

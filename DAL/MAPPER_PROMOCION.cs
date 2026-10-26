@@ -127,6 +127,28 @@ namespace DAL
             return promocion;
         }
 
+        // Decisión 79: promociones En proceso o Vigentes del mismo producto y tamaño cuya vigencia se superpone con [desde, hasta]
+        public List<BE.PROMOCION> BuscarSuperpuestas(int idProducto, int idTamanio, DateTime desde, DateTime hasta)
+        {
+            acceso.Abrir();
+            DataTable tabla;
+            try
+            {
+                tabla = acceso.Leer("BuscarPromocionesSuperpuestas", new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@IdProducto", idProducto),
+                    acceso.CrearParametro("@IdTamanio", idTamanio),
+                    new SqlParameter("@Desde", SqlDbType.Date) { Value = desde.Date },
+                    new SqlParameter("@Hasta", SqlDbType.Date) { Value = hasta.Date }
+                });
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            return tabla.Rows.Cast<DataRow>().Select(MapearPromocion).ToList();
+        }
+
         // Decisión 78: cambios de estado por fecha. Devuelve cuántas promociones cambiaron.
         public int ActualizarEstados(DateTime hoy)
         {

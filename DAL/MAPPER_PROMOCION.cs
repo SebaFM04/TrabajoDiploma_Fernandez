@@ -223,6 +223,21 @@ namespace DAL
             }
         }
 
+        // CU035: pasa la promoción de origen a Renovada (solo si sigue Finalizada). Devuelve las filas modificadas.
+        public int MarcarRenovada(int idPromocion)
+        {
+            acceso.Abrir();
+            try
+            {
+                DataTable tabla = acceso.Leer("MarcarPromocionRenovada", new List<SqlParameter> { acceso.CrearParametro("@IdPromocion", idPromocion) });
+                return Convert.ToInt32(tabla.Rows[0]["Filas"]);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
         // Decisión 78: cambios de estado por fecha. Devuelve cuántas promociones cambiaron.
         public int ActualizarEstados(DateTime hoy)
         {

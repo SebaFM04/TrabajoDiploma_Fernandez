@@ -183,6 +183,8 @@ namespace BLL
             promocion.FechaCreacion = DateTime.Now;
             promocion.Simulada = false;
             promocion.Resultado = null;
+            // Una renovación se hace con RenovarPromocion (CU035), que además marca la de origen
+            promocion.IdPromocionOrigen = null;
 
             var acceso = new ACCESO();
             acceso.IniciarTransaccion();
@@ -312,6 +314,88 @@ namespace BLL
 
             new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Promoción evaluada",
                 $"Promoción {promocion.IdPromocion} ({promocion.Nombre}): {resultado}");
+        }
+
+        // ── CU035 Renovar Promoción («extend» CU034, decisión 82) ─────
+
+        // FA: solo se renueva una promoción Finalizada y evaluada (propuesta 4 de la Fase 6)
+        BE.PROMOCION ValidarOrigenRenovacion(int idOrigen)
+        {
+            var origen = GestorPromocion.BuscarPromocion(idOrigen);
+            if (origen == null)
+                throw new ArgumentException("msgPromocionInexistente");
+            if (origen.Estado != EstadoFinalizada)
+                throw new ArgumentException("msgRenovacionNoFinalizada");
+            if (origen.Resultado == null)
+                throw new ArgumentException("msgRenovacionSinEvaluar");
+            return origen;
+        }
+
+        // CU035 paso 1: nueva promoción con los mismos productos, tamaños, criterio y precios promocionales (editables),
+        // vigencia propuesta desde hoy con la misma duración (propuesta 5 de la Fase 6). El precio de lista y el costo
+        // son los actuales; los productos que ya no están a la venta no se copian.
+        public BE.PROMOCION ArmarRenovacion(int idOrigen)
+        {
+            var origen = ValidarOrigenRenovacion(idOrigen);
+            int dias = (origen.FechaHasta.Date - origen.FechaDesde.Date).Days;
+            string sufijo = " (renovación)";
+            var nueva = new BE.PROMOCION
+            {
+                Nombre = (origen.Nombre.Length + sufijo.Length > 100 ? origen.Nombre.Substring(0, 100 - sufijo.Length) : origen.Nombre) + sufijo,
+                Criterio = origen.Criterio,
+                FechaDesde = DateTime.Today,
+                FechaHasta = DateTime.Today.AddDays(dias),
+                IdPromocionOrigen = origen.IdPromocion
+            };
+            var disponibles = ListarProductosParaPromocion();
+            foreach (var d in origen.Detalles)
+            {
+                var actual = disponibles.FirstOrDefault(x => x.IdProducto == d.IdProducto && x.IdTamanio == d.IdTamanio);
+                if (actual == null) continue;
+                actual.PrecioPromocional = d.PrecioPromocional;
+                nueva.Detalles.Add(actual);
+            }
+            return nueva;
+        }
+
+        // CU035 pasos 2 a 4: valida la nueva como CU033 (FA1 a FA4 y margen negativo con confirmación) y, en una
+        // transacción, la guarda con IdPromocionOrigen y pasa la anterior a Renovada
+        public BE.PROMOCION RenovarPromocion(BE.PROMOCION nueva, bool aceptaMargenNegativo)
+        {
+            if (!nueva.IdPromocionOrigen.HasValue)
+                throw new ArgumentException("msgPromocionInexistente");
+            var origen = ValidarOrigenRenovacion(nueva.IdPromocionOrigen.Value);
+            ValidarPromocion(nueva);
+            bool margenNegativo = ObtenerMargenesNegativos(nueva).Count > 0;
+            if (margenNegativo && !aceptaMargenNegativo)
+                throw new ArgumentException("msgPromocionMargenNegativoSinConfirmar");
+            nueva.Estado = nueva.FechaDesde.Date == DateTime.Today ? EstadoVigente : EstadoEnProceso;
+            nueva.FechaCreacion = DateTime.Now;
+            nueva.Simulada = false;
+            nueva.Resultado = null;
+
+            var acceso = new ACCESO();
+            acceso.IniciarTransaccion();
+            try
+            {
+                var mapper = new MAPPER_PROMOCION(acceso);
+                // El SP vuelve a controlar que la de origen siga Finalizada y evaluada (otro usuario pudo renovarla)
+                if (mapper.MarcarRenovada(origen.IdPromocion) == 0)
+                    throw new ArgumentException("msgRenovacionNoFinalizada");
+                mapper.GuardarPromocion(nueva);
+                acceso.ConfirmarTransaccion();
+            }
+            catch
+            {
+                acceso.DeshacerTransaccion();
+                nueva.IdPromocion = 0;
+                throw;
+            }
+
+            new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Promoción renovada",
+                $"Promoción {origen.IdPromocion} ({origen.Nombre}) renovada en la {nueva.IdPromocion} ({nueva.Nombre}), del {nueva.FechaDesde:dd/MM/yyyy} al {nueva.FechaHasta:dd/MM/yyyy}, "
+                + $"{nueva.Detalles.Count} productos, {nueva.Estado}" + (margenNegativo ? ", aceptada con margen negativo" : ""));
+            return nueva;
         }
     }
 }

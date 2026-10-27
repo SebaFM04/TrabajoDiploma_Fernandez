@@ -1,6 +1,7 @@
 ﻿using BE;
 using DAL;
 using SERVICIO;
+using SERVICIO.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,6 +83,97 @@ namespace BLL
                 throw new ArgumentException("msgAnalisisArchivoInvalido");
             RegistrarEvento("Análisis abierto", $"{analisis.Criterio}, del {analisis.FechaDesde:dd/MM/yyyy} al {analisis.FechaHasta:dd/MM/yyyy}: {ruta}");
             return analisis;
+        }
+
+        // ── CU032 Exportar Análisis de Rentabilidad a PDF (decisiones 84 y 87) ──
+
+        // Motivo de una sugerencia en el idioma del usuario: la clave lleva los formatos de sus valores
+        // ({0} insumo, {1} y {2} números). Lo usan la pantalla y el PDF.
+        public string TextoMotivo(BE.ANALISIS_ITEM item)
+        {
+            if (string.IsNullOrEmpty(item.Motivo)) return string.Empty;
+            return string.Format(System.Globalization.CultureInfo.CurrentCulture, GestorIdioma.Instancia.Traducir(item.Motivo),
+                item.MotivoInsumo, item.MotivoValor1, item.MotivoValor2);
+        }
+
+        // Nombre del criterio en el idioma del usuario
+        public string TextoCriterio(string criterio)
+        {
+            return GestorIdioma.Instancia.Traducir("msgCriterio" + (criterio ?? "").Replace("ó", "o"));
+        }
+
+        // CU032: PDF del análisis (generado o abierto desde XML) con encabezado, tabla de resultados con paginado, sugeridos
+        // con su motivo, avisos y las imágenes de los gráficos visibles (título y PNG). Devuelve la ruta del archivo.
+        // FA1 no hay análisis; FA2 error al guardar.
+        public string ExportarPdf(BE.ANALISIS_RENTABILIDAD analisis, List<KeyValuePair<string, byte[]>> graficos)
+        {
+            if (analisis == null)
+                throw new ArgumentException("msgAnalisisSinGenerar");
+            var g = GestorIdioma.Instancia;
+            var encabezado = new List<string>
+            {
+                string.Format(g.Traducir("msgPdfAnalisisCriterio"), TextoCriterio(analisis.Criterio), analisis.FechaDesde.ToString("dd/MM/yyyy"), analisis.FechaHasta.ToString("dd/MM/yyyy"))
+                    + (analisis.DiasPorVencer > 0 ? " " + string.Format(g.Traducir("msgAnalisisResumenDias"), analisis.DiasPorVencer) : ""),
+                string.Format(g.Traducir("msgPdfAnalisisTotales"), analisis.TotalUnidades.ToString("#,##0"), FormatoMoneda.Pesos(analisis.TotalIngresos),
+                    FormatoMoneda.Pesos(analisis.TotalCosto), FormatoMoneda.Pesos(analisis.TotalMargen)),
+                string.Format(g.Traducir("msgPdfAnalisisGenerado"), analisis.FechaGeneracion.ToString("dd/MM/yyyy HH:mm"), analisis.Usuario)
+            };
+
+            var filas = new List<string[]>
+            {
+                new[] { "colProductofrmAnalisisRentabilidad", "colTamaniofrmAnalisisRentabilidad", "colUnidadesfrmAnalisisRentabilidad",
+                        "colIngresosfrmAnalisisRentabilidad", "colCostofrmAnalisisRentabilidad", "colMargenTotalfrmAnalisisRentabilidad",
+                        "colMargenUnitariofrmAnalisisRentabilidad", "colMargenPorcentajefrmAnalisisRentabilidad", "colParticipacionfrmAnalisisRentabilidad",
+                        "colMargenActualfrmAnalisisRentabilidad", "colIndicador" + analisis.Criterio.Replace("ó", "o") + "frmAnalisisRentabilidad" }
+                    .Select(c => g.Traducir(c)).ToArray()
+            };
+            foreach (var i in analisis.Items.OrderByDescending(x => x.MargenTotal))
+                filas.Add(new[]
+                {
+                    (i.Sugerido ? "* " : "") + i.NombreProducto, i.NombreTamanio, i.Unidades.ToString("#,##0"),
+                    FormatoMoneda.Pesos(i.Ingresos), FormatoMoneda.Pesos(i.Costo), FormatoMoneda.Pesos(i.MargenTotal), FormatoMoneda.Pesos(i.MargenUnitario),
+                    i.MargenPorcentaje.ToString("0.0") + " %", i.Participacion.ToString("0.0") + " %", FormatoMoneda.Pesos(i.MargenUnitarioActual),
+                    i.Indicador.ToString("#,##0.##")
+                });
+
+            var secciones = new List<SeccionInforme>
+            {
+                new SeccionInforme
+                {
+                    Titulo = g.Traducir("msgPdfAnalisisResultados"),
+                    Lineas = new List<string> { g.Traducir("msgPdfAnalisisMarcaSugeridos") },
+                    Filas = filas,
+                    Anchos = new[] { 0.17, 0.09, 0.07, 0.10, 0.09, 0.10, 0.09, 0.07, 0.07, 0.08, 0.07 },
+                    ColumnasTexto = 2
+                },
+                new SeccionInforme
+                {
+                    Titulo = g.Traducir("lblSugeridosfrmAnalisisRentabilidad"),
+                    Lineas = analisis.ObtenerSugeridos().Count == 0
+                        ? new List<string> { g.Traducir("msgAnalisisSinSugeridos") }
+                        : analisis.ObtenerSugeridos().Select(i => $"{i.Orden}. {i.NombreProducto} {i.NombreTamanio}: {TextoMotivo(i)}").ToList()
+                }
+            };
+            if (analisis.Avisos.Count > 0)
+                secciones.Add(new SeccionInforme
+                {
+                    Titulo = g.Traducir("msgPdfAnalisisAvisos"),
+                    Lineas = analisis.Avisos.Select(a => string.Format(g.Traducir(a), analisis.MesesHistoria, analisis.DiasPorVencer)).ToList()
+                });
+            foreach (var grafico in graficos ?? new List<KeyValuePair<string, byte[]>>())
+                secciones.Add(new SeccionInforme { Titulo = grafico.Key, Imagen = grafico.Value });
+
+            string ruta = Path.Combine(GeneradorPdf.CarpetaInformes, $"Analisis_{analisis.FechaGeneracion:yyyyMMdd_HHmm}.pdf");
+            try
+            {
+                ruta = GeneradorPdf.GenerarInforme(ruta, g.Traducir("frmAnalisisRentabilidad"), encabezado, secciones);
+            }
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            {
+                throw new ArgumentException("msgAnalisisErrorArchivo", ex);
+            }
+            RegistrarEvento("PDF de análisis exportado", $"{analisis.Criterio}, del {analisis.FechaDesde:dd/MM/yyyy} al {analisis.FechaHasta:dd/MM/yyyy}: {ruta}");
+            return ruta;
         }
 
         static void RegistrarEvento(string actividad, string detalle)

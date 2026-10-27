@@ -23,6 +23,8 @@ namespace UI
         ANALISIS_BLL GestorAnalisis = new ANALISIS_BLL();
         // Análisis que se está mostrando (null = todavía no se generó ninguno)
         BE.ANALISIS_RENTABILIDAD analisis = null;
+        // Nombre del XML si el análisis a la vista se abrió de un archivo (modo consulta, decisión 85)
+        string archivoAbierto = null;
         // Criterios en el orden del combo y sus claves de idioma
         readonly string[] criterios = { PROMOCION_BLL.CriterioVentas, PROMOCION_BLL.CriterioRotacion, PROMOCION_BLL.CriterioVencimiento, PROMOCION_BLL.CriterioEstacionalidad };
         readonly string[] clavesCriterio = { "msgCriterioVentas", "msgCriterioRotacion", "msgCriterioVencimiento", "msgCriterioEstacionalidad" };
@@ -156,6 +158,7 @@ namespace UI
                 analisis = GestorAnalisis.GenerarAnalisis(criterios[cmbCriteriofrmAnalisisRentabilidad.SelectedIndex],
                     dtpDesdefrmAnalisisRentabilidad.Value.Date, dtpHastafrmAnalisisRentabilidad.Value.Date,
                     cmbDiasfrmAnalisisRentabilidad.SelectedItem is int dias ? dias : ANALISIS_BLL.DiasPorVencerDefecto);
+                archivoAbierto = null;
                 MostrarAnalisis();
                 Cursor = Cursors.Default;
             }
@@ -182,6 +185,8 @@ namespace UI
             tabGraficosfrmAnalisisRentabilidad.TabPages.Clear();
             lblAvisosfrmAnalisisRentabilidad.Text = string.Empty;
             btnCrearPromocionfrmAnalisisRentabilidad.Enabled = false;
+            // CU032 FA1 y XML: sin análisis a la vista no hay nada para exportar ni guardar
+            btnExportarPdffrmAnalisisRentabilidad.Enabled = btnGuardarfrmAnalisisRentabilidad.Enabled = analisis != null;
             if (analisis == null)
             {
                 lblResumenfrmAnalisisRentabilidad.Text = g.Traducir("msgAnalisisSinGenerar");
@@ -194,7 +199,8 @@ namespace UI
                 analisis.FechaDesde.ToString("dd/MM/yyyy"), analisis.FechaHasta.ToString("dd/MM/yyyy"), analisis.TotalUnidades,
                 FormatoMoneda.Pesos(analisis.TotalIngresos), FormatoMoneda.Pesos(analisis.TotalCosto), FormatoMoneda.Pesos(analisis.TotalMargen),
                 analisis.FechaGeneracion.ToString("dd/MM/yyyy HH:mm"), analisis.Usuario)
-                + (analisis.DiasPorVencer > 0 ? " " + string.Format(g.Traducir("msgAnalisisResumenDias"), analisis.DiasPorVencer) : "");
+                + (analisis.DiasPorVencer > 0 ? " " + string.Format(g.Traducir("msgAnalisisResumenDias"), analisis.DiasPorVencer) : "")
+                + (archivoAbierto != null ? " " + string.Format(g.Traducir("msgAnalisisAbiertoDesde"), archivoAbierto) : "");
             dgvResultadosfrmAnalisisRentabilidad.Columns["colIndicadorfrmAnalisisRentabilidad"].HeaderText = g.Traducir("colIndicador" + analisis.Criterio.Replace("ó", "o") + "frmAnalisisRentabilidad");
 
             foreach (var i in analisis.Items.OrderByDescending(x => x.MargenTotal))
@@ -213,7 +219,7 @@ namespace UI
 
             foreach (var i in analisis.ObtenerSugeridos())
             {
-                int fila = dgvSugeridosfrmAnalisisRentabilidad.Rows.Add(i.Orden, i.NombreProducto, i.NombreTamanio, TextoMotivo(i), i.MargenUnitarioActual);
+                int fila = dgvSugeridosfrmAnalisisRentabilidad.Rows.Add(i.Orden, i.NombreProducto, i.NombreTamanio, GestorAnalisis.TextoMotivo(i), i.MargenUnitarioActual);
                 dgvSugeridosfrmAnalisisRentabilidad.Rows[fila].Tag = i;
             }
             dgvSugeridosfrmAnalisisRentabilidad.ClearSelection();
@@ -225,11 +231,96 @@ namespace UI
             ArmarGraficos();
         }
 
-        // Motivo de la sugerencia: la clave de idioma lleva los formatos de sus valores ({0} insumo, {1} y {2} números)
-        private string TextoMotivo(BE.ANALISIS_ITEM i)
+        // ── CU032 y XML (decisiones 84 a 87) ───────────────────────────
+
+        // CU032: PDF del análisis a la vista (generado o abierto), con los gráficos de sus pestañas como imagen
+        private void btnExportarPdffrmAnalisisRentabilidad_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(i.Motivo)) return string.Empty;
-            return string.Format(CultureInfo.CurrentCulture, GestorIdioma.Instancia.Traducir(i.Motivo), i.MotivoInsumo, i.MotivoValor1, i.MotivoValor2);
+            var g = GestorIdioma.Instancia;
+            Cursor = Cursors.WaitCursor;
+            try
+            {
+                string ruta = GestorAnalisis.ExportarPdf(analisis, ImagenesGraficos());
+                Cursor = Cursors.Default;
+                MessageBox.Show(string.Format(g.Traducir("msgAnalisisPdfExportado"), ruta), g.Traducir("frmAnalisisRentabilidad"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.Diagnostics.Process.Start(ruta);
+            }
+            catch (ArgumentException argEx)
+            {
+                // FA1 no hay análisis / FA2 error al guardar
+                Cursor = Cursors.Default;
+                MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("frmAnalisisRentabilidad"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                Cursor = Cursors.Default;
+                MessageBox.Show(g.Traducir("msgAnalisisError") + ex.GetBaseException().Message, g.Traducir("frmAnalisisRentabilidad"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Decisión 84: cada gráfico de las pestañas se dibuja aparte, más ancho, y se pasa como PNG en memoria
+        private List<KeyValuePair<string, byte[]>> ImagenesGraficos()
+        {
+            var imagenes = new List<KeyValuePair<string, byte[]>>();
+            if (analisis == null) return imagenes;
+            foreach (TabPage pagina in tabGraficosfrmAnalisisRentabilidad.TabPages)
+            {
+                string grafico = pagina.Name.Substring("tab".Length);
+                using (var chart = CrearGrafico(grafico, analisis.Series.Where(s => s.Grafico == grafico && s.Puntos.Count > 0).ToList()))
+                using (var flujo = new System.IO.MemoryStream())
+                {
+                    chart.Dock = DockStyle.None;
+                    chart.Size = new Size(1000, 460);
+                    chart.SaveImage(flujo, ChartImageFormat.Png);
+                    imagenes.Add(new KeyValuePair<string, byte[]>(pagina.Text, flujo.ToArray()));
+                }
+            }
+            return imagenes;
+        }
+
+        // Decisión 85: "Guardar análisis" en Documentos\SistemaBar\Analisis\Analisis_aaaaMMdd_HHmm.xml
+        private void btnGuardarfrmAnalisisRentabilidad_Click(object sender, EventArgs e)
+        {
+            var g = GestorIdioma.Instancia;
+            if (analisis == null) return;
+            using (var dialogo = new SaveFileDialog { Filter = "XML (*.xml)|*.xml", FileName = GestorAnalisis.NombreArchivo(analisis) })
+            {
+                System.IO.Directory.CreateDirectory(GestorAnalisis.CarpetaAnalisis);
+                dialogo.InitialDirectory = GestorAnalisis.CarpetaAnalisis;
+                if (dialogo.ShowDialog(this) != DialogResult.OK) return;
+                try
+                {
+                    GestorAnalisis.GuardarAnalisis(analisis, dialogo.FileName);
+                    MessageBox.Show(string.Format(g.Traducir("msgAnalisisGuardado"), dialogo.FileName), g.Traducir("frmAnalisisRentabilidad"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (ArgumentException argEx)
+                {
+                    MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("frmAnalisisRentabilidad"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        // Decisión 85: "Abrir análisis" lo muestra en modo consulta, sin recalcular
+        private void btnAbrirfrmAnalisisRentabilidad_Click(object sender, EventArgs e)
+        {
+            var g = GestorIdioma.Instancia;
+            using (var dialogo = new OpenFileDialog { Filter = "XML (*.xml)|*.xml" })
+            {
+                System.IO.Directory.CreateDirectory(GestorAnalisis.CarpetaAnalisis);
+                dialogo.InitialDirectory = GestorAnalisis.CarpetaAnalisis;
+                if (dialogo.ShowDialog(this) != DialogResult.OK) return;
+                try
+                {
+                    analisis = GestorAnalisis.AbrirAnalisis(dialogo.FileName);
+                    archivoAbierto = System.IO.Path.GetFileName(dialogo.FileName);
+                    MostrarAnalisis();
+                }
+                catch (ArgumentException argEx)
+                {
+                    // El archivo no es un análisis válido: se avisa y queda lo que se estaba mostrando
+                    MessageBox.Show(g.Traducir(argEx.Message), g.Traducir("frmAnalisisRentabilidad"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         // ── Gráficos (decisión 83): una pestaña por gráfico con series; se arman con lo que trae el análisis ──

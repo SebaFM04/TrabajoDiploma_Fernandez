@@ -3,6 +3,7 @@ using DAL;
 using SERVICIO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BLL
@@ -31,6 +32,63 @@ namespace BLL
         public string[] ListarCriterios()
         {
             return new PROMOCION_BLL().ListarCriterios();
+        }
+
+        // ── Guardar y abrir el análisis en XML (decisiones 85 y 86) ──
+
+        // Carpeta: Documentos\SistemaBar\Analisis
+        public string CarpetaAnalisis
+        {
+            get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SistemaBar", "Analisis"); }
+        }
+
+        // Nombre propuesto: Analisis_aaaaMMdd_HHmm.xml (fecha de generación)
+        public string NombreArchivo(BE.ANALISIS_RENTABILIDAD analisis)
+        {
+            return $"Analisis_{analisis.FechaGeneracion:yyyyMMdd_HHmm}.xml";
+        }
+
+        // "Guardar análisis": escribe el análisis tal como está (con su tabla y sus gráficos)
+        public void GuardarAnalisis(BE.ANALISIS_RENTABILIDAD analisis, string ruta)
+        {
+            if (analisis == null)
+                throw new ArgumentException("msgAnalisisSinGenerar");
+            try
+            {
+                Serializador.Serializar(analisis, ruta);
+            }
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            {
+                // FA: error al guardar (carpeta sin permiso, archivo bloqueado)
+                throw new ArgumentException("msgAnalisisErrorArchivo", ex);
+            }
+            RegistrarEvento("Análisis guardado", $"{analisis.Criterio}, del {analisis.FechaDesde:dd/MM/yyyy} al {analisis.FechaHasta:dd/MM/yyyy}: {ruta}");
+        }
+
+        // "Abrir análisis": lo vuelve a cargar en modo consulta, sin recalcular. Si el archivo no es un análisis
+        // válido, se avisa y no se rompe nada.
+        public BE.ANALISIS_RENTABILIDAD AbrirAnalisis(string ruta)
+        {
+            BE.ANALISIS_RENTABILIDAD analisis;
+            try
+            {
+                analisis = Serializador.Deserializar<BE.ANALISIS_RENTABILIDAD>(ruta);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is IOException || ex is UnauthorizedAccessException)
+            {
+                throw new ArgumentException("msgAnalisisArchivoInvalido", ex);
+            }
+            if (analisis == null || Array.IndexOf(ListarCriterios(), analisis.Criterio) < 0 || analisis.Items == null || analisis.Items.Count == 0)
+                throw new ArgumentException("msgAnalisisArchivoInvalido");
+            RegistrarEvento("Análisis abierto", $"{analisis.Criterio}, del {analisis.FechaDesde:dd/MM/yyyy} al {analisis.FechaHasta:dd/MM/yyyy}: {ruta}");
+            return analisis;
+        }
+
+        static void RegistrarEvento(string actividad, string detalle)
+        {
+            var usuario = SessionManager.Instancia.UsuarioActual;
+            if (usuario != null)
+                new BITACORA_BLL().RegistrarEvento(usuario.IdUsuario, actividad, detalle);
         }
 
         // CU031: genera el análisis del período [desde, hasta] (días completos) con el criterio elegido.

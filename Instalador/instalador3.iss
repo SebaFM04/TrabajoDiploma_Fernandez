@@ -24,7 +24,7 @@
 
 ; ---------- CAMBIAR ESTOS VALORES ----------
 #define MyAppName        "SistemaBar"
-#define MyAppVersion     "2.0"   ; 2.0 = N01 (ventas) y N02 (compras) completos, con datos de demostracion
+#define MyAppVersion     "3.0"   ; 3.0 = N03 (rentabilidad y promociones), lotes con vencimiento, informe PDF y XML; 2.0 = N01 y N02
 #define MyAppPublisher   "Sebastian Fernandez"
 #define MyAppExeName     "SistemaBar.exe"
 #define MyDbName         "TpIngSoftware_2026"

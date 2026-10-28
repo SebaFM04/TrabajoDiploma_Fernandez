@@ -16,10 +16,12 @@ Antes de empezar: cerrá EA por completo y volvé a abrir el `.EAP` para que se 
 - Diagrama `ZZ_BORRAR_DSS-CU032` (167). El bueno es `DSS-CU032-ExportarAnalisisPdf` (175).
 - Cuando revises los nuevos: `OLD_DSS-CU010` (133), `OLD_DSS-CU019` (143) y `OLD_DSS-CU023` (149).
 
-**Pendiente de la 2ª entrega (sigue sin hacer):**
-- INSUMO_BLL.IngresarStock: borrar el parámetro `ZZ_BORRAR_costoUnidadCompra`.
+**Pendiente de la 2ª entrega:**
+- INSUMO_BLL.IngresarStock: borrar el parámetro `ZZ_BORRAR_costoUnidadCompra`. **Hecho el 27/10** (script con la API de EA, ver la sección 2).
 
 ## 2. Parámetros de las operaciones
+
+**Hecho el 27/10, sin tocar EA a mano.** Con EA cerrado, un script de PowerShell de 32 bits usó la API de EA (COM, `EA.Repository`, `Method.Parameters.AddNew`) sobre el `.EAP`: cargó los parámetros de las 79 operaciones de la tabla y de las dos de abajo (105 parámetros nuevos), los ordenó como en la firma, dejó en la nota de cada una solo la descripción y borró los 7 parámetros `ZZ_BORRAR_` que quedaban (el de `IngresarStock` y los 6 de la 2ª entrega). Se probó antes sobre una copia y se verificó por Jet: cada operación tiene exactamente los parámetros de su firma, no queda ninguna nota con firma ni ningún `ZZ_BORRAR_` en parámetros, y no cambió ningún otro elemento, conector ni diagrama. La tabla queda como registro.
 
 Las operaciones nuevas se crearon **sin parámetros**: en el diagrama se ven con `()` y la firma completa quedó en su descripción. Las que ya existían conservan los suyos. Hay que cargar estos parámetros (en la clase de su capa y en la homónima de `N03_General` o `N02_General`):
 
@@ -88,7 +90,7 @@ Además, en operaciones que ya existían y cambiaron de firma:
 - INSUMO_BLL.InsertarInsumo: agregar el parámetro `DateTime? fechaVencimiento` (después de `insumo`).
 - INSUMO_BLL.DescontarStock: revisar que los parámetros queden `List<BE.RECETA> consumos, ACCESO acceso` (el tipo de retorno ya se cambió a `Dictionary<int, decimal>`).
 
-**Alternativa (para decidir):** con EA cerrado, Claude Code puede escribir estos parámetros directo en la tabla `t_operationparams` del `.EAP` (Jet, sobre el archivo, sin el conector), con respaldo previo. Ahorra la carga a mano, pero es la única escritura del `.EAP` por fuera de EA.
+**Alternativa (descartada):** con EA cerrado, Claude Code puede escribir estos parámetros directo en la tabla `t_operationparams` del `.EAP` (Jet, sobre el archivo, sin el conector), con respaldo previo. Ahorra la carga a mano, pero es la única escritura del `.EAP` por fuera de EA.
 
 ## 3. Fragmentos de los DSS
 

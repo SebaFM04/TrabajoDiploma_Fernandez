@@ -4,12 +4,12 @@ Lo que el conector de Enterprise Architect no puede hacer (borrar y dibujar frag
 
 ## 1. Enterprise Architect: borrar
 - VENTA_BLL: borrar operación ZZ_SINUSO_BORRAR_VerificarStockBajoUmbral (op 334)
-- VENTA_BLL.VerificarDisponibilidadInsumos: borrar parámetro ZZ_BORRAR_detalles
-- VENTA_BLL.CalcularMontoTotal: borrar parámetro ZZ_BORRAR_detalles
-- VENTA_BLL.RegistrarVenta: borrar parámetros ZZ_BORRAR_medioPago y ZZ_BORRAR_monto
-- INSUMO_BLL.IngresarStock: borrar parámetro ZZ_BORRAR_costoUnidadCompra
-- RECEPCION_BLL.ValidarRecepcion: borrar parámetro ZZ_BORRAR_orden
-- PAGO_PROVEEDOR_BLL.ValidarPago: borrar parámetro ZZ_BORRAR_total
+- VENTA_BLL.VerificarDisponibilidadInsumos: borrar parámetro ZZ_BORRAR_detalles **Hecho el 27/10 (script con la API de EA).**
+- VENTA_BLL.CalcularMontoTotal: borrar parámetro ZZ_BORRAR_detalles **Hecho el 27/10 (script con la API de EA).**
+- VENTA_BLL.RegistrarVenta: borrar parámetros ZZ_BORRAR_medioPago y ZZ_BORRAR_monto **Hecho el 27/10 (script con la API de EA).**
+- INSUMO_BLL.IngresarStock: borrar parámetro ZZ_BORRAR_costoUnidadCompra **Hecho el 27/10 (script con la API de EA).**
+- RECEPCION_BLL.ValidarRecepcion: borrar parámetro ZZ_BORRAR_orden **Hecho el 27/10 (script con la API de EA).**
+- PAGO_PROVEEDOR_BLL.ValidarPago: borrar parámetro ZZ_BORRAR_total **Hecho el 27/10 (script con la API de EA).**
 - Paquete "Capas" (T00): borrar la clase ZZ_BORRAR_FormatoMoneda (quedó con estereotipo Java::static; la buena es FormatoMoneda)
 
 ## Diagramas General (rehechos)

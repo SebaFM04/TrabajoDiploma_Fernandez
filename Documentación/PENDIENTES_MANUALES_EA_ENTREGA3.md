@@ -96,6 +96,8 @@ Además, en operaciones que ya existían y cambiaron de firma:
 
 ## 3. Fragmentos de los DSS
 
+**Creados el 27/10 con la API de EA; falta acomodarlos (alumno).** Criterio del alumno: solo ALT y LOOP, con sus nombres ("FAn - Descripción" y "Por cada …"). Por eso los `opt` de abajo se crearon como ALT con el mismo nombre y los `critical` no se dibujaron (sus fragmentos internos quedaron sueltos). Dos LOOP se renombraron para empezar con "Por cada": "Por cada línea (receta escalada para el consumo y el costo)" y "Por cada insumo (segunda verificación de stock)" (CU010). Son 53 fragmentos, cada uno en el paquete de su CU, sobre los mensajes indicados (el rectángulo se calculó desde la línea de vida y la posición de los mensajes); los ALT con más de un camino tienen sus operandos con la guarda. Se probó en una copia y se verificó por Jet y con imágenes exportadas de los diagramas.
+
 El conector no crea fragmentos (alt/opt/loop/critical). En cada DSS, dibujalos sobre los mensajes indicados (los números son el orden del mensaje en el diagrama, empezando en 1). Dentro de cada `alt` va solo el camino del flujo alternativo; el camino bueno sigue afuera. Los fragmentos anidados están con sangría. Criterio: `Documentación/GUIA_FRAGMENTOS_DSS.md`.
 
 ### DSS-CU031-GenerarAnalisisRentabilidad (diagrama 166)

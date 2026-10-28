@@ -6,6 +6,8 @@ Antes de empezar: cerrá EA por completo y volvé a abrir el `.EAP` para que se 
 
 ## 1. Borrar
 
+**Hecho el 27/10, sin tocar EA a mano** (salvo el 956 y el 962, que ya había borrado el alumno). Con EA cerrado, un script de PowerShell de 32 bits con la API de EA (COM) borró los 9 elementos `ZZ_BORRAR_` que quedaban (con sus 5 flujos), los diagramas `ZZ_BORRAR_DSS-CU032` (167), `OLD_DSS-CU010` (133), `OLD_DSS-CU019` (143) y `OLD_DSS-CU023` (149), y lo que solo vivía dentro de los diagramas borrados (sus mensajes y sus fragmentos), para que no quede suelto en el modelo. Se probó antes sobre una copia y se verificó por Jet: no quedan elementos ni diagramas `ZZ_BORRAR_` u `OLD_`, no hay conectores, objetos ni mensajes colgados, y los diagramas que quedan tienen los mismos objetos y mensajes que antes. Lo de abajo queda como registro.
+
 **Diagrama de actividad N03 V3 (158), opción A:**
 - Acciones `ZZ_BORRAR_Solicita las ventas y los costos de insumos del período` (959), `ZZ_BORRAR_Entrega el resumen de ventas del período` (961) y `ZZ_BORRAR_Entrega la lista de costos y vencimientos de insumos` (962).
 - Fork `ZZ_BORRAR_Fork` (960), join `ZZ_BORRAR_Join` (963) y final `ZZ_BORRAR_Fin` (969). Con el 969 se va el flujo `ZZ_BORRAR_no` (2633), que ya no se ve en el diagrama.

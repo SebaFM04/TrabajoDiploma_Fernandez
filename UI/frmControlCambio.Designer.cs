@@ -51,6 +51,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 59);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -63,6 +64,7 @@
             this.btnRevertirCambio.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRevertirCambio.Location = new System.Drawing.Point(608, 14);
             this.btnRevertirCambio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRevertirCambio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnRevertirCambio.Name = "btnRevertirCambio";
             this.btnRevertirCambio.Size = new System.Drawing.Size(134, 36);
             this.btnRevertirCambio.TabIndex = 9;
@@ -76,6 +78,7 @@
             this.btnRevertirTodo.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRevertirTodo.Location = new System.Drawing.Point(746, 14);
             this.btnRevertirTodo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRevertirTodo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnRevertirTodo.Name = "btnRevertirTodo";
             this.btnRevertirTodo.Size = new System.Drawing.Size(134, 36);
             this.btnRevertirTodo.TabIndex = 10;
@@ -94,6 +97,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblfrmCCTitu);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(914, 435);
             this.Name = "frmControlCambio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmControlCambios";

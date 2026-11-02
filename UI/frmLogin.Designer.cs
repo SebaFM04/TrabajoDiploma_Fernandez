@@ -131,6 +131,7 @@
             this.Controls.Add(this.lblContraseñafrmLogin);
             this.Controls.Add(this.lblCorreoElectronicofrmLogin);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(558, 392);
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";

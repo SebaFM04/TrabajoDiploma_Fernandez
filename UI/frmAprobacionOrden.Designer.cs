@@ -55,6 +55,7 @@
             this.dgvOrdenesfrmAprobacionOrden.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrdenesfrmAprobacionOrden.Location = new System.Drawing.Point(20, 40);
             this.dgvOrdenesfrmAprobacionOrden.MultiSelect = false;
+            this.dgvOrdenesfrmAprobacionOrden.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvOrdenesfrmAprobacionOrden.Name = "dgvOrdenesfrmAprobacionOrden";
             this.dgvOrdenesfrmAprobacionOrden.ReadOnly = true;
             this.dgvOrdenesfrmAprobacionOrden.RowHeadersVisible = false;
@@ -77,6 +78,7 @@
             this.dgvDetallefrmAprobacionOrden.AllowUserToDeleteRows = false;
             this.dgvDetallefrmAprobacionOrden.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetallefrmAprobacionOrden.Location = new System.Drawing.Point(440, 40);
+            this.dgvDetallefrmAprobacionOrden.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvDetallefrmAprobacionOrden.Name = "dgvDetallefrmAprobacionOrden";
             this.dgvDetallefrmAprobacionOrden.ReadOnly = true;
             this.dgvDetallefrmAprobacionOrden.RowHeadersVisible = false;
@@ -87,6 +89,7 @@
             //
             this.lblObservacionesfrmAprobacionOrden.AutoSize = true;
             this.lblObservacionesfrmAprobacionOrden.Location = new System.Drawing.Point(440, 312);
+            this.lblObservacionesfrmAprobacionOrden.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblObservacionesfrmAprobacionOrden.Name = "lblObservacionesfrmAprobacionOrden";
             this.lblObservacionesfrmAprobacionOrden.TabIndex = 4;
             this.lblObservacionesfrmAprobacionOrden.Text = "Observaciones (para devolver la orden)";
@@ -96,6 +99,7 @@
             this.txtObservacionesfrmAprobacionOrden.Location = new System.Drawing.Point(440, 335);
             this.txtObservacionesfrmAprobacionOrden.MaxLength = 500;
             this.txtObservacionesfrmAprobacionOrden.Multiline = true;
+            this.txtObservacionesfrmAprobacionOrden.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtObservacionesfrmAprobacionOrden.Name = "txtObservacionesfrmAprobacionOrden";
             this.txtObservacionesfrmAprobacionOrden.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtObservacionesfrmAprobacionOrden.Size = new System.Drawing.Size(520, 75);
@@ -105,6 +109,9 @@
             //
             this.btnAprobarfrmAprobacionOrden.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAprobarfrmAprobacionOrden.Location = new System.Drawing.Point(760, 422);
+            this.btnAprobarfrmAprobacionOrden.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnAprobarfrmAprobacionOrden.AutoSize = true;
+            this.btnAprobarfrmAprobacionOrden.MinimumSize = new System.Drawing.Size(200, 38);
             this.btnAprobarfrmAprobacionOrden.Name = "btnAprobarfrmAprobacionOrden";
             this.btnAprobarfrmAprobacionOrden.Size = new System.Drawing.Size(200, 38);
             this.btnAprobarfrmAprobacionOrden.TabIndex = 7;
@@ -116,6 +123,9 @@
             //
             this.btnDevolverfrmAprobacionOrden.BackColor = System.Drawing.Color.SandyBrown;
             this.btnDevolverfrmAprobacionOrden.Location = new System.Drawing.Point(440, 422);
+            this.btnDevolverfrmAprobacionOrden.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnDevolverfrmAprobacionOrden.AutoSize = true;
+            this.btnDevolverfrmAprobacionOrden.MinimumSize = new System.Drawing.Size(240, 38);
             this.btnDevolverfrmAprobacionOrden.Name = "btnDevolverfrmAprobacionOrden";
             this.btnDevolverfrmAprobacionOrden.Size = new System.Drawing.Size(240, 38);
             this.btnDevolverfrmAprobacionOrden.TabIndex = 6;
@@ -138,6 +148,7 @@
             this.Controls.Add(this.dgvOrdenesfrmAprobacionOrden);
             this.Controls.Add(this.lblOrdenesfrmAprobacionOrden);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(996, 519);
             this.Name = "frmAprobacionOrden";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAprobacionOrden";

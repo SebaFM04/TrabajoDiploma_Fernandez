@@ -61,6 +61,7 @@
             this.dgvOrdenesfrmPagoProveedor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrdenesfrmPagoProveedor.Location = new System.Drawing.Point(20, 40);
             this.dgvOrdenesfrmPagoProveedor.MultiSelect = false;
+            this.dgvOrdenesfrmPagoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvOrdenesfrmPagoProveedor.Name = "dgvOrdenesfrmPagoProveedor";
             this.dgvOrdenesfrmPagoProveedor.ReadOnly = true;
             this.dgvOrdenesfrmPagoProveedor.RowHeadersVisible = false;
@@ -83,6 +84,7 @@
             this.dgvFacturasfrmPagoProveedor.AllowUserToDeleteRows = false;
             this.dgvFacturasfrmPagoProveedor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFacturasfrmPagoProveedor.Location = new System.Drawing.Point(500, 40);
+            this.dgvFacturasfrmPagoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvFacturasfrmPagoProveedor.Name = "dgvFacturasfrmPagoProveedor";
             this.dgvFacturasfrmPagoProveedor.ReadOnly = true;
             this.dgvFacturasfrmPagoProveedor.RowHeadersVisible = false;
@@ -110,6 +112,7 @@
             //
             this.cmbMediofrmPagoProveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMediofrmPagoProveedor.Location = new System.Drawing.Point(660, 262);
+            this.cmbMediofrmPagoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.cmbMediofrmPagoProveedor.Name = "cmbMediofrmPagoProveedor";
             this.cmbMediofrmPagoProveedor.Size = new System.Drawing.Size(300, 24);
             this.cmbMediofrmPagoProveedor.TabIndex = 6;
@@ -126,6 +129,7 @@
             //
             this.dtpFechafrmPagoProveedor.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechafrmPagoProveedor.Location = new System.Drawing.Point(660, 297);
+            this.dtpFechafrmPagoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dtpFechafrmPagoProveedor.Name = "dtpFechafrmPagoProveedor";
             this.dtpFechafrmPagoProveedor.Size = new System.Drawing.Size(300, 23);
             this.dtpFechafrmPagoProveedor.TabIndex = 8;
@@ -142,6 +146,7 @@
             //
             this.txtComprobantefrmPagoProveedor.Location = new System.Drawing.Point(660, 332);
             this.txtComprobantefrmPagoProveedor.MaxLength = 30;
+            this.txtComprobantefrmPagoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtComprobantefrmPagoProveedor.Name = "txtComprobantefrmPagoProveedor";
             this.txtComprobantefrmPagoProveedor.Size = new System.Drawing.Size(300, 23);
             this.txtComprobantefrmPagoProveedor.TabIndex = 10;
@@ -157,6 +162,7 @@
             // txtMontofrmPagoProveedor
             //
             this.txtMontofrmPagoProveedor.Location = new System.Drawing.Point(660, 367);
+            this.txtMontofrmPagoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtMontofrmPagoProveedor.Name = "txtMontofrmPagoProveedor";
             this.txtMontofrmPagoProveedor.Size = new System.Drawing.Size(300, 23);
             this.txtMontofrmPagoProveedor.TabIndex = 12;
@@ -165,6 +171,9 @@
             //
             this.btnRegistrarfrmPagoProveedor.BackColor = System.Drawing.Color.SandyBrown;
             this.btnRegistrarfrmPagoProveedor.Location = new System.Drawing.Point(720, 404);
+            this.btnRegistrarfrmPagoProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnRegistrarfrmPagoProveedor.AutoSize = true;
+            this.btnRegistrarfrmPagoProveedor.MinimumSize = new System.Drawing.Size(240, 36);
             this.btnRegistrarfrmPagoProveedor.Name = "btnRegistrarfrmPagoProveedor";
             this.btnRegistrarfrmPagoProveedor.Size = new System.Drawing.Size(240, 36);
             this.btnRegistrarfrmPagoProveedor.TabIndex = 13;
@@ -193,6 +202,7 @@
             this.Controls.Add(this.dgvOrdenesfrmPagoProveedor);
             this.Controls.Add(this.lblOrdenesfrmPagoProveedor);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(996, 499);
             this.Name = "frmPagoProveedor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmPagoProveedor";

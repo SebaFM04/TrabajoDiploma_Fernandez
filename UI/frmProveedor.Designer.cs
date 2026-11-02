@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.flpBotonesfrmProveedor = new System.Windows.Forms.FlowLayoutPanel();
             this.lblRazonSocialfrmProveedor = new System.Windows.Forms.Label();
             this.txtRazonSocialfrmProveedor = new System.Windows.Forms.TextBox();
             this.lblCuitfrmProveedor = new System.Windows.Forms.Label();
@@ -44,6 +45,7 @@
             this.btnBajafrmProveedor = new System.Windows.Forms.Button();
             this.dgvProveedoresfrmProveedor = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProveedoresfrmProveedor)).BeginInit();
+            this.flpBotonesfrmProveedor.SuspendLayout();
             this.SuspendLayout();
             //
             // lblRazonSocialfrmProveedor
@@ -122,6 +124,7 @@
             //
             this.clbInsumosfrmProveedor.CheckOnClick = true;
             this.clbInsumosfrmProveedor.Location = new System.Drawing.Point(20, 188);
+            this.clbInsumosfrmProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.clbInsumosfrmProveedor.Name = "clbInsumosfrmProveedor";
             this.clbInsumosfrmProveedor.Size = new System.Drawing.Size(420, 130);
             this.clbInsumosfrmProveedor.TabIndex = 9;
@@ -129,7 +132,9 @@
             // btnNuevofrmProveedor
             //
             this.btnNuevofrmProveedor.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnNuevofrmProveedor.Location = new System.Drawing.Point(20, 330);
+            this.btnNuevofrmProveedor.AutoSize = true;
+            this.btnNuevofrmProveedor.MinimumSize = new System.Drawing.Size(95, 36);
+            this.btnNuevofrmProveedor.Margin = new System.Windows.Forms.Padding(0, 0, 7, 0);
             this.btnNuevofrmProveedor.Name = "btnNuevofrmProveedor";
             this.btnNuevofrmProveedor.Size = new System.Drawing.Size(95, 36);
             this.btnNuevofrmProveedor.TabIndex = 10;
@@ -140,7 +145,9 @@
             // btnAltafrmProveedor
             //
             this.btnAltafrmProveedor.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnAltafrmProveedor.Location = new System.Drawing.Point(122, 330);
+            this.btnAltafrmProveedor.AutoSize = true;
+            this.btnAltafrmProveedor.MinimumSize = new System.Drawing.Size(95, 36);
+            this.btnAltafrmProveedor.Margin = new System.Windows.Forms.Padding(0, 0, 7, 0);
             this.btnAltafrmProveedor.Name = "btnAltafrmProveedor";
             this.btnAltafrmProveedor.Size = new System.Drawing.Size(95, 36);
             this.btnAltafrmProveedor.TabIndex = 11;
@@ -151,7 +158,9 @@
             // btnModificacionfrmProveedor
             //
             this.btnModificacionfrmProveedor.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnModificacionfrmProveedor.Location = new System.Drawing.Point(224, 330);
+            this.btnModificacionfrmProveedor.AutoSize = true;
+            this.btnModificacionfrmProveedor.MinimumSize = new System.Drawing.Size(100, 36);
+            this.btnModificacionfrmProveedor.Margin = new System.Windows.Forms.Padding(0, 0, 7, 0);
             this.btnModificacionfrmProveedor.Name = "btnModificacionfrmProveedor";
             this.btnModificacionfrmProveedor.Size = new System.Drawing.Size(100, 36);
             this.btnModificacionfrmProveedor.TabIndex = 12;
@@ -162,7 +171,9 @@
             // btnBajafrmProveedor
             //
             this.btnBajafrmProveedor.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnBajafrmProveedor.Location = new System.Drawing.Point(331, 330);
+            this.btnBajafrmProveedor.AutoSize = true;
+            this.btnBajafrmProveedor.MinimumSize = new System.Drawing.Size(110, 36);
+            this.btnBajafrmProveedor.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.btnBajafrmProveedor.Name = "btnBajafrmProveedor";
             this.btnBajafrmProveedor.Size = new System.Drawing.Size(110, 36);
             this.btnBajafrmProveedor.TabIndex = 13;
@@ -177,6 +188,7 @@
             this.dgvProveedoresfrmProveedor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProveedoresfrmProveedor.Location = new System.Drawing.Point(460, 22);
             this.dgvProveedoresfrmProveedor.MultiSelect = false;
+            this.dgvProveedoresfrmProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvProveedoresfrmProveedor.Name = "dgvProveedoresfrmProveedor";
             this.dgvProveedoresfrmProveedor.ReadOnly = true;
             this.dgvProveedoresfrmProveedor.RowHeadersVisible = false;
@@ -184,6 +196,19 @@
             this.dgvProveedoresfrmProveedor.Size = new System.Drawing.Size(600, 344);
             this.dgvProveedoresfrmProveedor.TabIndex = 14;
             this.dgvProveedoresfrmProveedor.SelectionChanged += new System.EventHandler(this.dgvProveedoresfrmProveedor_SelectionChanged);
+            // 
+            // flpBotonesfrmProveedor
+            // 
+            this.flpBotonesfrmProveedor.AutoSize = true;
+            this.flpBotonesfrmProveedor.WrapContents = false;
+            this.flpBotonesfrmProveedor.Controls.Add(this.btnNuevofrmProveedor);
+            this.flpBotonesfrmProveedor.Controls.Add(this.btnAltafrmProveedor);
+            this.flpBotonesfrmProveedor.Controls.Add(this.btnModificacionfrmProveedor);
+            this.flpBotonesfrmProveedor.Controls.Add(this.btnBajafrmProveedor);
+            this.flpBotonesfrmProveedor.Location = new System.Drawing.Point(20, 330);
+            this.flpBotonesfrmProveedor.Size = new System.Drawing.Size(421, 36);
+            this.flpBotonesfrmProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.flpBotonesfrmProveedor.Name = "flpBotonesfrmProveedor";
             //
             // frmProveedor
             //
@@ -191,11 +216,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(1080, 385);
+            this.Controls.Add(this.flpBotonesfrmProveedor);
             this.Controls.Add(this.dgvProveedoresfrmProveedor);
-            this.Controls.Add(this.btnBajafrmProveedor);
-            this.Controls.Add(this.btnModificacionfrmProveedor);
-            this.Controls.Add(this.btnAltafrmProveedor);
-            this.Controls.Add(this.btnNuevofrmProveedor);
             this.Controls.Add(this.clbInsumosfrmProveedor);
             this.Controls.Add(this.lblInsumosfrmProveedor);
             this.Controls.Add(this.txtCorreofrmProveedor);
@@ -207,11 +229,14 @@
             this.Controls.Add(this.txtRazonSocialfrmProveedor);
             this.Controls.Add(this.lblRazonSocialfrmProveedor);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1096, 424);
             this.Name = "frmProveedor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmProveedor";
             this.Load += new System.EventHandler(this.frmProveedor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProveedoresfrmProveedor)).EndInit();
+            this.flpBotonesfrmProveedor.ResumeLayout(false);
+            this.flpBotonesfrmProveedor.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,6 +244,7 @@
 
         #endregion
 
+        private System.Windows.Forms.FlowLayoutPanel flpBotonesfrmProveedor;
         private System.Windows.Forms.Label lblRazonSocialfrmProveedor;
         private System.Windows.Forms.TextBox txtRazonSocialfrmProveedor;
         private System.Windows.Forms.Label lblCuitfrmProveedor;

@@ -122,6 +122,8 @@
             //
             this.btnBuscarfrmConsultaCompras.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBuscarfrmConsultaCompras.Location = new System.Drawing.Point(960, 12);
+            this.btnBuscarfrmConsultaCompras.AutoSize = true;
+            this.btnBuscarfrmConsultaCompras.MinimumSize = new System.Drawing.Size(120, 30);
             this.btnBuscarfrmConsultaCompras.Name = "btnBuscarfrmConsultaCompras";
             this.btnBuscarfrmConsultaCompras.Size = new System.Drawing.Size(120, 30);
             this.btnBuscarfrmConsultaCompras.TabIndex = 8;
@@ -136,6 +138,7 @@
             this.dgvOrdenesfrmConsultaCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrdenesfrmConsultaCompras.Location = new System.Drawing.Point(20, 52);
             this.dgvOrdenesfrmConsultaCompras.MultiSelect = false;
+            this.dgvOrdenesfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvOrdenesfrmConsultaCompras.Name = "dgvOrdenesfrmConsultaCompras";
             this.dgvOrdenesfrmConsultaCompras.ReadOnly = true;
             this.dgvOrdenesfrmConsultaCompras.RowHeadersVisible = false;
@@ -151,6 +154,7 @@
             this.lblTotalesfrmConsultaCompras.AutoSize = true;
             this.lblTotalesfrmConsultaCompras.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalesfrmConsultaCompras.Location = new System.Drawing.Point(20, 260);
+            this.lblTotalesfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblTotalesfrmConsultaCompras.Name = "lblTotalesfrmConsultaCompras";
             this.lblTotalesfrmConsultaCompras.TabIndex = 10;
             this.lblTotalesfrmConsultaCompras.Text = "-";
@@ -160,6 +164,7 @@
             this.lblDetallefrmConsultaCompras.AutoSize = true;
             this.lblDetallefrmConsultaCompras.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDetallefrmConsultaCompras.Location = new System.Drawing.Point(20, 290);
+            this.lblDetallefrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblDetallefrmConsultaCompras.Name = "lblDetallefrmConsultaCompras";
             this.lblDetallefrmConsultaCompras.TabIndex = 11;
             this.lblDetallefrmConsultaCompras.Text = "Detalle de la orden";
@@ -168,6 +173,7 @@
             //
             this.lblLineasfrmConsultaCompras.AutoSize = true;
             this.lblLineasfrmConsultaCompras.Location = new System.Drawing.Point(20, 315);
+            this.lblLineasfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblLineasfrmConsultaCompras.Name = "lblLineasfrmConsultaCompras";
             this.lblLineasfrmConsultaCompras.TabIndex = 12;
             this.lblLineasfrmConsultaCompras.Text = "Insumos pedidos";
@@ -178,6 +184,7 @@
             this.dgvLineasfrmConsultaCompras.AllowUserToDeleteRows = false;
             this.dgvLineasfrmConsultaCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLineasfrmConsultaCompras.Location = new System.Drawing.Point(20, 335);
+            this.dgvLineasfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dgvLineasfrmConsultaCompras.Name = "dgvLineasfrmConsultaCompras";
             this.dgvLineasfrmConsultaCompras.ReadOnly = true;
             this.dgvLineasfrmConsultaCompras.RowHeadersVisible = false;
@@ -188,6 +195,7 @@
             //
             this.lblRecepcionesfrmConsultaCompras.AutoSize = true;
             this.lblRecepcionesfrmConsultaCompras.Location = new System.Drawing.Point(560, 315);
+            this.lblRecepcionesfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblRecepcionesfrmConsultaCompras.Name = "lblRecepcionesfrmConsultaCompras";
             this.lblRecepcionesfrmConsultaCompras.TabIndex = 14;
             this.lblRecepcionesfrmConsultaCompras.Text = "Recepciones y facturas del proveedor";
@@ -198,6 +206,7 @@
             this.dgvRecepcionesfrmConsultaCompras.AllowUserToDeleteRows = false;
             this.dgvRecepcionesfrmConsultaCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRecepcionesfrmConsultaCompras.Location = new System.Drawing.Point(560, 335);
+            this.dgvRecepcionesfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvRecepcionesfrmConsultaCompras.Name = "dgvRecepcionesfrmConsultaCompras";
             this.dgvRecepcionesfrmConsultaCompras.ReadOnly = true;
             this.dgvRecepcionesfrmConsultaCompras.RowHeadersVisible = false;
@@ -208,6 +217,7 @@
             //
             this.lblReclamosfrmConsultaCompras.AutoSize = true;
             this.lblReclamosfrmConsultaCompras.Location = new System.Drawing.Point(20, 485);
+            this.lblReclamosfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblReclamosfrmConsultaCompras.Name = "lblReclamosfrmConsultaCompras";
             this.lblReclamosfrmConsultaCompras.TabIndex = 16;
             this.lblReclamosfrmConsultaCompras.Text = "Reclamos al proveedor";
@@ -218,6 +228,7 @@
             this.dgvReclamosfrmConsultaCompras.AllowUserToDeleteRows = false;
             this.dgvReclamosfrmConsultaCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReclamosfrmConsultaCompras.Location = new System.Drawing.Point(20, 505);
+            this.dgvReclamosfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dgvReclamosfrmConsultaCompras.Name = "dgvReclamosfrmConsultaCompras";
             this.dgvReclamosfrmConsultaCompras.ReadOnly = true;
             this.dgvReclamosfrmConsultaCompras.RowHeadersVisible = false;
@@ -228,6 +239,7 @@
             //
             this.lblResumenfrmConsultaCompras.AutoSize = true;
             this.lblResumenfrmConsultaCompras.Location = new System.Drawing.Point(560, 485);
+            this.lblResumenfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblResumenfrmConsultaCompras.Name = "lblResumenfrmConsultaCompras";
             this.lblResumenfrmConsultaCompras.TabIndex = 18;
             this.lblResumenfrmConsultaCompras.Text = "Aprobación, observaciones y pago";
@@ -237,6 +249,7 @@
             this.txtResumenfrmConsultaCompras.BackColor = System.Drawing.Color.White;
             this.txtResumenfrmConsultaCompras.Location = new System.Drawing.Point(560, 505);
             this.txtResumenfrmConsultaCompras.Multiline = true;
+            this.txtResumenfrmConsultaCompras.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtResumenfrmConsultaCompras.Name = "txtResumenfrmConsultaCompras";
             this.txtResumenfrmConsultaCompras.ReadOnly = true;
             this.txtResumenfrmConsultaCompras.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -270,6 +283,7 @@
             this.Controls.Add(this.dtpDesdefrmConsultaCompras);
             this.Controls.Add(this.lblDesdefrmConsultaCompras);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1116, 684);
             this.Name = "frmConsultaCompras";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmConsultaCompras";

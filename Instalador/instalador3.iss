@@ -26,7 +26,7 @@
 
 ; ---------- CAMBIAR ESTOS VALORES ----------
 #define MyAppName        "SistemaBar"
-#define MyAppVersion     "3.1"   ; 3.1 = conexion por variables de entorno (sin conexion.txt); 3.0 = N03 (rentabilidad y promociones), lotes con vencimiento, informe PDF y XML; 2.0 = N01 y N02
+#define MyAppVersion     "3.2"   ; 3.2 = formularios responsive; 3.1 = conexion por variables de entorno (sin conexion.txt); 3.0 = N03 (rentabilidad y promociones), lotes con vencimiento, informe PDF y XML; 2.0 = N01 y N02
 #define MyAppPublisher   "Sebastian Fernandez"
 #define MyAppExeName     "SistemaBar.exe"
 #define MyDbName         "TpIngSoftware_2026"

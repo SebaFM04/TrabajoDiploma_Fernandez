@@ -82,14 +82,21 @@
             this.lblOrdenesRecibirfrmMenu = new System.Windows.Forms.Label();
             this.lblOrdenesPagofrmMenu = new System.Windows.Forms.Label();
             this.btnActualizarTablerofrmMenu = new System.Windows.Forms.Button();
+            this.pnlContenidofrmMenu = new System.Windows.Forms.Panel();
+            this.tlpTablerofrmMenu = new System.Windows.Forms.TableLayoutPanel();
             this.mnstripMenu.SuspendLayout();
+            this.pnlContenidofrmMenu.SuspendLayout();
+            this.tlpTablerofrmMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCerrarSesionfrmMenu
             // 
             this.btnCerrarSesionfrmMenu.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCerrarSesionfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(420, 590);
+            this.btnCerrarSesionfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCerrarSesionfrmMenu.AutoSize = true;
+            this.btnCerrarSesionfrmMenu.Location = new System.Drawing.Point(726, 569);
+            this.btnCerrarSesionfrmMenu.MinimumSize = new System.Drawing.Size(162, 38);
             this.btnCerrarSesionfrmMenu.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrarSesionfrmMenu.Name = "btnCerrarSesionfrmMenu";
             this.btnCerrarSesionfrmMenu.Size = new System.Drawing.Size(162, 38);
@@ -102,7 +109,7 @@
             // 
             this.lblEmailTag.AutoSize = true;
             this.lblEmailTag.Font = new System.Drawing.Font("MS Reference Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmailTag.Location = new System.Drawing.Point(10, 72);
+            this.lblEmailTag.Location = new System.Drawing.Point(10, 48);
             this.lblEmailTag.Name = "lblEmailTag";
             this.lblEmailTag.Size = new System.Drawing.Size(19, 15);
             this.lblEmailTag.TabIndex = 18;
@@ -178,9 +185,10 @@
             this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
             this.comprasToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.comprasToolStripMenuItem.Text = "Compras";
+            this.mnstripMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.mnstripMenu.Name = "mnstripMenu";
             this.mnstripMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.mnstripMenu.Size = new System.Drawing.Size(600, 24);
+            this.mnstripMenu.Size = new System.Drawing.Size(900, 24);
             this.mnstripMenu.TabIndex = 19;
             this.mnstripMenu.Text = "menuStrip1";
             // 
@@ -395,8 +403,9 @@
             // 
             // comboIdiomas
             // 
+            this.comboIdiomas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboIdiomas.FormattingEnabled = true;
-            this.comboIdiomas.Location = new System.Drawing.Point(371, 40);
+            this.comboIdiomas.Location = new System.Drawing.Point(671, 16);
             this.comboIdiomas.Name = "comboIdiomas";
             this.comboIdiomas.Size = new System.Drawing.Size(217, 21);
             this.comboIdiomas.TabIndex = 21;
@@ -406,7 +415,7 @@
             // 
             this.lblNombreTag.AutoSize = true;
             this.lblNombreTag.Font = new System.Drawing.Font("MS Reference Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreTag.Location = new System.Drawing.Point(10, 97);
+            this.lblNombreTag.Location = new System.Drawing.Point(10, 73);
             this.lblNombreTag.Name = "lblNombreTag";
             this.lblNombreTag.Size = new System.Drawing.Size(19, 15);
             this.lblNombreTag.TabIndex = 22;
@@ -416,7 +425,7 @@
             //
             this.lblRolesTag.AutoSize = true;
             this.lblRolesTag.Font = new System.Drawing.Font("MS Reference Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRolesTag.Location = new System.Drawing.Point(10, 122);
+            this.lblRolesTag.Location = new System.Drawing.Point(10, 98);
             this.lblRolesTag.Name = "lblRolesTag";
             this.lblRolesTag.TabIndex = 23;
             this.lblRolesTag.Text = "...";
@@ -425,7 +434,8 @@
             //
             this.lblTableroTitulofrmMenu.AutoSize = true;
             this.lblTableroTitulofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTableroTitulofrmMenu.Location = new System.Drawing.Point(10, 160);
+            this.lblTableroTitulofrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTableroTitulofrmMenu.Margin = new System.Windows.Forms.Padding(0, 0, 3, 10);
             this.lblTableroTitulofrmMenu.Name = "lblTableroTitulofrmMenu";
             this.lblTableroTitulofrmMenu.TabIndex = 24;
             this.lblTableroTitulofrmMenu.Text = "Resumen del día";
@@ -434,7 +444,8 @@
             //
             this.lblVentasHoyfrmMenu.AutoSize = true;
             this.lblVentasHoyfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVentasHoyfrmMenu.Location = new System.Drawing.Point(14, 195);
+            this.lblVentasHoyfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblVentasHoyfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lblVentasHoyfrmMenu.Name = "lblVentasHoyfrmMenu";
             this.lblVentasHoyfrmMenu.TabIndex = 25;
             this.lblVentasHoyfrmMenu.Text = "-";
@@ -443,7 +454,8 @@
             //
             this.lblComandasPendientesfrmMenu.AutoSize = true;
             this.lblComandasPendientesfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblComandasPendientesfrmMenu.Location = new System.Drawing.Point(14, 222);
+            this.lblComandasPendientesfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblComandasPendientesfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lblComandasPendientesfrmMenu.Name = "lblComandasPendientesfrmMenu";
             this.lblComandasPendientesfrmMenu.TabIndex = 26;
             this.lblComandasPendientesfrmMenu.Text = "-";
@@ -452,7 +464,8 @@
             //
             this.lblValesSinUsarfrmMenu.AutoSize = true;
             this.lblValesSinUsarfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValesSinUsarfrmMenu.Location = new System.Drawing.Point(14, 249);
+            this.lblValesSinUsarfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblValesSinUsarfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lblValesSinUsarfrmMenu.Name = "lblValesSinUsarfrmMenu";
             this.lblValesSinUsarfrmMenu.TabIndex = 27;
             this.lblValesSinUsarfrmMenu.Text = "-";
@@ -461,7 +474,8 @@
             //
             this.lblOrdenesAprobacionfrmMenu.AutoSize = true;
             this.lblOrdenesAprobacionfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOrdenesAprobacionfrmMenu.Location = new System.Drawing.Point(14, 303);
+            this.lblOrdenesAprobacionfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOrdenesAprobacionfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lblOrdenesAprobacionfrmMenu.Name = "lblOrdenesAprobacionfrmMenu";
             this.lblOrdenesAprobacionfrmMenu.TabIndex = 40;
             this.lblOrdenesAprobacionfrmMenu.Text = "-";
@@ -470,7 +484,8 @@
             //
             this.lblOrdenesObservadasfrmMenu.AutoSize = true;
             this.lblOrdenesObservadasfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOrdenesObservadasfrmMenu.Location = new System.Drawing.Point(14, 330);
+            this.lblOrdenesObservadasfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOrdenesObservadasfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lblOrdenesObservadasfrmMenu.Name = "lblOrdenesObservadasfrmMenu";
             this.lblOrdenesObservadasfrmMenu.TabIndex = 41;
             this.lblOrdenesObservadasfrmMenu.Text = "-";
@@ -479,7 +494,8 @@
             //
             this.lblOrdenesRecibirfrmMenu.AutoSize = true;
             this.lblOrdenesRecibirfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOrdenesRecibirfrmMenu.Location = new System.Drawing.Point(14, 357);
+            this.lblOrdenesRecibirfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOrdenesRecibirfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lblOrdenesRecibirfrmMenu.Name = "lblOrdenesRecibirfrmMenu";
             this.lblOrdenesRecibirfrmMenu.TabIndex = 42;
             this.lblOrdenesRecibirfrmMenu.Text = "-";
@@ -488,7 +504,8 @@
             //
             this.lblOrdenesPagofrmMenu.AutoSize = true;
             this.lblOrdenesPagofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOrdenesPagofrmMenu.Location = new System.Drawing.Point(14, 384);
+            this.lblOrdenesPagofrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOrdenesPagofrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lblOrdenesPagofrmMenu.Name = "lblOrdenesPagofrmMenu";
             this.lblOrdenesPagofrmMenu.TabIndex = 43;
             this.lblOrdenesPagofrmMenu.Text = "-";
@@ -497,7 +514,8 @@
             //
             this.lnkStockBajofrmMenu.AutoSize = true;
             this.lnkStockBajofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkStockBajofrmMenu.Location = new System.Drawing.Point(14, 276);
+            this.lnkStockBajofrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkStockBajofrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lnkStockBajofrmMenu.Name = "lnkStockBajofrmMenu";
             this.lnkStockBajofrmMenu.TabIndex = 28;
             this.lnkStockBajofrmMenu.TabStop = true;
@@ -508,7 +526,8 @@
             //
             this.lnkLotesPorVencerfrmMenu.AutoSize = true;
             this.lnkLotesPorVencerfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkLotesPorVencerfrmMenu.Location = new System.Drawing.Point(14, 411);
+            this.lnkLotesPorVencerfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkLotesPorVencerfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lnkLotesPorVencerfrmMenu.Name = "lnkLotesPorVencerfrmMenu";
             this.lnkLotesPorVencerfrmMenu.TabIndex = 44;
             this.lnkLotesPorVencerfrmMenu.TabStop = true;
@@ -519,7 +538,8 @@
             //
             this.lnkLotesVencidosfrmMenu.AutoSize = true;
             this.lnkLotesVencidosfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkLotesVencidosfrmMenu.Location = new System.Drawing.Point(14, 438);
+            this.lnkLotesVencidosfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkLotesVencidosfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lnkLotesVencidosfrmMenu.Name = "lnkLotesVencidosfrmMenu";
             this.lnkLotesVencidosfrmMenu.TabIndex = 45;
             this.lnkLotesVencidosfrmMenu.TabStop = true;
@@ -530,7 +550,8 @@
             //
             this.lnkPromocionesVigentesfrmMenu.AutoSize = true;
             this.lnkPromocionesVigentesfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkPromocionesVigentesfrmMenu.Location = new System.Drawing.Point(14, 465);
+            this.lnkPromocionesVigentesfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkPromocionesVigentesfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lnkPromocionesVigentesfrmMenu.Name = "lnkPromocionesVigentesfrmMenu";
             this.lnkPromocionesVigentesfrmMenu.TabIndex = 46;
             this.lnkPromocionesVigentesfrmMenu.TabStop = true;
@@ -541,7 +562,8 @@
             //
             this.lnkPromocionesEvaluarfrmMenu.AutoSize = true;
             this.lnkPromocionesEvaluarfrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkPromocionesEvaluarfrmMenu.Location = new System.Drawing.Point(14, 492);
+            this.lnkPromocionesEvaluarfrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkPromocionesEvaluarfrmMenu.Margin = new System.Windows.Forms.Padding(4, 3, 3, 3);
             this.lnkPromocionesEvaluarfrmMenu.Name = "lnkPromocionesEvaluarfrmMenu";
             this.lnkPromocionesEvaluarfrmMenu.TabIndex = 47;
             this.lnkPromocionesEvaluarfrmMenu.TabStop = true;
@@ -552,7 +574,10 @@
             //
             this.btnActualizarTablerofrmMenu.BackColor = System.Drawing.Color.SandyBrown;
             this.btnActualizarTablerofrmMenu.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizarTablerofrmMenu.Location = new System.Drawing.Point(14, 528);
+            this.btnActualizarTablerofrmMenu.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnActualizarTablerofrmMenu.AutoSize = true;
+            this.btnActualizarTablerofrmMenu.Margin = new System.Windows.Forms.Padding(4, 10, 3, 3);
+            this.btnActualizarTablerofrmMenu.MinimumSize = new System.Drawing.Size(130, 30);
             this.btnActualizarTablerofrmMenu.Name = "btnActualizarTablerofrmMenu";
             this.btnActualizarTablerofrmMenu.Size = new System.Drawing.Size(130, 30);
             this.btnActualizarTablerofrmMenu.TabIndex = 29;
@@ -560,34 +585,74 @@
             this.btnActualizarTablerofrmMenu.UseVisualStyleBackColor = false;
             this.btnActualizarTablerofrmMenu.Click += new System.EventHandler(this.btnActualizarTablerofrmMenu_Click);
             // 
+            // pnlContenidofrmMenu
+            // 
+            this.pnlContenidofrmMenu.AutoScroll = true;
+            this.pnlContenidofrmMenu.Controls.Add(this.tlpTablerofrmMenu);
+            this.pnlContenidofrmMenu.Controls.Add(this.btnCerrarSesionfrmMenu);
+            this.pnlContenidofrmMenu.Controls.Add(this.comboIdiomas);
+            this.pnlContenidofrmMenu.Controls.Add(this.lblEmailTag);
+            this.pnlContenidofrmMenu.Controls.Add(this.lblNombreTag);
+            this.pnlContenidofrmMenu.Controls.Add(this.lblRolesTag);
+            this.pnlContenidofrmMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlContenidofrmMenu.Location = new System.Drawing.Point(0, 24);
+            this.pnlContenidofrmMenu.Name = "pnlContenidofrmMenu";
+            this.pnlContenidofrmMenu.Size = new System.Drawing.Size(900, 619);
+            this.pnlContenidofrmMenu.TabIndex = 48;
+            // 
+            // tlpTablerofrmMenu
+            // 
+            this.tlpTablerofrmMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpTablerofrmMenu.AutoScroll = true;
+            this.tlpTablerofrmMenu.ColumnCount = 1;
+            this.tlpTablerofrmMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpTablerofrmMenu.Controls.Add(this.lblTableroTitulofrmMenu, 0, 0);
+            this.tlpTablerofrmMenu.Controls.Add(this.lblVentasHoyfrmMenu, 0, 1);
+            this.tlpTablerofrmMenu.Controls.Add(this.lblComandasPendientesfrmMenu, 0, 2);
+            this.tlpTablerofrmMenu.Controls.Add(this.lblValesSinUsarfrmMenu, 0, 3);
+            this.tlpTablerofrmMenu.Controls.Add(this.lnkStockBajofrmMenu, 0, 4);
+            this.tlpTablerofrmMenu.Controls.Add(this.lblOrdenesAprobacionfrmMenu, 0, 5);
+            this.tlpTablerofrmMenu.Controls.Add(this.lblOrdenesObservadasfrmMenu, 0, 6);
+            this.tlpTablerofrmMenu.Controls.Add(this.lblOrdenesRecibirfrmMenu, 0, 7);
+            this.tlpTablerofrmMenu.Controls.Add(this.lblOrdenesPagofrmMenu, 0, 8);
+            this.tlpTablerofrmMenu.Controls.Add(this.lnkLotesPorVencerfrmMenu, 0, 9);
+            this.tlpTablerofrmMenu.Controls.Add(this.lnkLotesVencidosfrmMenu, 0, 10);
+            this.tlpTablerofrmMenu.Controls.Add(this.lnkPromocionesVigentesfrmMenu, 0, 11);
+            this.tlpTablerofrmMenu.Controls.Add(this.lnkPromocionesEvaluarfrmMenu, 0, 12);
+            this.tlpTablerofrmMenu.Controls.Add(this.btnActualizarTablerofrmMenu, 0, 13);
+            this.tlpTablerofrmMenu.Location = new System.Drawing.Point(10, 136);
+            this.tlpTablerofrmMenu.Name = "tlpTablerofrmMenu";
+            this.tlpTablerofrmMenu.RowCount = 14;
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTablerofrmMenu.Size = new System.Drawing.Size(880, 423);
+            this.tlpTablerofrmMenu.TabIndex = 49;
+            // 
             // frmMenú
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(600, 643);
-            this.Controls.Add(this.lnkPromocionesVigentesfrmMenu);
-            this.Controls.Add(this.lnkPromocionesEvaluarfrmMenu);
-            this.Controls.Add(this.btnActualizarTablerofrmMenu);
-            this.Controls.Add(this.lnkStockBajofrmMenu);
-            this.Controls.Add(this.lnkLotesPorVencerfrmMenu);
-            this.Controls.Add(this.lnkLotesVencidosfrmMenu);
-            this.Controls.Add(this.lblOrdenesAprobacionfrmMenu);
-            this.Controls.Add(this.lblOrdenesObservadasfrmMenu);
-            this.Controls.Add(this.lblOrdenesRecibirfrmMenu);
-            this.Controls.Add(this.lblOrdenesPagofrmMenu);
-            this.Controls.Add(this.lblValesSinUsarfrmMenu);
-            this.Controls.Add(this.lblComandasPendientesfrmMenu);
-            this.Controls.Add(this.lblVentasHoyfrmMenu);
-            this.Controls.Add(this.lblTableroTitulofrmMenu);
-            this.Controls.Add(this.lblRolesTag);
-            this.Controls.Add(this.lblNombreTag);
-            this.Controls.Add(this.comboIdiomas);
-            this.Controls.Add(this.lblEmailTag);
-            this.Controls.Add(this.btnCerrarSesionfrmMenu);
+            this.ClientSize = new System.Drawing.Size(900, 643);
+            this.Controls.Add(this.pnlContenidofrmMenu);
             this.Controls.Add(this.mnstripMenu);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.MainMenuStrip = this.mnstripMenu;
+            this.MinimumSize = new System.Drawing.Size(640, 560);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmMenú";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -597,6 +662,10 @@
             this.Activated += new System.EventHandler(this.frmMenú_Activated);
             this.mnstripMenu.ResumeLayout(false);
             this.mnstripMenu.PerformLayout();
+            this.pnlContenidofrmMenu.ResumeLayout(false);
+            this.pnlContenidofrmMenu.PerformLayout();
+            this.tlpTablerofrmMenu.ResumeLayout(false);
+            this.tlpTablerofrmMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -658,5 +727,7 @@
         private System.Windows.Forms.Label lblOrdenesRecibirfrmMenu;
         private System.Windows.Forms.Label lblOrdenesPagofrmMenu;
         private System.Windows.Forms.Button btnActualizarTablerofrmMenu;
+        private System.Windows.Forms.Panel pnlContenidofrmMenu;
+        private System.Windows.Forms.TableLayoutPanel tlpTablerofrmMenu;
     }
 }

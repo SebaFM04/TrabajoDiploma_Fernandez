@@ -47,6 +47,7 @@
             this.dgvInsumosfrmStockBajo.AllowUserToDeleteRows = false;
             this.dgvInsumosfrmStockBajo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInsumosfrmStockBajo.Location = new System.Drawing.Point(20, 40);
+            this.dgvInsumosfrmStockBajo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvInsumosfrmStockBajo.Name = "dgvInsumosfrmStockBajo";
             this.dgvInsumosfrmStockBajo.ReadOnly = true;
             this.dgvInsumosfrmStockBajo.RowHeadersVisible = false;
@@ -62,6 +63,7 @@
             this.Controls.Add(this.dgvInsumosfrmStockBajo);
             this.Controls.Add(this.lblAyudafrmStockBajo);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(520, 280);
             this.Name = "frmStockBajo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmStockBajo";

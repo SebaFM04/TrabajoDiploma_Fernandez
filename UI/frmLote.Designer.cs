@@ -65,6 +65,7 @@
             this.dgvLotesfrmLote.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLotesfrmLote.Location = new System.Drawing.Point(20, 45);
             this.dgvLotesfrmLote.MultiSelect = false;
+            this.dgvLotesfrmLote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvLotesfrmLote.Name = "dgvLotesfrmLote";
             this.dgvLotesfrmLote.ReadOnly = true;
             this.dgvLotesfrmLote.RowHeadersVisible = false;
@@ -76,6 +77,7 @@
             //
             this.lblTotalfrmLote.AutoSize = true;
             this.lblTotalfrmLote.Location = new System.Drawing.Point(20, 340);
+            this.lblTotalfrmLote.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblTotalfrmLote.Name = "lblTotalfrmLote";
             this.lblTotalfrmLote.TabIndex = 3;
             this.lblTotalfrmLote.Text = "-";
@@ -85,6 +87,9 @@
             this.btnDarDeBajafrmLote.BackColor = System.Drawing.Color.SandyBrown;
             this.btnDarDeBajafrmLote.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDarDeBajafrmLote.Location = new System.Drawing.Point(580, 333);
+            this.btnDarDeBajafrmLote.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnDarDeBajafrmLote.AutoSize = true;
+            this.btnDarDeBajafrmLote.MinimumSize = new System.Drawing.Size(200, 38);
             this.btnDarDeBajafrmLote.Name = "btnDarDeBajafrmLote";
             this.btnDarDeBajafrmLote.Size = new System.Drawing.Size(200, 38);
             this.btnDarDeBajafrmLote.TabIndex = 4;
@@ -104,6 +109,7 @@
             this.Controls.Add(this.rdbPorVencerfrmLote);
             this.Controls.Add(this.rdbVencidosfrmLote);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(640, 360);
             this.Name = "frmLote";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmLote";

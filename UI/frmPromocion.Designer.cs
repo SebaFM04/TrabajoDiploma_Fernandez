@@ -102,11 +102,12 @@
             this.dgvDetallefrmPromocion.AllowUserToDeleteRows = false;
             this.dgvDetallefrmPromocion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetallefrmPromocion.Location = new System.Drawing.Point(15, 378);
+            this.dgvDetallefrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvDetallefrmPromocion.Name = "dgvDetallefrmPromocion";
             this.dgvDetallefrmPromocion.ReadOnly = true;
             this.dgvDetallefrmPromocion.RowHeadersVisible = false;
             this.dgvDetallefrmPromocion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDetallefrmPromocion.Size = new System.Drawing.Size(540, 300);
+            this.dgvDetallefrmPromocion.Size = new System.Drawing.Size(540, 290);
             this.dgvDetallefrmPromocion.TabIndex = 4;
             //
             // lblNuevafrmPromocion
@@ -130,6 +131,7 @@
             //
             this.txtNombrefrmPromocion.Location = new System.Drawing.Point(690, 45);
             this.txtNombrefrmPromocion.MaxLength = 100;
+            this.txtNombrefrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtNombrefrmPromocion.Name = "txtNombrefrmPromocion";
             this.txtNombrefrmPromocion.Size = new System.Drawing.Size(475, 23);
             this.txtNombrefrmPromocion.TabIndex = 7;
@@ -194,6 +196,7 @@
             //
             this.cmbProductofrmPromocion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProductofrmPromocion.Location = new System.Drawing.Point(690, 150);
+            this.cmbProductofrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.cmbProductofrmPromocion.Name = "cmbProductofrmPromocion";
             this.cmbProductofrmPromocion.Size = new System.Drawing.Size(280, 24);
             this.cmbProductofrmPromocion.TabIndex = 15;
@@ -204,6 +207,7 @@
             this.nudPreciofrmPromocion.DecimalPlaces = 2;
             this.nudPreciofrmPromocion.Location = new System.Drawing.Point(980, 151);
             this.nudPreciofrmPromocion.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            this.nudPreciofrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.nudPreciofrmPromocion.Name = "nudPreciofrmPromocion";
             this.nudPreciofrmPromocion.Size = new System.Drawing.Size(95, 23);
             this.nudPreciofrmPromocion.TabIndex = 16;
@@ -213,6 +217,7 @@
             //
             this.btnAgregarfrmPromocion.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAgregarfrmPromocion.Location = new System.Drawing.Point(1080, 147);
+            this.btnAgregarfrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnAgregarfrmPromocion.Name = "btnAgregarfrmPromocion";
             this.btnAgregarfrmPromocion.Size = new System.Drawing.Size(85, 30);
             this.btnAgregarfrmPromocion.TabIndex = 17;
@@ -227,10 +232,11 @@
             this.dgvLineasfrmPromocion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLineasfrmPromocion.Location = new System.Drawing.Point(575, 190);
             this.dgvLineasfrmPromocion.MultiSelect = false;
+            this.dgvLineasfrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvLineasfrmPromocion.Name = "dgvLineasfrmPromocion";
             this.dgvLineasfrmPromocion.RowHeadersVisible = false;
             this.dgvLineasfrmPromocion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLineasfrmPromocion.Size = new System.Drawing.Size(590, 440);
+            this.dgvLineasfrmPromocion.Size = new System.Drawing.Size(590, 430);
             this.dgvLineasfrmPromocion.TabIndex = 18;
             this.dgvLineasfrmPromocion.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLineasfrmPromocion_CellValueChanged);
             this.dgvLineasfrmPromocion.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvLineasfrmPromocion_DataError);
@@ -238,7 +244,10 @@
             // btnQuitarfrmPromocion
             //
             this.btnQuitarfrmPromocion.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnQuitarfrmPromocion.Location = new System.Drawing.Point(575, 640);
+            this.btnQuitarfrmPromocion.Location = new System.Drawing.Point(575, 630);
+            this.btnQuitarfrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnQuitarfrmPromocion.AutoSize = true;
+            this.btnQuitarfrmPromocion.MinimumSize = new System.Drawing.Size(130, 38);
             this.btnQuitarfrmPromocion.Name = "btnQuitarfrmPromocion";
             this.btnQuitarfrmPromocion.Size = new System.Drawing.Size(130, 38);
             this.btnQuitarfrmPromocion.TabIndex = 19;
@@ -249,7 +258,10 @@
             // btnNuevafrmPromocion
             //
             this.btnNuevafrmPromocion.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnNuevafrmPromocion.Location = new System.Drawing.Point(715, 640);
+            this.btnNuevafrmPromocion.Location = new System.Drawing.Point(715, 630);
+            this.btnNuevafrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnNuevafrmPromocion.AutoSize = true;
+            this.btnNuevafrmPromocion.MinimumSize = new System.Drawing.Size(130, 38);
             this.btnNuevafrmPromocion.Name = "btnNuevafrmPromocion";
             this.btnNuevafrmPromocion.Size = new System.Drawing.Size(130, 38);
             this.btnNuevafrmPromocion.TabIndex = 20;
@@ -261,7 +273,10 @@
             //
             this.btnCrearfrmPromocion.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCrearfrmPromocion.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCrearfrmPromocion.Location = new System.Drawing.Point(965, 640);
+            this.btnCrearfrmPromocion.Location = new System.Drawing.Point(965, 630);
+            this.btnCrearfrmPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnCrearfrmPromocion.AutoSize = true;
+            this.btnCrearfrmPromocion.MinimumSize = new System.Drawing.Size(200, 38);
             this.btnCrearfrmPromocion.Name = "btnCrearfrmPromocion";
             this.btnCrearfrmPromocion.Size = new System.Drawing.Size(200, 38);
             this.btnCrearfrmPromocion.TabIndex = 21;
@@ -274,7 +289,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1180, 695);
+            this.ClientSize = new System.Drawing.Size(1180, 685);
             this.Controls.Add(this.btnCrearfrmPromocion);
             this.Controls.Add(this.btnNuevafrmPromocion);
             this.Controls.Add(this.btnQuitarfrmPromocion);
@@ -298,6 +313,7 @@
             this.Controls.Add(this.cmbFiltrofrmPromocion);
             this.Controls.Add(this.lblFiltrofrmPromocion);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1196, 620);
             this.Name = "frmPromocion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmPromocion";

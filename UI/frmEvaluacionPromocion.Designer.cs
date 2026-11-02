@@ -62,17 +62,19 @@
             this.dgvPromocionesfrmEvaluacionPromocion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPromocionesfrmEvaluacionPromocion.Location = new System.Drawing.Point(15, 45);
             this.dgvPromocionesfrmEvaluacionPromocion.MultiSelect = false;
+            this.dgvPromocionesfrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvPromocionesfrmEvaluacionPromocion.Name = "dgvPromocionesfrmEvaluacionPromocion";
             this.dgvPromocionesfrmEvaluacionPromocion.ReadOnly = true;
             this.dgvPromocionesfrmEvaluacionPromocion.RowHeadersVisible = false;
             this.dgvPromocionesfrmEvaluacionPromocion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPromocionesfrmEvaluacionPromocion.Size = new System.Drawing.Size(430, 650);
+            this.dgvPromocionesfrmEvaluacionPromocion.Size = new System.Drawing.Size(430, 625);
             this.dgvPromocionesfrmEvaluacionPromocion.TabIndex = 1;
             this.dgvPromocionesfrmEvaluacionPromocion.SelectionChanged += new System.EventHandler(this.dgvPromocionesfrmEvaluacionPromocion_SelectionChanged);
             //
             // lblPromocionfrmEvaluacionPromocion
             //
             this.lblPromocionfrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 12);
+            this.lblPromocionfrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.lblPromocionfrmEvaluacionPromocion.Name = "lblPromocionfrmEvaluacionPromocion";
             this.lblPromocionfrmEvaluacionPromocion.Size = new System.Drawing.Size(700, 42);
             this.lblPromocionfrmEvaluacionPromocion.TabIndex = 2;
@@ -84,6 +86,7 @@
             this.dgvComparacionfrmEvaluacionPromocion.AllowUserToDeleteRows = false;
             this.dgvComparacionfrmEvaluacionPromocion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvComparacionfrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 60);
+            this.dgvComparacionfrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvComparacionfrmEvaluacionPromocion.Name = "dgvComparacionfrmEvaluacionPromocion";
             this.dgvComparacionfrmEvaluacionPromocion.ReadOnly = true;
             this.dgvComparacionfrmEvaluacionPromocion.RowHeadersVisible = false;
@@ -94,6 +97,7 @@
             //
             this.lblSugerenciafrmEvaluacionPromocion.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSugerenciafrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 266);
+            this.lblSugerenciafrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.lblSugerenciafrmEvaluacionPromocion.Name = "lblSugerenciafrmEvaluacionPromocion";
             this.lblSugerenciafrmEvaluacionPromocion.Size = new System.Drawing.Size(700, 40);
             this.lblSugerenciafrmEvaluacionPromocion.TabIndex = 4;
@@ -101,14 +105,16 @@
             // pnlGraficofrmEvaluacionPromocion
             //
             this.pnlGraficofrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 310);
+            this.pnlGraficofrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.pnlGraficofrmEvaluacionPromocion.Name = "pnlGraficofrmEvaluacionPromocion";
-            this.pnlGraficofrmEvaluacionPromocion.Size = new System.Drawing.Size(700, 250);
+            this.pnlGraficofrmEvaluacionPromocion.Size = new System.Drawing.Size(700, 225);
             this.pnlGraficofrmEvaluacionPromocion.TabIndex = 5;
             //
             // lblResultadofrmEvaluacionPromocion
             //
             this.lblResultadofrmEvaluacionPromocion.AutoSize = true;
-            this.lblResultadofrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 572);
+            this.lblResultadofrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 547);
+            this.lblResultadofrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblResultadofrmEvaluacionPromocion.Name = "lblResultadofrmEvaluacionPromocion";
             this.lblResultadofrmEvaluacionPromocion.TabIndex = 6;
             this.lblResultadofrmEvaluacionPromocion.Text = "Resultado";
@@ -116,7 +122,8 @@
             // rdbEfectivafrmEvaluacionPromocion
             //
             this.rdbEfectivafrmEvaluacionPromocion.AutoSize = true;
-            this.rdbEfectivafrmEvaluacionPromocion.Location = new System.Drawing.Point(575, 570);
+            this.rdbEfectivafrmEvaluacionPromocion.Location = new System.Drawing.Point(575, 545);
+            this.rdbEfectivafrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.rdbEfectivafrmEvaluacionPromocion.Name = "rdbEfectivafrmEvaluacionPromocion";
             this.rdbEfectivafrmEvaluacionPromocion.TabIndex = 7;
             this.rdbEfectivafrmEvaluacionPromocion.Text = "Efectiva";
@@ -125,7 +132,8 @@
             // rdbNoEfectivafrmEvaluacionPromocion
             //
             this.rdbNoEfectivafrmEvaluacionPromocion.AutoSize = true;
-            this.rdbNoEfectivafrmEvaluacionPromocion.Location = new System.Drawing.Point(720, 570);
+            this.rdbNoEfectivafrmEvaluacionPromocion.Location = new System.Drawing.Point(720, 545);
+            this.rdbNoEfectivafrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.rdbNoEfectivafrmEvaluacionPromocion.Name = "rdbNoEfectivafrmEvaluacionPromocion";
             this.rdbNoEfectivafrmEvaluacionPromocion.TabIndex = 8;
             this.rdbNoEfectivafrmEvaluacionPromocion.Text = "No efectiva";
@@ -134,16 +142,18 @@
             // lblObservacionesfrmEvaluacionPromocion
             //
             this.lblObservacionesfrmEvaluacionPromocion.AutoSize = true;
-            this.lblObservacionesfrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 603);
+            this.lblObservacionesfrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 578);
+            this.lblObservacionesfrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblObservacionesfrmEvaluacionPromocion.Name = "lblObservacionesfrmEvaluacionPromocion";
             this.lblObservacionesfrmEvaluacionPromocion.TabIndex = 9;
             this.lblObservacionesfrmEvaluacionPromocion.Text = "Observaciones";
             //
             // txtObservacionesfrmEvaluacionPromocion
             //
-            this.txtObservacionesfrmEvaluacionPromocion.Location = new System.Drawing.Point(575, 600);
+            this.txtObservacionesfrmEvaluacionPromocion.Location = new System.Drawing.Point(575, 575);
             this.txtObservacionesfrmEvaluacionPromocion.MaxLength = 500;
             this.txtObservacionesfrmEvaluacionPromocion.Multiline = true;
+            this.txtObservacionesfrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtObservacionesfrmEvaluacionPromocion.Name = "txtObservacionesfrmEvaluacionPromocion";
             this.txtObservacionesfrmEvaluacionPromocion.Size = new System.Drawing.Size(590, 45);
             this.txtObservacionesfrmEvaluacionPromocion.TabIndex = 10;
@@ -152,7 +162,10 @@
             //
             this.btnConfirmarfrmEvaluacionPromocion.BackColor = System.Drawing.Color.SandyBrown;
             this.btnConfirmarfrmEvaluacionPromocion.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmarfrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 655);
+            this.btnConfirmarfrmEvaluacionPromocion.Location = new System.Drawing.Point(465, 630);
+            this.btnConfirmarfrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnConfirmarfrmEvaluacionPromocion.AutoSize = true;
+            this.btnConfirmarfrmEvaluacionPromocion.MinimumSize = new System.Drawing.Size(250, 40);
             this.btnConfirmarfrmEvaluacionPromocion.Name = "btnConfirmarfrmEvaluacionPromocion";
             this.btnConfirmarfrmEvaluacionPromocion.Size = new System.Drawing.Size(250, 40);
             this.btnConfirmarfrmEvaluacionPromocion.TabIndex = 11;
@@ -164,7 +177,10 @@
             //
             this.btnRenovarfrmEvaluacionPromocion.BackColor = System.Drawing.Color.SandyBrown;
             this.btnRenovarfrmEvaluacionPromocion.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRenovarfrmEvaluacionPromocion.Location = new System.Drawing.Point(915, 655);
+            this.btnRenovarfrmEvaluacionPromocion.Location = new System.Drawing.Point(915, 630);
+            this.btnRenovarfrmEvaluacionPromocion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnRenovarfrmEvaluacionPromocion.AutoSize = true;
+            this.btnRenovarfrmEvaluacionPromocion.MinimumSize = new System.Drawing.Size(250, 40);
             this.btnRenovarfrmEvaluacionPromocion.Name = "btnRenovarfrmEvaluacionPromocion";
             this.btnRenovarfrmEvaluacionPromocion.Size = new System.Drawing.Size(250, 40);
             this.btnRenovarfrmEvaluacionPromocion.TabIndex = 12;
@@ -177,7 +193,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1180, 710);
+            this.ClientSize = new System.Drawing.Size(1180, 685);
             this.Controls.Add(this.btnRenovarfrmEvaluacionPromocion);
             this.Controls.Add(this.btnConfirmarfrmEvaluacionPromocion);
             this.Controls.Add(this.txtObservacionesfrmEvaluacionPromocion);
@@ -192,6 +208,7 @@
             this.Controls.Add(this.dgvPromocionesfrmEvaluacionPromocion);
             this.Controls.Add(this.chkTodasfrmEvaluacionPromocion);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1000, 620);
             this.Name = "frmEvaluacionPromocion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmEvaluacionPromocion";

@@ -121,6 +121,8 @@
             this.btnGenerarfrmAnalisisRentabilidad.BackColor = System.Drawing.Color.SandyBrown;
             this.btnGenerarfrmAnalisisRentabilidad.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerarfrmAnalisisRentabilidad.Location = new System.Drawing.Point(875, 9);
+            this.btnGenerarfrmAnalisisRentabilidad.AutoSize = true;
+            this.btnGenerarfrmAnalisisRentabilidad.MinimumSize = new System.Drawing.Size(160, 34);
             this.btnGenerarfrmAnalisisRentabilidad.Name = "btnGenerarfrmAnalisisRentabilidad";
             this.btnGenerarfrmAnalisisRentabilidad.Size = new System.Drawing.Size(160, 34);
             this.btnGenerarfrmAnalisisRentabilidad.TabIndex = 8;
@@ -131,6 +133,7 @@
             // lblResumenfrmAnalisisRentabilidad
             //
             this.lblResumenfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 52);
+            this.lblResumenfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.lblResumenfrmAnalisisRentabilidad.Name = "lblResumenfrmAnalisisRentabilidad";
             this.lblResumenfrmAnalisisRentabilidad.Size = new System.Drawing.Size(1150, 22);
             this.lblResumenfrmAnalisisRentabilidad.TabIndex = 9;
@@ -142,17 +145,19 @@
             this.dgvResultadosfrmAnalisisRentabilidad.AllowUserToDeleteRows = false;
             this.dgvResultadosfrmAnalisisRentabilidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResultadosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 80);
+            this.dgvResultadosfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvResultadosfrmAnalisisRentabilidad.Name = "dgvResultadosfrmAnalisisRentabilidad";
             this.dgvResultadosfrmAnalisisRentabilidad.ReadOnly = true;
             this.dgvResultadosfrmAnalisisRentabilidad.RowHeadersVisible = false;
             this.dgvResultadosfrmAnalisisRentabilidad.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvResultadosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(700, 360);
+            this.dgvResultadosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(700, 320);
             this.dgvResultadosfrmAnalisisRentabilidad.TabIndex = 10;
             //
             // lblSugeridosfrmAnalisisRentabilidad
             //
             this.lblSugeridosfrmAnalisisRentabilidad.AutoSize = true;
-            this.lblSugeridosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 450);
+            this.lblSugeridosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 410);
+            this.lblSugeridosfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblSugeridosfrmAnalisisRentabilidad.Name = "lblSugeridosfrmAnalisisRentabilidad";
             this.lblSugeridosfrmAnalisisRentabilidad.TabIndex = 11;
             this.lblSugeridosfrmAnalisisRentabilidad.Text = "Productos sugeridos para promocionar";
@@ -162,18 +167,20 @@
             this.dgvSugeridosfrmAnalisisRentabilidad.AllowUserToAddRows = false;
             this.dgvSugeridosfrmAnalisisRentabilidad.AllowUserToDeleteRows = false;
             this.dgvSugeridosfrmAnalisisRentabilidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSugeridosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 472);
+            this.dgvSugeridosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 432);
+            this.dgvSugeridosfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvSugeridosfrmAnalisisRentabilidad.Name = "dgvSugeridosfrmAnalisisRentabilidad";
             this.dgvSugeridosfrmAnalisisRentabilidad.ReadOnly = true;
             this.dgvSugeridosfrmAnalisisRentabilidad.RowHeadersVisible = false;
             this.dgvSugeridosfrmAnalisisRentabilidad.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSugeridosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(700, 190);
+            this.dgvSugeridosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(700, 170);
             this.dgvSugeridosfrmAnalisisRentabilidad.TabIndex = 12;
             //
             // lblAvisosfrmAnalisisRentabilidad
             //
             this.lblAvisosfrmAnalisisRentabilidad.ForeColor = System.Drawing.Color.Firebrick;
-            this.lblAvisosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 670);
+            this.lblAvisosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(15, 610);
+            this.lblAvisosfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.lblAvisosfrmAnalisisRentabilidad.Name = "lblAvisosfrmAnalisisRentabilidad";
             this.lblAvisosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(700, 60);
             this.lblAvisosfrmAnalisisRentabilidad.TabIndex = 13;
@@ -181,14 +188,18 @@
             // tabGraficosfrmAnalisisRentabilidad
             //
             this.tabGraficosfrmAnalisisRentabilidad.Location = new System.Drawing.Point(730, 80);
+            this.tabGraficosfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right));
             this.tabGraficosfrmAnalisisRentabilidad.Name = "tabGraficosfrmAnalisisRentabilidad";
             this.tabGraficosfrmAnalisisRentabilidad.SelectedIndex = 0;
-            this.tabGraficosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(435, 600);
+            this.tabGraficosfrmAnalisisRentabilidad.Size = new System.Drawing.Size(435, 540);
             //
             // btnAbrirfrmAnalisisRentabilidad
             //
             this.btnAbrirfrmAnalisisRentabilidad.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnAbrirfrmAnalisisRentabilidad.Location = new System.Drawing.Point(730, 692);
+            this.btnAbrirfrmAnalisisRentabilidad.Location = new System.Drawing.Point(730, 632);
+            this.btnAbrirfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnAbrirfrmAnalisisRentabilidad.AutoSize = true;
+            this.btnAbrirfrmAnalisisRentabilidad.MinimumSize = new System.Drawing.Size(140, 34);
             this.btnAbrirfrmAnalisisRentabilidad.Name = "btnAbrirfrmAnalisisRentabilidad";
             this.btnAbrirfrmAnalisisRentabilidad.Size = new System.Drawing.Size(140, 34);
             this.btnAbrirfrmAnalisisRentabilidad.TabIndex = 16;
@@ -199,7 +210,10 @@
             // btnGuardarfrmAnalisisRentabilidad
             //
             this.btnGuardarfrmAnalisisRentabilidad.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnGuardarfrmAnalisisRentabilidad.Location = new System.Drawing.Point(877, 692);
+            this.btnGuardarfrmAnalisisRentabilidad.Location = new System.Drawing.Point(877, 632);
+            this.btnGuardarfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnGuardarfrmAnalisisRentabilidad.AutoSize = true;
+            this.btnGuardarfrmAnalisisRentabilidad.MinimumSize = new System.Drawing.Size(140, 34);
             this.btnGuardarfrmAnalisisRentabilidad.Name = "btnGuardarfrmAnalisisRentabilidad";
             this.btnGuardarfrmAnalisisRentabilidad.Size = new System.Drawing.Size(140, 34);
             this.btnGuardarfrmAnalisisRentabilidad.TabIndex = 17;
@@ -210,7 +224,10 @@
             // btnExportarPdffrmAnalisisRentabilidad
             //
             this.btnExportarPdffrmAnalisisRentabilidad.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnExportarPdffrmAnalisisRentabilidad.Location = new System.Drawing.Point(1025, 692);
+            this.btnExportarPdffrmAnalisisRentabilidad.Location = new System.Drawing.Point(1025, 632);
+            this.btnExportarPdffrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnExportarPdffrmAnalisisRentabilidad.AutoSize = true;
+            this.btnExportarPdffrmAnalisisRentabilidad.MinimumSize = new System.Drawing.Size(140, 34);
             this.btnExportarPdffrmAnalisisRentabilidad.Name = "btnExportarPdffrmAnalisisRentabilidad";
             this.btnExportarPdffrmAnalisisRentabilidad.Size = new System.Drawing.Size(140, 34);
             this.btnExportarPdffrmAnalisisRentabilidad.TabIndex = 18;
@@ -222,9 +239,12 @@
             // btnCrearPromocionfrmAnalisisRentabilidad
             //
             this.btnCrearPromocionfrmAnalisisRentabilidad.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnCrearPromocionfrmAnalisisRentabilidad.Location = new System.Drawing.Point(445, 443);
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Location = new System.Drawing.Point(405, 403);
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnCrearPromocionfrmAnalisisRentabilidad.AutoSize = true;
+            this.btnCrearPromocionfrmAnalisisRentabilidad.MinimumSize = new System.Drawing.Size(310, 27);
             this.btnCrearPromocionfrmAnalisisRentabilidad.Name = "btnCrearPromocionfrmAnalisisRentabilidad";
-            this.btnCrearPromocionfrmAnalisisRentabilidad.Size = new System.Drawing.Size(270, 27);
+            this.btnCrearPromocionfrmAnalisisRentabilidad.Size = new System.Drawing.Size(310, 27);
             this.btnCrearPromocionfrmAnalisisRentabilidad.TabIndex = 15;
             this.btnCrearPromocionfrmAnalisisRentabilidad.Text = "Crear promoción con los seleccionados";
             this.btnCrearPromocionfrmAnalisisRentabilidad.UseVisualStyleBackColor = false;
@@ -235,7 +255,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1180, 745);
+            this.ClientSize = new System.Drawing.Size(1180, 685);
             this.Controls.Add(this.btnExportarPdffrmAnalisisRentabilidad);
             this.Controls.Add(this.btnGuardarfrmAnalisisRentabilidad);
             this.Controls.Add(this.btnAbrirfrmAnalisisRentabilidad);
@@ -256,6 +276,7 @@
             this.Controls.Add(this.dtpDesdefrmAnalisisRentabilidad);
             this.Controls.Add(this.lblDesdefrmAnalisisRentabilidad);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1070, 620);
             this.Name = "frmAnalisisRentabilidad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAnalisisRentabilidad";

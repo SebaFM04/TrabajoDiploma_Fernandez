@@ -17,9 +17,11 @@ namespace SERVICIO
             get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SistemaBar", "Facturas"); }
         }
 
-        public static string RutaFactura(int numeroComprobante)
+        // Cada letra tiene su numeración (decisión 94): la B conserva el nombre de siempre y la A lleva la letra
+        public static string RutaFactura(int numeroComprobante, string tipoFactura = "B")
         {
-            return Path.Combine(CarpetaFacturas, $"Factura_{numeroComprobante:00000000}.pdf");
+            string letra = tipoFactura == "B" ? string.Empty : tipoFactura + "_";
+            return Path.Combine(CarpetaFacturas, $"Factura_{letra}{numeroComprobante:00000000}.pdf");
         }
 
         // filas[0] es el encabezado de la tabla. anchos: proporción de cada columna (suman 1).

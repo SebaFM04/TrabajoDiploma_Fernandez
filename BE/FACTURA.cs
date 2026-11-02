@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    // CU015: factura simulada a consumidor final (decisión 11). Datos del cliente opcionales (decisión 46).
+    // CU015: factura simulada (decisión 11). B a consumidor final, con datos del cliente opcionales (decisión 46);
+    // A a un cliente Responsable Inscripto, con razón social y CUIT (decisión 94).
     public class FACTURA
     {
         private int idFactura;
@@ -63,6 +64,22 @@ namespace BE
         {
             get { return total; }
             set { total = value; }
+        }
+
+        // Decisión 94: "A" = cliente Responsable Inscripto (razón social y CUIT, IVA discriminado); "B" = consumidor final
+        private string tipoFactura = "B";
+        public string TipoFactura
+        {
+            get { return tipoFactura; }
+            set { tipoFactura = value; }
+        }
+
+        // Obligatorio en la Factura A
+        private string cuitCliente;
+        public string CuitCliente
+        {
+            get { return cuitCliente; }
+            set { cuitCliente = value; }
         }
     }
 }

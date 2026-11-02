@@ -181,7 +181,9 @@ namespace DAL
                         NombreCliente = u["NombreCliente"] == DBNull.Value ? null : u["NombreCliente"].ToString(),
                         TelefonoCliente = u["TelefonoCliente"] == DBNull.Value ? null : u["TelefonoCliente"].ToString(),
                         CorreoCliente = u["CorreoCliente"] == DBNull.Value ? null : u["CorreoCliente"].ToString(),
-                        Total = venta.Monto
+                        Total = venta.Monto,
+                        TipoFactura = u["TipoFactura"].ToString(),
+                        CuitCliente = u["CuitCliente"] == DBNull.Value ? null : u["CuitCliente"].ToString()
                     };
                 if (u["IdComanda"] != DBNull.Value)
                     venta.Comanda = new BE.COMANDA { IdComanda = Convert.ToInt32(u["IdComanda"]), IdVenta = venta.IdVenta, Estado = u["EstadoComanda"].ToString() };

@@ -24,13 +24,14 @@ namespace DAL
             acceso = accesoCompartido;
         }
 
-        // CU015 mensajes 8-11: próximo número de comprobante (siempre creciente, decisión 11)
-        public int ObtenerProximoNumero()
+        // CU015 mensajes 8-11: próximo número de comprobante (siempre creciente, decisión 11), por letra (decisión 94)
+        public int ObtenerProximoNumero(string tipoFactura)
         {
             acceso.Abrir();
             try
             {
-                DataTable tabla = acceso.Leer("ObtenerProximoNumeroFactura");
+                List<SqlParameter> parametros = new List<SqlParameter> { acceso.CrearParametro("@TipoFactura", tipoFactura) };
+                DataTable tabla = acceso.Leer("ObtenerProximoNumeroFactura", parametros);
                 return Convert.ToInt32(tabla.Rows[0]["NumeroComprobante"]);
             }
             finally
@@ -53,7 +54,9 @@ namespace DAL
                     acceso.CrearParametro("@NombreCliente", factura.NombreCliente ?? string.Empty),
                     acceso.CrearParametro("@TelefonoCliente", factura.TelefonoCliente ?? string.Empty),
                     acceso.CrearParametro("@CorreoCliente", factura.CorreoCliente ?? string.Empty),
-                    acceso.CrearParametro("@Total", factura.Total)
+                    acceso.CrearParametro("@Total", factura.Total),
+                    acceso.CrearParametro("@TipoFactura", factura.TipoFactura),
+                    acceso.CrearParametro("@CuitCliente", factura.CuitCliente ?? string.Empty)
                 };
                 DataTable tabla = acceso.Leer("GuardarFactura", parametros);
                 factura.IdFactura = Convert.ToInt32(tabla.Rows[0]["IdFactura"]);

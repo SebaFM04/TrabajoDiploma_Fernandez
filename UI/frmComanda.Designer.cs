@@ -53,6 +53,7 @@
             this.dgvComandasfrmComanda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvComandasfrmComanda.Location = new System.Drawing.Point(20, 40);
             this.dgvComandasfrmComanda.MultiSelect = false;
+            this.dgvComandasfrmComanda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvComandasfrmComanda.Name = "dgvComandasfrmComanda";
             this.dgvComandasfrmComanda.ReadOnly = true;
             this.dgvComandasfrmComanda.RowHeadersVisible = false;
@@ -75,6 +76,7 @@
             this.dgvDetallefrmComanda.AllowUserToDeleteRows = false;
             this.dgvDetallefrmComanda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetallefrmComanda.Location = new System.Drawing.Point(370, 40);
+            this.dgvDetallefrmComanda.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvDetallefrmComanda.Name = "dgvDetallefrmComanda";
             this.dgvDetallefrmComanda.ReadOnly = true;
             this.dgvDetallefrmComanda.RowHeadersVisible = false;
@@ -85,6 +87,9 @@
             //
             this.btnConfirmarEntregafrmComanda.BackColor = System.Drawing.Color.SandyBrown;
             this.btnConfirmarEntregafrmComanda.Location = new System.Drawing.Point(370, 315);
+            this.btnConfirmarEntregafrmComanda.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnConfirmarEntregafrmComanda.AutoSize = true;
+            this.btnConfirmarEntregafrmComanda.MinimumSize = new System.Drawing.Size(220, 40);
             this.btnConfirmarEntregafrmComanda.Name = "btnConfirmarEntregafrmComanda";
             this.btnConfirmarEntregafrmComanda.Size = new System.Drawing.Size(220, 40);
             this.btnConfirmarEntregafrmComanda.TabIndex = 4;
@@ -96,6 +101,9 @@
             //
             this.btnActualizarfrmComanda.BackColor = System.Drawing.Color.SandyBrown;
             this.btnActualizarfrmComanda.Location = new System.Drawing.Point(20, 365);
+            this.btnActualizarfrmComanda.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnActualizarfrmComanda.AutoSize = true;
+            this.btnActualizarfrmComanda.MinimumSize = new System.Drawing.Size(150, 36);
             this.btnActualizarfrmComanda.Name = "btnActualizarfrmComanda";
             this.btnActualizarfrmComanda.Size = new System.Drawing.Size(150, 36);
             this.btnActualizarfrmComanda.TabIndex = 5;
@@ -116,6 +124,7 @@
             this.Controls.Add(this.dgvComandasfrmComanda);
             this.Controls.Add(this.lblComandasfrmComanda);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(776, 454);
             this.Name = "frmComanda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmComanda";

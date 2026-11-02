@@ -45,6 +45,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +90,24 @@
     </Compile>
     <Compile Include="frmControlCambio.Designer.cs">
       <DependentUpon>frmControlCambio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAnalisisRentabilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAnalisisRentabilidad.Designer.cs">
+      <DependentUpon>frmAnalisisRentabilidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEvaluacionPromocion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEvaluacionPromocion.Designer.cs">
+      <DependentUpon>frmEvaluacionPromocion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPromocion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPromocion.Designer.cs">
+      <DependentUpon>frmPromocion.cs</DependentUpon>
     </Compile>
     <Compile Include="frmEntrega.cs">
       <SubType>Form</SubType>
@@ -137,6 +156,18 @@
     </Compile>
     <Compile Include="frmRolesyPermisos.Designer.cs">
       <DependentUpon>frmRolesyPermisos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLote.Designer.cs">
+      <DependentUpon>frmLote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSimuladorVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSimuladorVentas.Designer.cs">
+      <DependentUpon>frmSimuladorVentas.cs</DependentUpon>
     </Compile>
     <Compile Include="frmStockBajo.cs">
       <SubType>Form</SubType>

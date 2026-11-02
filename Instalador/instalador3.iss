@@ -13,6 +13,8 @@
 ;     - Falta SQL Server              -> instala SQL Server Express como instancia por defecto (".")
 ;     - Instancia: no se pregunta. Usa "." si existe; si la PC solo tiene instancias con nombre
 ;       (ej: .\SQLEXPRESS), usa la primera que encuentra.
+;     - El programa sabe a que base conectarse por dos variables de entorno del sistema:
+;       SISTEMABAR_SERVIDOR (la instancia elegida) y SISTEMABAR_BASE (la base). Se borran al desinstalar.
 ;     - Servicio de SQL detenido      -> lo pone en automatico y lo inicia
 ;     - Falta sqlcmd en la PC         -> usa uno propio (go-sqlcmd) incluido en el setup
 ;     - Nunca pide reinicio (PCs congeladas): todo tiene que funcionar en la misma sesion
@@ -24,7 +26,7 @@
 
 ; ---------- CAMBIAR ESTOS VALORES ----------
 #define MyAppName        "SistemaBar"
-#define MyAppVersion     "2.0"   ; 2.0 = N01 (ventas) y N02 (compras) completos, con datos de demostracion
+#define MyAppVersion     "3.2"   ; 3.2 = formularios responsive; 3.1 = conexion por variables de entorno (sin conexion.txt); 3.0 = N03 (rentabilidad y promociones), lotes con vencimiento, informe PDF y XML; 2.0 = N01 y N02
 #define MyAppPublisher   "Sebastian Fernandez"
 #define MyAppExeName     "SistemaBar.exe"
 #define MyDbName         "TpIngSoftware_2026"
@@ -56,6 +58,8 @@ SetupLogging=yes
 CloseApplications=yes
 ; PCs congeladas (Deep Freeze): nunca pedir reinicio, se perderia todo lo instalado
 RestartIfNeededByRun=no
+; Avisa a Windows que cambiaron las variables de entorno (las de [Registry]), sin reiniciar
+ChangesEnvironment=yes
 
 [Languages]
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
@@ -84,6 +88,15 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent; Check: PuedeLanzar
+
+[Registry]
+; Decision 93: el programa arma la cadena de conexion con estas variables de entorno del sistema (ya no usa conexion.txt)
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "SISTEMABAR_SERVIDOR"; ValueData: "{code:InstanciaElegida}"; Flags: uninsdeletevalue
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "SISTEMABAR_BASE"; ValueData: "{#MyDbName}"; Flags: uninsdeletevalue
+
+[InstallDelete]
+; conexion.txt de una instalacion anterior (version 3.0 o previa)
+Type: files; Name: "{app}\conexion.txt"
 
 [UninstallDelete]
 Type: files; Name: "{app}\conexion.txt"
@@ -142,6 +155,12 @@ begin
   Result := Trim(ExpandConstant('{param:INSTANCIA|}'));
   if Result = '' then
     Result := Instancias[0];
+end;
+
+{ Valor de SISTEMABAR_SERVIDOR en [Registry] }
+function InstanciaElegida(Param: String): String;
+begin
+  Result := ObtenerInstancia();
 end;
 
 function UsuarioActual(): String;
@@ -536,9 +555,7 @@ begin
   RutaLogSql := ExpandConstant('{app}\instalacion\instalacion_sql.log');
   Log('Instancia elegida: ' + Instancia);
 
-  { 1. Guardar la instancia para que la lea el programa }
-  if not SaveStringToFile(ExpandConstant('{app}\conexion.txt'), Instancia, False) then
-    SuppressibleMsgBox('No se pudo escribir conexion.txt en la carpeta del programa.', mbError, MB_OK, IDOK);
+  { 1. La instancia y la base para el programa ya quedaron en las variables de entorno ([Registry]) }
 
   { 2. Asegurar que el servicio este corriendo }
   IniciarServicio(Instancia);

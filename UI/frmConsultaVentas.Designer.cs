@@ -78,6 +78,8 @@
             //
             this.btnBuscarfrmConsultaVentas.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBuscarfrmConsultaVentas.Location = new System.Drawing.Point(440, 11);
+            this.btnBuscarfrmConsultaVentas.AutoSize = true;
+            this.btnBuscarfrmConsultaVentas.MinimumSize = new System.Drawing.Size(120, 32);
             this.btnBuscarfrmConsultaVentas.Name = "btnBuscarfrmConsultaVentas";
             this.btnBuscarfrmConsultaVentas.Size = new System.Drawing.Size(120, 32);
             this.btnBuscarfrmConsultaVentas.TabIndex = 4;
@@ -92,6 +94,7 @@
             this.dgvVentasfrmConsultaVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVentasfrmConsultaVentas.Location = new System.Drawing.Point(20, 55);
             this.dgvVentasfrmConsultaVentas.MultiSelect = false;
+            this.dgvVentasfrmConsultaVentas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvVentasfrmConsultaVentas.Name = "dgvVentasfrmConsultaVentas";
             this.dgvVentasfrmConsultaVentas.ReadOnly = true;
             this.dgvVentasfrmConsultaVentas.RowHeadersVisible = false;
@@ -107,6 +110,7 @@
             this.lblTotalesfrmConsultaVentas.AutoSize = true;
             this.lblTotalesfrmConsultaVentas.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalesfrmConsultaVentas.Location = new System.Drawing.Point(20, 312);
+            this.lblTotalesfrmConsultaVentas.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblTotalesfrmConsultaVentas.Name = "lblTotalesfrmConsultaVentas";
             this.lblTotalesfrmConsultaVentas.TabIndex = 6;
             this.lblTotalesfrmConsultaVentas.Text = "-";
@@ -115,6 +119,7 @@
             //
             this.lblDetallefrmConsultaVentas.AutoSize = true;
             this.lblDetallefrmConsultaVentas.Location = new System.Drawing.Point(20, 340);
+            this.lblDetallefrmConsultaVentas.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblDetallefrmConsultaVentas.Name = "lblDetallefrmConsultaVentas";
             this.lblDetallefrmConsultaVentas.TabIndex = 7;
             this.lblDetallefrmConsultaVentas.Text = "Detalle de la venta";
@@ -125,6 +130,7 @@
             this.dgvDetallefrmConsultaVentas.AllowUserToDeleteRows = false;
             this.dgvDetallefrmConsultaVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetallefrmConsultaVentas.Location = new System.Drawing.Point(20, 362);
+            this.dgvDetallefrmConsultaVentas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvDetallefrmConsultaVentas.Name = "dgvDetallefrmConsultaVentas";
             this.dgvDetallefrmConsultaVentas.ReadOnly = true;
             this.dgvDetallefrmConsultaVentas.RowHeadersVisible = false;
@@ -135,6 +141,9 @@
             //
             this.btnVerFacturafrmConsultaVentas.BackColor = System.Drawing.Color.SandyBrown;
             this.btnVerFacturafrmConsultaVentas.Location = new System.Drawing.Point(740, 362);
+            this.btnVerFacturafrmConsultaVentas.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnVerFacturafrmConsultaVentas.AutoSize = true;
+            this.btnVerFacturafrmConsultaVentas.MinimumSize = new System.Drawing.Size(240, 40);
             this.btnVerFacturafrmConsultaVentas.Name = "btnVerFacturafrmConsultaVentas";
             this.btnVerFacturafrmConsultaVentas.Size = new System.Drawing.Size(240, 40);
             this.btnVerFacturafrmConsultaVentas.TabIndex = 9;
@@ -159,6 +168,7 @@
             this.Controls.Add(this.dtpDesdefrmConsultaVentas);
             this.Controls.Add(this.lblDesdefrmConsultaVentas);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "frmConsultaVentas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmConsultaVentas";

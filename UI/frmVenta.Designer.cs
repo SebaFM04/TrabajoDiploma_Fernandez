@@ -73,6 +73,7 @@
             this.dgvProductosfrmVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProductosfrmVenta.Location = new System.Drawing.Point(20, 40);
             this.dgvProductosfrmVenta.MultiSelect = false;
+            this.dgvProductosfrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvProductosfrmVenta.Name = "dgvProductosfrmVenta";
             this.dgvProductosfrmVenta.ReadOnly = true;
             this.dgvProductosfrmVenta.RowHeadersVisible = false;
@@ -85,6 +86,7 @@
             //
             this.lblCantidadfrmVenta.AutoSize = true;
             this.lblCantidadfrmVenta.Location = new System.Drawing.Point(20, 300);
+            this.lblCantidadfrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblCantidadfrmVenta.Name = "lblCantidadfrmVenta";
             this.lblCantidadfrmVenta.TabIndex = 2;
             this.lblCantidadfrmVenta.Text = "Cantidad";
@@ -94,6 +96,7 @@
             this.nudCantidadfrmVenta.Location = new System.Drawing.Point(110, 297);
             this.nudCantidadfrmVenta.Maximum = new decimal(new int[] { 99, 0, 0, 0 });
             this.nudCantidadfrmVenta.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            this.nudCantidadfrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.nudCantidadfrmVenta.Name = "nudCantidadfrmVenta";
             this.nudCantidadfrmVenta.Size = new System.Drawing.Size(70, 23);
             this.nudCantidadfrmVenta.TabIndex = 3;
@@ -103,6 +106,9 @@
             //
             this.btnAgregarfrmVenta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAgregarfrmVenta.Location = new System.Drawing.Point(200, 292);
+            this.btnAgregarfrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnAgregarfrmVenta.AutoSize = true;
+            this.btnAgregarfrmVenta.MinimumSize = new System.Drawing.Size(180, 32);
             this.btnAgregarfrmVenta.Name = "btnAgregarfrmVenta";
             this.btnAgregarfrmVenta.Size = new System.Drawing.Size(180, 32);
             this.btnAgregarfrmVenta.TabIndex = 4;
@@ -125,6 +131,7 @@
             this.dgvPedidofrmVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPedidofrmVenta.Location = new System.Drawing.Point(520, 40);
             this.dgvPedidofrmVenta.MultiSelect = false;
+            this.dgvPedidofrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvPedidofrmVenta.Name = "dgvPedidofrmVenta";
             this.dgvPedidofrmVenta.ReadOnly = true;
             this.dgvPedidofrmVenta.RowHeadersVisible = false;
@@ -136,6 +143,8 @@
             //
             this.btnQuitarfrmVenta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnQuitarfrmVenta.Location = new System.Drawing.Point(520, 248);
+            this.btnQuitarfrmVenta.AutoSize = true;
+            this.btnQuitarfrmVenta.MinimumSize = new System.Drawing.Size(120, 32);
             this.btnQuitarfrmVenta.Name = "btnQuitarfrmVenta";
             this.btnQuitarfrmVenta.Size = new System.Drawing.Size(120, 32);
             this.btnQuitarfrmVenta.TabIndex = 7;
@@ -147,6 +156,8 @@
             //
             this.btnVerificarfrmVenta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnVerificarfrmVenta.Location = new System.Drawing.Point(650, 248);
+            this.btnVerificarfrmVenta.AutoSize = true;
+            this.btnVerificarfrmVenta.MinimumSize = new System.Drawing.Size(220, 32);
             this.btnVerificarfrmVenta.Name = "btnVerificarfrmVenta";
             this.btnVerificarfrmVenta.Size = new System.Drawing.Size(220, 32);
             this.btnVerificarfrmVenta.TabIndex = 8;
@@ -158,6 +169,7 @@
             //
             this.lblTotalTitulofrmVenta.AutoSize = true;
             this.lblTotalTitulofrmVenta.Location = new System.Drawing.Point(885, 255);
+            this.lblTotalTitulofrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.lblTotalTitulofrmVenta.Name = "lblTotalTitulofrmVenta";
             this.lblTotalTitulofrmVenta.TabIndex = 9;
             this.lblTotalTitulofrmVenta.Text = "Total";
@@ -167,6 +179,7 @@
             this.lblTotalfrmVenta.AutoSize = true;
             this.lblTotalfrmVenta.Font = new System.Drawing.Font("MS Reference Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalfrmVenta.Location = new System.Drawing.Point(950, 253);
+            this.lblTotalfrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.lblTotalfrmVenta.Name = "lblTotalfrmVenta";
             this.lblTotalfrmVenta.TabIndex = 10;
             this.lblTotalfrmVenta.Text = "-";
@@ -191,6 +204,9 @@
             //
             this.btnCobrarfrmVenta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCobrarfrmVenta.Location = new System.Drawing.Point(840, 290);
+            this.btnCobrarfrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.btnCobrarfrmVenta.AutoSize = true;
+            this.btnCobrarfrmVenta.MinimumSize = new System.Drawing.Size(115, 34);
             this.btnCobrarfrmVenta.Name = "btnCobrarfrmVenta";
             this.btnCobrarfrmVenta.Size = new System.Drawing.Size(115, 34);
             this.btnCobrarfrmVenta.TabIndex = 13;
@@ -202,6 +218,9 @@
             //
             this.btnCancelarfrmVenta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCancelarfrmVenta.Location = new System.Drawing.Point(965, 290);
+            this.btnCancelarfrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.btnCancelarfrmVenta.AutoSize = true;
+            this.btnCancelarfrmVenta.MinimumSize = new System.Drawing.Size(115, 34);
             this.btnCancelarfrmVenta.Name = "btnCancelarfrmVenta";
             this.btnCancelarfrmVenta.Size = new System.Drawing.Size(115, 34);
             this.btnCancelarfrmVenta.TabIndex = 14;
@@ -214,6 +233,7 @@
             this.lblDatosClientefrmVenta.AutoSize = true;
             this.lblDatosClientefrmVenta.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDatosClientefrmVenta.Location = new System.Drawing.Point(20, 345);
+            this.lblDatosClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblDatosClientefrmVenta.Name = "lblDatosClientefrmVenta";
             this.lblDatosClientefrmVenta.TabIndex = 15;
             this.lblDatosClientefrmVenta.Text = "Factura: datos del cliente (opcionales)";
@@ -222,6 +242,7 @@
             //
             this.lblNombreClientefrmVenta.AutoSize = true;
             this.lblNombreClientefrmVenta.Location = new System.Drawing.Point(20, 378);
+            this.lblNombreClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblNombreClientefrmVenta.Name = "lblNombreClientefrmVenta";
             this.lblNombreClientefrmVenta.TabIndex = 16;
             this.lblNombreClientefrmVenta.Text = "Nombre";
@@ -230,6 +251,7 @@
             //
             this.txtNombreClientefrmVenta.Location = new System.Drawing.Point(130, 375);
             this.txtNombreClientefrmVenta.MaxLength = 100;
+            this.txtNombreClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtNombreClientefrmVenta.Name = "txtNombreClientefrmVenta";
             this.txtNombreClientefrmVenta.Size = new System.Drawing.Size(270, 23);
             this.txtNombreClientefrmVenta.TabIndex = 17;
@@ -238,6 +260,7 @@
             //
             this.lblTelefonoClientefrmVenta.AutoSize = true;
             this.lblTelefonoClientefrmVenta.Location = new System.Drawing.Point(20, 411);
+            this.lblTelefonoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblTelefonoClientefrmVenta.Name = "lblTelefonoClientefrmVenta";
             this.lblTelefonoClientefrmVenta.TabIndex = 18;
             this.lblTelefonoClientefrmVenta.Text = "Teléfono";
@@ -246,6 +269,7 @@
             //
             this.txtTelefonoClientefrmVenta.Location = new System.Drawing.Point(130, 408);
             this.txtTelefonoClientefrmVenta.MaxLength = 30;
+            this.txtTelefonoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtTelefonoClientefrmVenta.Name = "txtTelefonoClientefrmVenta";
             this.txtTelefonoClientefrmVenta.Size = new System.Drawing.Size(270, 23);
             this.txtTelefonoClientefrmVenta.TabIndex = 19;
@@ -254,6 +278,7 @@
             //
             this.lblCorreoClientefrmVenta.AutoSize = true;
             this.lblCorreoClientefrmVenta.Location = new System.Drawing.Point(20, 444);
+            this.lblCorreoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblCorreoClientefrmVenta.Name = "lblCorreoClientefrmVenta";
             this.lblCorreoClientefrmVenta.TabIndex = 20;
             this.lblCorreoClientefrmVenta.Text = "Correo";
@@ -262,6 +287,7 @@
             //
             this.txtCorreoClientefrmVenta.Location = new System.Drawing.Point(130, 441);
             this.txtCorreoClientefrmVenta.MaxLength = 100;
+            this.txtCorreoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtCorreoClientefrmVenta.Name = "txtCorreoClientefrmVenta";
             this.txtCorreoClientefrmVenta.Size = new System.Drawing.Size(270, 23);
             this.txtCorreoClientefrmVenta.TabIndex = 21;
@@ -270,6 +296,9 @@
             //
             this.btnEmitirFacturafrmVenta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnEmitirFacturafrmVenta.Location = new System.Drawing.Point(130, 478);
+            this.btnEmitirFacturafrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnEmitirFacturafrmVenta.AutoSize = true;
+            this.btnEmitirFacturafrmVenta.MinimumSize = new System.Drawing.Size(270, 34);
             this.btnEmitirFacturafrmVenta.Name = "btnEmitirFacturafrmVenta";
             this.btnEmitirFacturafrmVenta.Size = new System.Drawing.Size(270, 34);
             this.btnEmitirFacturafrmVenta.TabIndex = 22;
@@ -281,6 +310,9 @@
             //
             this.btnNuevaVentafrmVenta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnNuevaVentafrmVenta.Location = new System.Drawing.Point(130, 522);
+            this.btnNuevaVentafrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnNuevaVentafrmVenta.AutoSize = true;
+            this.btnNuevaVentafrmVenta.MinimumSize = new System.Drawing.Size(270, 34);
             this.btnNuevaVentafrmVenta.Name = "btnNuevaVentafrmVenta";
             this.btnNuevaVentafrmVenta.Size = new System.Drawing.Size(270, 34);
             this.btnNuevaVentafrmVenta.TabIndex = 23;
@@ -293,6 +325,7 @@
             this.txtResultadofrmVenta.BackColor = System.Drawing.Color.White;
             this.txtResultadofrmVenta.Location = new System.Drawing.Point(520, 345);
             this.txtResultadofrmVenta.Multiline = true;
+            this.txtResultadofrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtResultadofrmVenta.Name = "txtResultadofrmVenta";
             this.txtResultadofrmVenta.ReadOnly = true;
             this.txtResultadofrmVenta.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -331,6 +364,7 @@
             this.Controls.Add(this.dgvProductosfrmVenta);
             this.Controls.Add(this.lblProductosfrmVenta);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1116, 614);
             this.Name = "frmVenta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmVenta";

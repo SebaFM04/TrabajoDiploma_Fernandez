@@ -37,6 +37,15 @@ namespace BE
             set { costoUnidadCompra = value; }
         }
 
+        // Decisión 65: vencimiento del lote que genera esta línea. No es columna de RECEPCION_DETALLE:
+        // se guarda en LOTE_INSUMO (null = no vence; obligatoria si el insumo es perecedero).
+        private DateTime? fechaVencimiento;
+        public DateTime? FechaVencimiento
+        {
+            get { return fechaVencimiento; }
+            set { fechaVencimiento = value; }
+        }
+
         private INSUMO insumo;
         public INSUMO Insumo
         {

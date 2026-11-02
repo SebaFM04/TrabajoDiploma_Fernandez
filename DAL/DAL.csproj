@@ -42,14 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ACCESO.cs" />
+    <Compile Include="MAPPER_ANALISIS.cs" />
     <Compile Include="MAPPER_BACKUP.cs" />
     <Compile Include="MAPPER_BITACORA.cs" />
     <Compile Include="MAPPER_CONTROLCAMBIO.cs" />
     <Compile Include="MAPPER_DIGITOVERIFICADOR.cs" />
     <Compile Include="MAPPER_IDIOMA.cs" />
     <Compile Include="MAPPER_INSUMO.cs" />
+    <Compile Include="MAPPER_LOTE.cs" />
     <Compile Include="MAPPER_PERMISO.cs" />
     <Compile Include="MAPPER_PRODUCTO.cs" />
+    <Compile Include="MAPPER_PROMOCION.cs" />
     <Compile Include="MAPPER_RECETA.cs" />
     <Compile Include="MAPPER_RESTORE.cs" />
     <Compile Include="MAPPER_TAMANIO.cs" />

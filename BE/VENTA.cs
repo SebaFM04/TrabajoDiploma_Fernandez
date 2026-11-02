@@ -38,6 +38,14 @@ namespace BE
             set { medioPago = value; }
         }
 
+        // Decisión 88: venta generada por el simulador de ventas (sin vale, comanda ni factura)
+        private bool simulada;
+        public bool Simulada
+        {
+            get { return simulada; }
+            set { simulada = value; }
+        }
+
         private List<VENTA_DETALLE> detalles = new List<VENTA_DETALLE>();
         public List<VENTA_DETALLE> Detalles
         {

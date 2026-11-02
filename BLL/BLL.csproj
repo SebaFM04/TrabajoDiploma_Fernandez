@@ -42,14 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ANALISIS_BLL.cs" />
     <Compile Include="BACKUP_BLL.cs" />
     <Compile Include="BITACORA_BLL.cs" />
     <Compile Include="CONTROLCAMBIO_BLL.cs" />
     <Compile Include="DIGITOVERIFICADOR_BLL.cs" />
     <Compile Include="IDIOMA_BLL.cs" />
     <Compile Include="INSUMO_BLL.cs" />
+    <Compile Include="LOTE_BLL.cs" />
     <Compile Include="PERMISO_BLL.cs" />
     <Compile Include="PRODUCTO_BLL.cs" />
+    <Compile Include="PROMOCION_BLL.cs" />
     <Compile Include="RECETA_BLL.cs" />
     <Compile Include="RESTORE_BLL.cs" />
     <Compile Include="USUARIO_BLL.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="PROVEEDOR_BLL.cs" />
     <Compile Include="ORDEN_COMPRA_BLL.cs" />
     <Compile Include="RECEPCION_BLL.cs" />
+    <Compile Include="SIMULADOR_BLL.cs" />
     <Compile Include="RECLAMO_BLL.cs" />
     <Compile Include="PAGO_PROVEEDOR_BLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

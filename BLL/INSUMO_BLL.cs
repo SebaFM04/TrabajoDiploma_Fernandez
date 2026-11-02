@@ -58,22 +58,39 @@ namespace BLL
             return Math.Round(cantidadUnidadesCompra * equivalencia, 3);
         }
 
-        // CU023 Insertar Insumo
-        public void InsertarInsumo(BE.INSUMO insumo)
+        // CU023 Insertar Insumo. Con stock inicial se crea su lote (decisión 65) en la misma transacción;
+        // fechaVencimiento es obligatoria si el insumo es perecedero (decisión 66).
+        public void InsertarInsumo(BE.INSUMO insumo, DateTime? fechaVencimiento)
         {
             ValidarInsumo(insumo);
+            var gestorLote = new LOTE_BLL();
+            if (insumo.VolumenPesoDisponible > 0)
+                gestorLote.ValidarFechaVencimiento(insumo, fechaVencimiento);
             // El aviso de stock bajo lo maneja el sistema: el insumo nace activo y sin aviso
             insumo.AvisoStockBajo = false;
             insumo.Activo = true;
 
+            var acceso = new ACCESO();
+            acceso.IniciarTransaccion();
             try
             {
-                insumo.IdInsumo = GestorInsumo.AltaInsumo(insumo);
+                insumo.IdInsumo = new MAPPER_INSUMO(acceso).AltaInsumo(insumo);
+                if (insumo.VolumenPesoDisponible > 0)
+                    gestorLote.CrearLote(insumo, null, insumo.VolumenPesoDisponible, insumo.CostoUnidadCompra, fechaVencimiento, acceso);
+                acceso.ConfirmarTransaccion();
             }
             catch (SqlException ex) when (ex.Number == ErrorDeNegocioSql)
             {
                 // FA2: el SP detectó un insumo con el mismo nombre (activo o dado de baja)
+                acceso.DeshacerTransaccion();
+                insumo.IdInsumo = 0;
                 throw new ArgumentException("msgInsumoDuplicado", ex);
+            }
+            catch
+            {
+                acceso.DeshacerTransaccion();
+                insumo.IdInsumo = 0;
+                throw;
             }
 
             new BITACORA_BLL().RegistrarEvento(SessionManager.Instancia.UsuarioActual.IdUsuario, "Alta de insumo", $"Se agrego el insumo: {insumo.Nombre}");
@@ -86,7 +103,8 @@ namespace BLL
             if (insumoActual == null || !insumoActual.Activo)
                 throw new ArgumentException("msgInsumoInexistente");
 
-            // La unidad de medida y el stock no se modifican (decisión 37): se conservan los actuales
+            // La unidad de medida y el stock no se modifican (decisión 37): se conservan los actuales.
+            // Perecedero sí se puede cambiar; los lotes que ya existen quedan como están.
             insumo.UnidadMedida = insumoActual.UnidadMedida;
             insumo.VolumenPesoDisponible = insumoActual.VolumenPesoDisponible;
             insumo.AvisoStockBajo = insumoActual.AvisoStockBajo;
@@ -197,10 +215,12 @@ namespace BLL
         }
 
         // CU019 mensajes 29-38: ingresa lo recibido (decisión 61): stock += cantidad × equivalencia y costo promedio ponderado.
-        // Decisión 59: si el insumo queda en o sobre el umbral, sus avisos se resuelven y el flag vuelve a 0.
+        // Decisión 65: cada insumo recibido genera un lote con su vencimiento y su costo.
+        // Decisión 59: si el stock vendible (decisión 68) queda en o sobre el umbral, sus avisos se resuelven y el flag vuelve a 0.
         public void IngresarStock(List<BE.RECEPCION_DETALLE> recibidos, ACCESO acceso)
         {
             var mapper = new MAPPER_INSUMO(acceso);
+            var gestorLote = new LOTE_BLL();
             foreach (var r in recibidos)
             {
                 var insumo = mapper.BuscarInsumo(r.IdInsumo);
@@ -210,23 +230,27 @@ namespace BLL
                 decimal costo = stockEnUnidades + r.CantidadRecibida > 0
                     ? (stockEnUnidades * insumo.CostoUnidadCompra + r.CantidadRecibida * r.CostoUnidadCompra) / (stockEnUnidades + r.CantidadRecibida)
                     : r.CostoUnidadCompra;
-                decimal nuevoStock = insumo.VolumenPesoDisponible + r.CantidadRecibida * insumo.EquivalenciaMagnitud;
+                decimal ingresado = r.CantidadRecibida * insumo.EquivalenciaMagnitud;
+                decimal nuevoStock = insumo.VolumenPesoDisponible + ingresado;
                 mapper.ActualizarVolumenPeso(insumo.IdInsumo, nuevoStock);
                 mapper.ActualizarCosto(insumo.IdInsumo, Math.Round(costo, 2));
-                if (nuevoStock >= insumo.UmbralReposicion)
+                gestorLote.CrearLote(insumo, r.IdRecepcion, ingresado, r.CostoUnidadCompra, r.FechaVencimiento, acceso);
+                // El lote nuevo no está vencido (la fecha es posterior a hoy): suma al stock vendible
+                if (insumo.StockVendible + ingresado >= insumo.UmbralReposicion)
                     mapper.ResolverAvisos(insumo.IdInsumo);
             }
         }
 
-        // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente
+        // Tablero del menú (decisión 56): insumos activos bajo el umbral o con aviso de stock bajo pendiente.
+        // Decisión 68: el umbral se compara contra el stock vendible (sin lotes vencidos).
         public List<BE.INSUMO> ListarStockBajo()
         {
             return GestorInsumo.ListarInsumosActivos()
-                .Where(i => i.VolumenPesoDisponible < i.UmbralReposicion || i.AvisoStockBajo)
+                .Where(i => i.StockVendible < i.UmbralReposicion || i.AvisoStockBajo)
                 .ToList();
         }
 
-        // CU010 mensajes 9-17: hay stock para el consumo requerido. insumoRequerido.Proporcion = cantidad total (decisión 53).
+        // CU010 mensajes 9-17: hay stock vendible (decisión 68) para el consumo requerido. insumoRequerido.Proporcion = cantidad total (decisión 53).
         // Con acceso != null se lee dentro de la transacción de la venta (segunda verificación del paso 5).
         public bool VerificarDisponibilidad(BE.RECETA insumoRequerido, ACCESO acceso = null)
         {
@@ -234,24 +258,42 @@ namespace BLL
             var insumo = mapper.BuscarInsumo(insumoRequerido.IdInsumo);
             if (insumo == null || !insumo.Activo) return false;
             insumoRequerido.Insumo = insumo;
-            return insumo.VolumenPesoDisponible >= insumoRequerido.Proporcion;
+            return insumo.StockVendible >= insumoRequerido.Proporcion;
         }
 
-        // CU010 mensajes 30-35: descuenta el consumo de cada insumo. El stock nunca queda negativo.
-        public void DescontarStock(List<BE.RECETA> consumos, ACCESO acceso)
+        // CU010 mensajes 30-35: descuenta el consumo de cada insumo de sus lotes no vencidos, primero los que vencen antes
+        // (FEFO, decisión 67), y el stock del insumo (decisión 70). El stock nunca queda negativo.
+        // Devuelve, por IdInsumo, el costo por unidad de medida de lo consumido (promedio de los lotes, decisiones 72 y 73).
+        public Dictionary<int, decimal> DescontarStock(List<BE.RECETA> consumos, ACCESO acceso)
         {
             var mapper = new MAPPER_INSUMO(acceso);
+            var mapperLote = new MAPPER_LOTE(acceso);
+            var costos = new Dictionary<int, decimal>();
             foreach (var consumo in consumos)
             {
                 var insumo = mapper.BuscarInsumo(consumo.IdInsumo);
-                if (insumo == null || insumo.VolumenPesoDisponible < consumo.Proporcion)
+                if (insumo == null || insumo.StockVendible < consumo.Proporcion)
+                    throw new ArgumentException("msgVentaStockInsuficiente");
+                decimal resta = consumo.Proporcion;
+                decimal costo = 0;
+                foreach (var lote in mapperLote.ListarLotesVendibles(insumo.IdInsumo))
+                {
+                    if (resta <= 0) break;
+                    decimal tomado = Math.Min(resta, lote.CantidadDisponible);
+                    mapperLote.DescontarLote(lote.IdLote, tomado);
+                    costo += tomado * lote.CostoUnidadMedida;
+                    resta -= tomado;
+                }
+                if (resta > 0)
                     throw new ArgumentException("msgVentaStockInsuficiente");
                 mapper.ActualizarVolumenPeso(insumo.IdInsumo, insumo.VolumenPesoDisponible - consumo.Proporcion);
+                costos[insumo.IdInsumo] = consumo.Proporcion > 0 ? costo / consumo.Proporcion : 0;
             }
+            return costos;
         }
 
-        // CU010 mensajes 18-23, en el paso 5 (decisión 47): después de descontar, los insumos que quedaron
-        // bajo el umbral y no tienen aviso pendiente generan un aviso. Devuelve los insumos avisados.
+        // CU010 mensajes 18-23, en el paso 5 (decisión 47): después de descontar, los insumos cuyo stock vendible
+        // (decisión 68) quedó bajo el umbral y no tienen aviso pendiente generan un aviso. Devuelve los insumos avisados.
         public List<BE.INSUMO> VerificarStockBajoUmbral(List<int> idsInsumo, ACCESO acceso)
         {
             var mapper = new MAPPER_INSUMO(acceso);
@@ -259,7 +301,7 @@ namespace BLL
             foreach (int id in idsInsumo.Distinct())
             {
                 var insumo = mapper.BuscarInsumo(id);
-                if (insumo != null && insumo.VolumenPesoDisponible < insumo.UmbralReposicion && !insumo.AvisoStockBajo)
+                if (insumo != null && insumo.StockVendible < insumo.UmbralReposicion && !insumo.AvisoStockBajo)
                 {
                     GenerarAvisoStockBajo(insumo, mapper);
                     avisados.Add(insumo);
@@ -268,14 +310,14 @@ namespace BLL
             return avisados;
         }
 
-        // Aviso "Pendiente" para el Encargado (lo atiende CU016 en N02)
+        // Aviso "Pendiente" para el Encargado (lo atiende CU016 en N02), con el stock vendible del momento
         private BE.AVISO_STOCK_BAJO GenerarAvisoStockBajo(BE.INSUMO insumo, MAPPER_INSUMO mapper)
         {
             return mapper.GuardarAviso(new BE.AVISO_STOCK_BAJO
             {
                 IdInsumo = insumo.IdInsumo,
                 FechaHora = DateTime.Now,
-                VolumenPesoAlMomento = insumo.VolumenPesoDisponible
+                VolumenPesoAlMomento = insumo.StockVendible
             });
         }
     }

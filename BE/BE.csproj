@@ -41,15 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ANALISIS_ITEM.cs" />
+    <Compile Include="ANALISIS_PUNTO.cs" />
+    <Compile Include="ANALISIS_RENTABILIDAD.cs" />
+    <Compile Include="ANALISIS_SERIE.cs" />
     <Compile Include="BITACORA.cs" />
+    <Compile Include="EVALUACION_ITEM.cs" />
+    <Compile Include="EVALUACION_PROMOCION.cs" />
     <Compile Include="CONTROLCAMBIO.cs" />
     <Compile Include="DIGITOVERIFICADOR.cs" />
     <Compile Include="INSUMO.cs" />
+    <Compile Include="LOTE_INSUMO.cs" />
     <Compile Include="PERMISOATOMICO.cs" />
     <Compile Include="PERMISOCOMPONENT.cs" />
     <Compile Include="PERMISOCOMPOSITE.cs" />
     <Compile Include="PRODUCTO.cs" />
     <Compile Include="PRODUCTO_TAMANIO.cs" />
+    <Compile Include="PROMOCION.cs" />
+    <Compile Include="PROMOCION_DETALLE.cs" />
     <Compile Include="RECETA.cs" />
     <Compile Include="TAMANIO.cs" />
     <Compile Include="USUARIO.cs" />

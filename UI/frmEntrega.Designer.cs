@@ -62,6 +62,8 @@
             //
             this.btnBuscarfrmEntrega.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBuscarfrmEntrega.Location = new System.Drawing.Point(255, 12);
+            this.btnBuscarfrmEntrega.AutoSize = true;
+            this.btnBuscarfrmEntrega.MinimumSize = new System.Drawing.Size(160, 34);
             this.btnBuscarfrmEntrega.Name = "btnBuscarfrmEntrega";
             this.btnBuscarfrmEntrega.Size = new System.Drawing.Size(160, 34);
             this.btnBuscarfrmEntrega.TabIndex = 2;
@@ -83,6 +85,7 @@
             this.dgvBebidasfrmEntrega.AllowUserToDeleteRows = false;
             this.dgvBebidasfrmEntrega.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBebidasfrmEntrega.Location = new System.Drawing.Point(20, 85);
+            this.dgvBebidasfrmEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvBebidasfrmEntrega.Name = "dgvBebidasfrmEntrega";
             this.dgvBebidasfrmEntrega.ReadOnly = true;
             this.dgvBebidasfrmEntrega.RowHeadersVisible = false;
@@ -103,6 +106,7 @@
             this.dgvRecetasfrmEntrega.AllowUserToDeleteRows = false;
             this.dgvRecetasfrmEntrega.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRecetasfrmEntrega.Location = new System.Drawing.Point(400, 85);
+            this.dgvRecetasfrmEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvRecetasfrmEntrega.Name = "dgvRecetasfrmEntrega";
             this.dgvRecetasfrmEntrega.ReadOnly = true;
             this.dgvRecetasfrmEntrega.RowHeadersVisible = false;
@@ -113,6 +117,9 @@
             //
             this.btnConfirmarEntregafrmEntrega.BackColor = System.Drawing.Color.SandyBrown;
             this.btnConfirmarEntregafrmEntrega.Location = new System.Drawing.Point(620, 350);
+            this.btnConfirmarEntregafrmEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnConfirmarEntregafrmEntrega.AutoSize = true;
+            this.btnConfirmarEntregafrmEntrega.MinimumSize = new System.Drawing.Size(220, 40);
             this.btnConfirmarEntregafrmEntrega.Name = "btnConfirmarEntregafrmEntrega";
             this.btnConfirmarEntregafrmEntrega.Size = new System.Drawing.Size(220, 40);
             this.btnConfirmarEntregafrmEntrega.TabIndex = 7;
@@ -124,6 +131,9 @@
             //
             this.btnLimpiarfrmEntrega.BackColor = System.Drawing.Color.SandyBrown;
             this.btnLimpiarfrmEntrega.Location = new System.Drawing.Point(20, 350);
+            this.btnLimpiarfrmEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnLimpiarfrmEntrega.AutoSize = true;
+            this.btnLimpiarfrmEntrega.MinimumSize = new System.Drawing.Size(160, 40);
             this.btnLimpiarfrmEntrega.Name = "btnLimpiarfrmEntrega";
             this.btnLimpiarfrmEntrega.Size = new System.Drawing.Size(160, 40);
             this.btnLimpiarfrmEntrega.TabIndex = 8;
@@ -147,6 +157,7 @@
             this.Controls.Add(this.txtValefrmEntrega);
             this.Controls.Add(this.lblValefrmEntrega);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(876, 449);
             this.Name = "frmEntrega";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmEntrega";

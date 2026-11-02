@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 
 
 namespace DAL
@@ -12,11 +11,28 @@ namespace DAL
         SqlConnection Conexion;
         // Transacción en curso (decisión 27). Si es null, Leer y Escribir funcionan como siempre.
         SqlTransaction Transaccion;
+        // Instancia de SQL Server y base de datos: variables de entorno de Windows que crea el instalador (decisión 93,
+        // reemplaza a conexion.txt). Sin ellas (PC de desarrollo) se usan la instancia local y la base del proyecto.
+        const string VariableServidor = "SISTEMABAR_SERVIDOR";
+        const string VariableBase = "SISTEMABAR_BASE";
         public static string ObtenerCadena()
         {
-            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.txt"); 
-            string instancia = File.Exists(ruta) ? File.ReadAllText(ruta).Trim() : @".";
-            return $"Data Source={instancia};Initial Catalog=TpIngSoftware_2026;Integrated Security=True;TrustServerCertificate=True;";
+            var cadena = new SqlConnectionStringBuilder
+            {
+                DataSource = LeerVariable(VariableServidor) ?? ".",
+                InitialCatalog = LeerVariable(VariableBase) ?? "TpIngSoftware_2026",
+                IntegratedSecurity = true,
+                TrustServerCertificate = true
+            };
+            return cadena.ConnectionString;
+        }
+        // Primero la del proceso; si no está, la de la máquina (un programa abierto desde el instalador todavía no la heredó)
+        static string LeerVariable(string nombre)
+        {
+            string valor = Environment.GetEnvironmentVariable(nombre);
+            if (string.IsNullOrWhiteSpace(valor))
+                valor = Environment.GetEnvironmentVariable(nombre, EnvironmentVariableTarget.Machine);
+            return string.IsNullOrWhiteSpace(valor) ? null : valor.Trim();
         }
         // true mientras hay una transacción en curso (decisión 27)
         public bool EnTransaccion

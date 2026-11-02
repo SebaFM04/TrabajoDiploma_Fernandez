@@ -55,6 +55,13 @@ namespace UI
             consultaComprasToolStripMenuItem.Available = tiene("Consulta Compras");
             pagoProveedorToolStripMenuItem.Available = tiene("Registrar Pagos");
             recepcionToolStripMenuItem.Available = tiene("Registrar Recepcion");
+            lotesVencidosToolStripMenuItem.Available = tiene("Lotes Vencidos");
+
+            // N03: rentabilidad y promociones
+            analisisRentabilidadToolStripMenuItem.Available = tiene("Analisis Rentabilidad");
+            promocionesToolStripMenuItem.Available = tiene("Gestion Promociones");
+            evaluarPromocionesToolStripMenuItem.Available = tiene("Evaluar Promociones");
+            simuladorVentasToolStripMenuItem.Available = tiene("Simulador Ventas");
             aprobacionOrdenToolStripMenuItem.Available = tiene("Aprobar Ordenes Compra");
             ordenCompraToolStripMenuItem.Available = tiene("Gestion Ordenes Compra");
             proveedoresToolStripMenuItem.Available = tiene("Gestion Proveedores");
@@ -98,6 +105,12 @@ namespace UI
             bool verObservadas = usuario.TienePermiso("Gestion Ordenes Compra");
             bool verRecepcion = usuario.TienePermiso("Registrar Recepcion");
             bool verPagos = usuario.TienePermiso("Registrar Pagos");
+            // Lotes con vencimiento (decisiones 68 y 69): Encargado de Stock
+            bool verLotes = usuario.TienePermiso("Lotes Vencidos");
+            lnkLotesPorVencerfrmMenu.Visible = lnkLotesVencidosfrmMenu.Visible = verLotes;
+            // N03: promociones vigentes y para evaluar (Dueño)
+            bool verPromociones = usuario.TienePermiso("Gestion Promociones");
+            lnkPromocionesVigentesfrmMenu.Visible = lnkPromocionesEvaluarfrmMenu.Visible = verPromociones;
             lblOrdenesAprobacionfrmMenu.Visible = verAprobacion;
             lblOrdenesObservadasfrmMenu.Visible = verObservadas;
             lblOrdenesRecibirfrmMenu.Visible = verRecepcion;
@@ -107,12 +120,14 @@ namespace UI
             lblValesSinUsarfrmMenu.Visible = verVales;
             lnkStockBajofrmMenu.Visible = verStock;
             lblTableroTitulofrmMenu.Visible = btnActualizarTablerofrmMenu.Visible = verVentas || verComandas || verVales || verStock
-                || verAprobacion || verObservadas || verRecepcion || verPagos;
+                || verAprobacion || verObservadas || verRecepcion || verPagos || verLotes || verPromociones;
             lblTableroTitulofrmMenu.Text = g.Traducir("lblTableroTitulofrmMenu");
             btnActualizarTablerofrmMenu.Text = g.Traducir("btnActualizarTablerofrmMenu");
 
             try
             {
+                // Decisión 78: los estados de las promociones se actualizan por fecha al abrir el menú
+                new PROMOCION_BLL().ActualizarEstados();
                 if (verVentas)
                 {
                     var ventasHoy = new VENTA_BLL().ListarVentas(DateTime.Today, DateTime.Today);
@@ -139,6 +154,29 @@ namespace UI
                     lblOrdenesRecibirfrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesRecibir"), ordenes.ListarPendientesRecepcion().Count);
                 if (verPagos)
                     lblOrdenesPagofrmMenu.Text = string.Format(g.Traducir("msgTableroOrdenesPago"), ordenes.ListarPorEstado(ORDEN_COMPRA_BLL.EstadoCerrada).Count);
+                if (verLotes)
+                {
+                    var lotes = new LOTE_BLL();
+                    int porVencer = lotes.ListarLotesPorVencer(LOTE_BLL.DiasPorVencerTablero).Count;
+                    int vencidos = lotes.ListarLotesVencidos().Count;
+                    lnkLotesPorVencerfrmMenu.Text = string.Format(g.Traducir("msgTableroLotesPorVencer"), porVencer, LOTE_BLL.DiasPorVencerTablero);
+                    lnkLotesPorVencerfrmMenu.LinkColor = lnkLotesPorVencerfrmMenu.ActiveLinkColor = porVencer > 0 ? System.Drawing.Color.DarkOrange : System.Drawing.Color.DarkGreen;
+                    lnkLotesPorVencerfrmMenu.Enabled = porVencer > 0;
+                    lnkLotesVencidosfrmMenu.Text = string.Format(g.Traducir("msgTableroLotesVencidos"), vencidos);
+                    lnkLotesVencidosfrmMenu.LinkColor = lnkLotesVencidosfrmMenu.ActiveLinkColor = vencidos > 0 ? System.Drawing.Color.Firebrick : System.Drawing.Color.DarkGreen;
+                    lnkLotesVencidosfrmMenu.Enabled = vencidos > 0;
+                }
+                if (verPromociones)
+                {
+                    var promociones = new PROMOCION_BLL();
+                    int vigentes = promociones.ListarPromociones(PROMOCION_BLL.EstadoVigente).Count;
+                    int paraEvaluar = promociones.ListarParaEvaluar().Count;
+                    lnkPromocionesVigentesfrmMenu.Text = string.Format(g.Traducir("msgTableroPromocionesVigentes"), vigentes);
+                    lnkPromocionesVigentesfrmMenu.Enabled = vigentes > 0;
+                    lnkPromocionesEvaluarfrmMenu.Text = string.Format(g.Traducir("msgTableroPromocionesEvaluar"), paraEvaluar);
+                    lnkPromocionesEvaluarfrmMenu.LinkColor = lnkPromocionesEvaluarfrmMenu.ActiveLinkColor = paraEvaluar > 0 ? System.Drawing.Color.DarkOrange : System.Drawing.Color.DarkGreen;
+                    lnkPromocionesEvaluarfrmMenu.Enabled = paraEvaluar > 0;
+                }
             }
             catch (Exception ex)
             {
@@ -160,6 +198,34 @@ namespace UI
         private void lnkStockBajofrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             gestorUI.AbrirForm(new frmStockBajo());
+        }
+
+        // Tablero del Encargado: lotes por vencer (consulta) y vencidos sin dar de baja (CU036)
+        private void lnkLotesPorVencerfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmLote(true));
+        }
+
+        private void lnkLotesVencidosfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmLote(false));
+        }
+
+        // Tablero del Dueño (N03): promociones vigentes y finalizadas sin evaluar (abre CU034)
+        private void lnkPromocionesVigentesfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmPromocion(PROMOCION_BLL.EstadoVigente));
+        }
+
+        private void lnkPromocionesEvaluarfrmMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            gestorUI.AbrirForm(new frmEvaluacionPromocion());
+        }
+
+        // N03 CU034 Evaluar Resultado de Promoción (y CU035 Renovar)
+        private void evaluarPromocionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmEvaluacionPromocion());
         }
         private void formularioUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -236,6 +302,30 @@ namespace UI
             gestorUI.AbrirForm(new frmAprobacionOrden());
         }
 
+        // N03 CU031 Generar Análisis de Rentabilidad
+        private void analisisRentabilidadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmAnalisisRentabilidad());
+        }
+
+        // N03 CU033 Crear Promoción (y listado de promociones)
+        private void promocionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmPromocion());
+        }
+
+        // Simulador de ventas (decisión 88): herramienta de soporte para la demo de N03
+        private void simuladorVentasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmSimuladorVentas());
+        }
+
+        // CU036 Dar de Baja Lote Vencido
+        private void lotesVencidosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gestorUI.AbrirForm(new frmLote());
+        }
+
         // CU019 Registrar Recepción y CU020 Registrar Reclamo
         private void recepcionToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -301,6 +391,8 @@ namespace UI
                 if (ctrl is TextBox || ctrl is MenuStrip || ctrl is ComboBox || ctrl.Name is "lblEmailTag" || ctrl.Name is "lblNombreTag" || ctrl.Name is "lblRolesTag") continue;
                 // Los indicadores del tablero se arman en ActualizarTablero
                 if (ctrl == lblVentasHoyfrmMenu || ctrl == lblComandasPendientesfrmMenu || ctrl == lblValesSinUsarfrmMenu || ctrl == lnkStockBajofrmMenu) continue;
+                if (ctrl == lnkLotesPorVencerfrmMenu || ctrl == lnkLotesVencidosfrmMenu) continue;
+                if (ctrl == lnkPromocionesVigentesfrmMenu || ctrl == lnkPromocionesEvaluarfrmMenu) continue;
                 if (ctrl == lblOrdenesAprobacionfrmMenu || ctrl == lblOrdenesObservadasfrmMenu || ctrl == lblOrdenesRecibirfrmMenu || ctrl == lblOrdenesPagofrmMenu) continue;
                 ctrl.Text = g.Traducir(ctrl.Name);
             }

@@ -99,6 +99,7 @@
             this.txtObservacionesfrmOrdenCompra.BackColor = System.Drawing.Color.White;
             this.txtObservacionesfrmOrdenCompra.Location = new System.Drawing.Point(20, 303);
             this.txtObservacionesfrmOrdenCompra.Multiline = true;
+            this.txtObservacionesfrmOrdenCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.txtObservacionesfrmOrdenCompra.Name = "txtObservacionesfrmOrdenCompra";
             this.txtObservacionesfrmOrdenCompra.ReadOnly = true;
             this.txtObservacionesfrmOrdenCompra.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -120,6 +121,7 @@
             this.dgvAvisosfrmOrdenCompra.AllowUserToDeleteRows = false;
             this.dgvAvisosfrmOrdenCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAvisosfrmOrdenCompra.Location = new System.Drawing.Point(20, 70);
+            this.dgvAvisosfrmOrdenCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvAvisosfrmOrdenCompra.Name = "dgvAvisosfrmOrdenCompra";
             this.dgvAvisosfrmOrdenCompra.ReadOnly = true;
             this.dgvAvisosfrmOrdenCompra.RowHeadersVisible = false;
@@ -138,6 +140,7 @@
             //
             this.cmbProveedorfrmOrdenCompra.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProveedorfrmOrdenCompra.Location = new System.Drawing.Point(560, 42);
+            this.cmbProveedorfrmOrdenCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.cmbProveedorfrmOrdenCompra.Name = "cmbProveedorfrmOrdenCompra";
             this.cmbProveedorfrmOrdenCompra.Size = new System.Drawing.Size(270, 24);
             this.cmbProveedorfrmOrdenCompra.TabIndex = 3;
@@ -147,6 +150,9 @@
             //
             this.btnNuevoProveedorfrmOrdenCompra.BackColor = System.Drawing.Color.SandyBrown;
             this.btnNuevoProveedorfrmOrdenCompra.Location = new System.Drawing.Point(840, 38);
+            this.btnNuevoProveedorfrmOrdenCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.btnNuevoProveedorfrmOrdenCompra.AutoSize = true;
+            this.btnNuevoProveedorfrmOrdenCompra.MinimumSize = new System.Drawing.Size(140, 32);
             this.btnNuevoProveedorfrmOrdenCompra.Name = "btnNuevoProveedorfrmOrdenCompra";
             this.btnNuevoProveedorfrmOrdenCompra.Size = new System.Drawing.Size(140, 32);
             this.btnNuevoProveedorfrmOrdenCompra.TabIndex = 4;
@@ -168,6 +174,7 @@
             this.dgvPedidofrmOrdenCompra.AllowUserToDeleteRows = false;
             this.dgvPedidofrmOrdenCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPedidofrmOrdenCompra.Location = new System.Drawing.Point(460, 105);
+            this.dgvPedidofrmOrdenCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvPedidofrmOrdenCompra.Name = "dgvPedidofrmOrdenCompra";
             this.dgvPedidofrmOrdenCompra.RowHeadersVisible = false;
             this.dgvPedidofrmOrdenCompra.Size = new System.Drawing.Size(520, 345);
@@ -177,6 +184,9 @@
             //
             this.btnLimpiarfrmOrdenCompra.BackColor = System.Drawing.Color.SandyBrown;
             this.btnLimpiarfrmOrdenCompra.Location = new System.Drawing.Point(460, 465);
+            this.btnLimpiarfrmOrdenCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnLimpiarfrmOrdenCompra.AutoSize = true;
+            this.btnLimpiarfrmOrdenCompra.MinimumSize = new System.Drawing.Size(140, 38);
             this.btnLimpiarfrmOrdenCompra.Name = "btnLimpiarfrmOrdenCompra";
             this.btnLimpiarfrmOrdenCompra.Size = new System.Drawing.Size(140, 38);
             this.btnLimpiarfrmOrdenCompra.TabIndex = 7;
@@ -188,6 +198,9 @@
             //
             this.btnConfirmarfrmOrdenCompra.BackColor = System.Drawing.Color.SandyBrown;
             this.btnConfirmarfrmOrdenCompra.Location = new System.Drawing.Point(740, 465);
+            this.btnConfirmarfrmOrdenCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnConfirmarfrmOrdenCompra.AutoSize = true;
+            this.btnConfirmarfrmOrdenCompra.MinimumSize = new System.Drawing.Size(240, 38);
             this.btnConfirmarfrmOrdenCompra.Name = "btnConfirmarfrmOrdenCompra";
             this.btnConfirmarfrmOrdenCompra.Size = new System.Drawing.Size(240, 38);
             this.btnConfirmarfrmOrdenCompra.TabIndex = 8;
@@ -216,6 +229,7 @@
             this.Controls.Add(this.rdbObservadasfrmOrdenCompra);
             this.Controls.Add(this.rdbNuevafrmOrdenCompra);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1016, 559);
             this.Name = "frmOrdenCompra";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmOrdenCompra";

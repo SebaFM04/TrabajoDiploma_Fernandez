@@ -56,19 +56,19 @@
             // 
             this.lblRolesfrmRolyPer.AutoSize = true;
             this.lblRolesfrmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRolesfrmRolyPer.Location = new System.Drawing.Point(12, 11);
+            this.lblRolesfrmRolyPer.Location = new System.Drawing.Point(10, 5);
             this.lblRolesfrmRolyPer.Name = "lblRolesfrmRolyPer";
-            this.lblRolesfrmRolyPer.Size = new System.Drawing.Size(73, 23);
+            this.lblRolesfrmRolyPer.Size = new System.Drawing.Size(58, 18);
             this.lblRolesfrmRolyPer.TabIndex = 0;
             this.lblRolesfrmRolyPer.Text = "Roles: ";
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(16, 36);
+            this.comboBox1.Location = new System.Drawing.Point(13, 29);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(176, 24);
+            this.comboBox1.Size = new System.Drawing.Size(141, 19);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -76,38 +76,40 @@
             // 
             this.lblPermisosfrmRolyPer.AutoSize = true;
             this.lblPermisosfrmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPermisosfrmRolyPer.Location = new System.Drawing.Point(12, 155);
+            this.lblPermisosfrmRolyPer.Location = new System.Drawing.Point(10, 124);
             this.lblPermisosfrmRolyPer.Name = "lblPermisosfrmRolyPer";
-            this.lblPermisosfrmRolyPer.Size = new System.Drawing.Size(100, 23);
+            this.lblPermisosfrmRolyPer.Size = new System.Drawing.Size(80, 18);
             this.lblPermisosfrmRolyPer.TabIndex = 2;
             this.lblPermisosfrmRolyPer.Text = "Permisos:";
             // 
             // tVfrmRolyPer
             // 
-            this.tVfrmRolyPer.Location = new System.Drawing.Point(15, 190);
+            this.tVfrmRolyPer.Location = new System.Drawing.Point(12, 152);
             this.tVfrmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tVfrmRolyPer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.tVfrmRolyPer.Name = "tVfrmRolyPer";
-            this.tVfrmRolyPer.Size = new System.Drawing.Size(257, 320);
+            this.tVfrmRolyPer.Size = new System.Drawing.Size(206, 256);
             this.tVfrmRolyPer.TabIndex = 3;
             this.tVfrmRolyPer.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tVfrmRolyPer_AfterSelect);
             // 
             // lstfrmRolyPer
             // 
             this.lstfrmRolyPer.FormattingEnabled = true;
-            this.lstfrmRolyPer.ItemHeight = 16;
-            this.lstfrmRolyPer.Location = new System.Drawing.Point(437, 186);
+            this.lstfrmRolyPer.ItemHeight = 13;
+            this.lstfrmRolyPer.Location = new System.Drawing.Point(350, 149);
             this.lstfrmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lstfrmRolyPer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.lstfrmRolyPer.Name = "lstfrmRolyPer";
-            this.lstfrmRolyPer.Size = new System.Drawing.Size(311, 324);
+            this.lstfrmRolyPer.Size = new System.Drawing.Size(249, 259);
             this.lstfrmRolyPer.TabIndex = 4;
             // 
             // lblfrmRolyPer
             // 
             this.lblfrmRolyPer.AutoSize = true;
             this.lblfrmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblfrmRolyPer.Location = new System.Drawing.Point(433, 155);
+            this.lblfrmRolyPer.Location = new System.Drawing.Point(346, 124);
             this.lblfrmRolyPer.Name = "lblfrmRolyPer";
-            this.lblfrmRolyPer.Size = new System.Drawing.Size(214, 23);
+            this.lblfrmRolyPer.Size = new System.Drawing.Size(171, 18);
             this.lblfrmRolyPer.TabIndex = 5;
             this.lblfrmRolyPer.Text = "Permisos Disponibles: ";
             // 
@@ -115,10 +117,10 @@
             // 
             this.btn1frmRolyPer.BackColor = System.Drawing.Color.SandyBrown;
             this.btn1frmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn1frmRolyPer.Location = new System.Drawing.Point(777, 197);
+            this.btn1frmRolyPer.Location = new System.Drawing.Point(622, 158);
             this.btn1frmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn1frmRolyPer.Name = "btn1frmRolyPer";
-            this.btn1frmRolyPer.Size = new System.Drawing.Size(104, 48);
+            this.btn1frmRolyPer.Size = new System.Drawing.Size(83, 38);
             this.btn1frmRolyPer.TabIndex = 6;
             this.btn1frmRolyPer.Text = "Agregar";
             this.btn1frmRolyPer.UseVisualStyleBackColor = false;
@@ -128,10 +130,10 @@
             // 
             this.btn2frmRolyPer.BackColor = System.Drawing.Color.SandyBrown;
             this.btn2frmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn2frmRolyPer.Location = new System.Drawing.Point(777, 251);
+            this.btn2frmRolyPer.Location = new System.Drawing.Point(622, 201);
             this.btn2frmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn2frmRolyPer.Name = "btn2frmRolyPer";
-            this.btn2frmRolyPer.Size = new System.Drawing.Size(104, 48);
+            this.btn2frmRolyPer.Size = new System.Drawing.Size(83, 38);
             this.btn2frmRolyPer.TabIndex = 7;
             this.btn2frmRolyPer.Text = "Modificar";
             this.btn2frmRolyPer.UseVisualStyleBackColor = false;
@@ -141,10 +143,10 @@
             // 
             this.btn3frmRolyPer.BackColor = System.Drawing.Color.SandyBrown;
             this.btn3frmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn3frmRolyPer.Location = new System.Drawing.Point(777, 306);
+            this.btn3frmRolyPer.Location = new System.Drawing.Point(622, 245);
             this.btn3frmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn3frmRolyPer.Name = "btn3frmRolyPer";
-            this.btn3frmRolyPer.Size = new System.Drawing.Size(104, 48);
+            this.btn3frmRolyPer.Size = new System.Drawing.Size(83, 38);
             this.btn3frmRolyPer.TabIndex = 8;
             this.btn3frmRolyPer.Text = "Eliminar";
             this.btn3frmRolyPer.UseVisualStyleBackColor = false;
@@ -154,10 +156,10 @@
             // 
             this.btn4frmRolyPer.BackColor = System.Drawing.Color.SandyBrown;
             this.btn4frmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn4frmRolyPer.Location = new System.Drawing.Point(777, 377);
+            this.btn4frmRolyPer.Location = new System.Drawing.Point(622, 302);
             this.btn4frmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn4frmRolyPer.Name = "btn4frmRolyPer";
-            this.btn4frmRolyPer.Size = new System.Drawing.Size(104, 62);
+            this.btn4frmRolyPer.Size = new System.Drawing.Size(83, 50);
             this.btn4frmRolyPer.TabIndex = 9;
             this.btn4frmRolyPer.Text = "Agregar Hijo";
             this.btn4frmRolyPer.UseVisualStyleBackColor = false;
@@ -167,10 +169,10 @@
             // 
             this.btn5frmRolyPer.BackColor = System.Drawing.Color.SandyBrown;
             this.btn5frmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn5frmRolyPer.Location = new System.Drawing.Point(777, 446);
+            this.btn5frmRolyPer.Location = new System.Drawing.Point(622, 357);
             this.btn5frmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn5frmRolyPer.Name = "btn5frmRolyPer";
-            this.btn5frmRolyPer.Size = new System.Drawing.Size(104, 60);
+            this.btn5frmRolyPer.Size = new System.Drawing.Size(83, 48);
             this.btn5frmRolyPer.TabIndex = 10;
             this.btn5frmRolyPer.Text = "Quitar Hijo";
             this.btn5frmRolyPer.UseVisualStyleBackColor = false;
@@ -180,29 +182,29 @@
             // 
             this.lblfrmRolyPerNombrePer.AutoSize = true;
             this.lblfrmRolyPerNombrePer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblfrmRolyPerNombrePer.Location = new System.Drawing.Point(11, 86);
+            this.lblfrmRolyPerNombrePer.Location = new System.Drawing.Point(9, 65);
             this.lblfrmRolyPerNombrePer.Name = "lblfrmRolyPerNombrePer";
-            this.lblfrmRolyPerNombrePer.Size = new System.Drawing.Size(90, 23);
+            this.lblfrmRolyPerNombrePer.Size = new System.Drawing.Size(72, 18);
             this.lblfrmRolyPerNombrePer.TabIndex = 11;
             this.lblfrmRolyPerNombrePer.Text = "Nombre:";
             // 
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(115, 110);
+            this.textBox1.Location = new System.Drawing.Point(92, 88);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(297, 28);
+            this.textBox1.Size = new System.Drawing.Size(238, 22);
             this.textBox1.TabIndex = 12;
             // 
             // ChBxfrmRolyPer
             // 
             this.ChBxfrmRolyPer.AutoSize = true;
             this.ChBxfrmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChBxfrmRolyPer.Location = new System.Drawing.Point(437, 82);
+            this.ChBxfrmRolyPer.Location = new System.Drawing.Point(350, 66);
             this.ChBxfrmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ChBxfrmRolyPer.Name = "ChBxfrmRolyPer";
-            this.ChBxfrmRolyPer.Size = new System.Drawing.Size(123, 27);
+            this.ChBxfrmRolyPer.Size = new System.Drawing.Size(98, 22);
             this.ChBxfrmRolyPer.TabIndex = 13;
             this.ChBxfrmRolyPer.Text = "Es Familia";
             this.ChBxfrmRolyPer.UseVisualStyleBackColor = true;
@@ -211,19 +213,19 @@
             // 
             this.lblUsuariofrmRolyPer.AutoSize = true;
             this.lblUsuariofrmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuariofrmRolyPer.Location = new System.Drawing.Point(683, 10);
+            this.lblUsuariofrmRolyPer.Location = new System.Drawing.Point(546, 8);
             this.lblUsuariofrmRolyPer.Name = "lblUsuariofrmRolyPer";
-            this.lblUsuariofrmRolyPer.Size = new System.Drawing.Size(92, 23);
+            this.lblUsuariofrmRolyPer.Size = new System.Drawing.Size(74, 18);
             this.lblUsuariofrmRolyPer.TabIndex = 14;
             this.lblUsuariofrmRolyPer.Text = "Usuario: ";
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(688, 36);
+            this.comboBox2.Location = new System.Drawing.Point(550, 29);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(193, 24);
+            this.comboBox2.Size = new System.Drawing.Size(154, 19);
             this.comboBox2.TabIndex = 15;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -231,29 +233,29 @@
             // 
             this.lblRolAsigfrmRolyPer.AutoSize = true;
             this.lblRolAsigfrmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRolAsigfrmRolyPer.Location = new System.Drawing.Point(916, 11);
+            this.lblRolAsigfrmRolyPer.Location = new System.Drawing.Point(733, 5);
             this.lblRolAsigfrmRolyPer.Name = "lblRolAsigfrmRolyPer";
-            this.lblRolAsigfrmRolyPer.Size = new System.Drawing.Size(142, 23);
+            this.lblRolAsigfrmRolyPer.Size = new System.Drawing.Size(114, 18);
             this.lblRolAsigfrmRolyPer.TabIndex = 16;
             this.lblRolAsigfrmRolyPer.Text = "Rol a asignar: ";
             // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(920, 36);
+            this.comboBox3.Location = new System.Drawing.Point(736, 29);
             this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(193, 24);
+            this.comboBox3.Size = new System.Drawing.Size(154, 19);
             this.comboBox3.TabIndex = 17;
             // 
             // btn6frmRolyPer
             // 
             this.btn6frmRolyPer.BackColor = System.Drawing.Color.SandyBrown;
             this.btn6frmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn6frmRolyPer.Location = new System.Drawing.Point(985, 66);
+            this.btn6frmRolyPer.Location = new System.Drawing.Point(788, 53);
             this.btn6frmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn6frmRolyPer.Name = "btn6frmRolyPer";
-            this.btn6frmRolyPer.Size = new System.Drawing.Size(194, 37);
+            this.btn6frmRolyPer.Size = new System.Drawing.Size(155, 30);
             this.btn6frmRolyPer.TabIndex = 18;
             this.btn6frmRolyPer.Text = "Asignar Rol";
             this.btn6frmRolyPer.UseVisualStyleBackColor = false;
@@ -261,19 +263,20 @@
             // 
             // tVPermisosUsuario
             // 
-            this.tVPermisosUsuario.Location = new System.Drawing.Point(901, 190);
+            this.tVPermisosUsuario.Location = new System.Drawing.Point(721, 152);
             this.tVPermisosUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tVPermisosUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.tVPermisosUsuario.Name = "tVPermisosUsuario";
-            this.tVPermisosUsuario.Size = new System.Drawing.Size(257, 320);
+            this.tVPermisosUsuario.Size = new System.Drawing.Size(206, 256);
             this.tVPermisosUsuario.TabIndex = 19;
             // 
             // lblRolesxUsuario
             // 
             this.lblRolesxUsuario.AutoSize = true;
             this.lblRolesxUsuario.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRolesxUsuario.Location = new System.Drawing.Point(901, 160);
+            this.lblRolesxUsuario.Location = new System.Drawing.Point(721, 128);
             this.lblRolesxUsuario.Name = "lblRolesxUsuario";
-            this.lblRolesxUsuario.Size = new System.Drawing.Size(174, 23);
+            this.lblRolesxUsuario.Size = new System.Drawing.Size(139, 18);
             this.lblRolesxUsuario.TabIndex = 20;
             this.lblRolesxUsuario.Text = "Roles del Usuario:";
             // 
@@ -281,10 +284,10 @@
             // 
             this.btn7frmRolyPer.BackColor = System.Drawing.Color.SandyBrown;
             this.btn7frmRolyPer.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn7frmRolyPer.Location = new System.Drawing.Point(985, 120);
+            this.btn7frmRolyPer.Location = new System.Drawing.Point(788, 96);
             this.btn7frmRolyPer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn7frmRolyPer.Name = "btn7frmRolyPer";
-            this.btn7frmRolyPer.Size = new System.Drawing.Size(194, 38);
+            this.btn7frmRolyPer.Size = new System.Drawing.Size(155, 30);
             this.btn7frmRolyPer.TabIndex = 21;
             this.btn7frmRolyPer.Text = "Desasignar Rol";
             this.btn7frmRolyPer.UseVisualStyleBackColor = false;
@@ -292,10 +295,10 @@
             // 
             // frmRolesyPermisos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1191, 522);
+            this.ClientSize = new System.Drawing.Size(953, 418);
             this.Controls.Add(this.btn7frmRolyPer);
             this.Controls.Add(this.lblRolesxUsuario);
             this.Controls.Add(this.tVPermisosUsuario);
@@ -319,6 +322,7 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lblRolesfrmRolyPer);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinimumSize = new System.Drawing.Size(969, 457);
             this.Name = "frmRolesyPermisos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRolesyPermisos";

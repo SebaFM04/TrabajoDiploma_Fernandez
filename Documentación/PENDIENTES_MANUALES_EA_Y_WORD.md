@@ -3,13 +3,13 @@
 Lo que el conector de Enterprise Architect no puede hacer (borrar y dibujar fragmentos) y lo que falta en el Word. Antes de empezar: cerrá y volvé a abrir el proyecto .EAP para que se refresquen los mensajes y diagramas.
 
 ## 1. Enterprise Architect: borrar
-- VENTA_BLL: borrar operación ZZ_SINUSO_BORRAR_VerificarStockBajoUmbral (op 334)
-- VENTA_BLL.VerificarDisponibilidadInsumos: borrar parámetro ZZ_BORRAR_detalles
-- VENTA_BLL.CalcularMontoTotal: borrar parámetro ZZ_BORRAR_detalles
-- VENTA_BLL.RegistrarVenta: borrar parámetros ZZ_BORRAR_medioPago y ZZ_BORRAR_monto
-- INSUMO_BLL.IngresarStock: borrar parámetro ZZ_BORRAR_costoUnidadCompra
-- RECEPCION_BLL.ValidarRecepcion: borrar parámetro ZZ_BORRAR_orden
-- PAGO_PROVEEDOR_BLL.ValidarPago: borrar parámetro ZZ_BORRAR_total
+- VENTA_BLL: borrar operación ZZ_SINUSO_BORRAR_VerificarStockBajoUmbral (op 334) **Hecho el 27/10 (script con la API de EA).**
+- VENTA_BLL.VerificarDisponibilidadInsumos: borrar parámetro ZZ_BORRAR_detalles **Hecho el 27/10 (script con la API de EA).**
+- VENTA_BLL.CalcularMontoTotal: borrar parámetro ZZ_BORRAR_detalles **Hecho el 27/10 (script con la API de EA).**
+- VENTA_BLL.RegistrarVenta: borrar parámetros ZZ_BORRAR_medioPago y ZZ_BORRAR_monto **Hecho el 27/10 (script con la API de EA).**
+- INSUMO_BLL.IngresarStock: borrar parámetro ZZ_BORRAR_costoUnidadCompra **Hecho el 27/10 (script con la API de EA).**
+- RECEPCION_BLL.ValidarRecepcion: borrar parámetro ZZ_BORRAR_orden **Hecho el 27/10 (script con la API de EA).**
+- PAGO_PROVEEDOR_BLL.ValidarPago: borrar parámetro ZZ_BORRAR_total **Hecho el 27/10 (script con la API de EA).**
 - Paquete "Capas" (T00): borrar la clase ZZ_BORRAR_FormatoMoneda (quedó con estereotipo Java::static; la buena es FormatoMoneda)
 
 ## Diagramas General (rehechos)
@@ -17,7 +17,7 @@ Lo que el conector de Enterprise Architect no puede hacer (borrar y dibujar frag
 - Borrar los diagramas OLD_N01 - General (78) y OLD_N02 - General (114).
 - Borrar las clases ZZ_BORRAR_ de los paquetes DiagramaClases de N01 (566-575, 632) y Clases de N02 (708-716). Solo las usaban los diagramas OLD_.
 
-- Diagramas de secuencia viejos renombrados con OLD_ (95-100, 45, 47 y 115-120): borrarlos cuando revises los nuevos.
+- Diagramas de secuencia viejos renombrados con OLD_ (95-100, 45, 47 y 115-120): borrarlos cuando revises los nuevos. **Hecho:** al 27/10 solo quedaban el 45 y el 47 (el resto ya lo había borrado el alumno), que se borraron con la API de EA junto con sus mensajes y fragmentos. También estaban ya borrados los OLD_ General, las clases ZZ_BORRAR_ y ZZ_BORRAR_FormatoMoneda.
 
 ## 2. Enterprise Architect: fragmentos de los DSS nuevos
 

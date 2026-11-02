@@ -51,6 +51,22 @@ namespace BE
             set { montoLinea = value; }
         }
 
+        // Decisión 72: costo real de los lotes consumidos (FEFO) al vender
+        private decimal costoLinea;
+        public decimal CostoLinea
+        {
+            get { return costoLinea; }
+            set { costoLinea = value; }
+        }
+
+        // Decisión 80: promoción aplicada a la línea (null = precio de lista)
+        private int? idPromocion;
+        public int? IdPromocion
+        {
+            get { return idPromocion; }
+            set { idPromocion = value; }
+        }
+
         // Producto, tamaño y precio de la línea (para calcular, mostrar y escalar la receta)
         private PRODUCTO_TAMANIO productoTamanio;
         public PRODUCTO_TAMANIO ProductoTamanio

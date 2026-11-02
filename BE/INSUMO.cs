@@ -98,6 +98,31 @@ namespace BE
             set { usoComidas = value; }
         }
 
+        // Decisión 66: perecedero = la fecha de vencimiento de sus lotes es obligatoria
+        private bool perecedero;
+        public bool Perecedero
+        {
+            get { return perecedero; }
+            set { perecedero = value; }
+        }
+
+        // Decisión 68 (calculado, no es columna): lotes Disponible sin fecha o no vencidos.
+        // VolumenPesoDisponible es el stock físico (incluye los vencidos hasta que se dan de baja).
+        private decimal stockVendible;
+        public decimal StockVendible
+        {
+            get { return stockVendible; }
+            set { stockVendible = value; }
+        }
+
+        // Calculado: fecha de vencimiento más cercana entre los lotes Disponible (null = ninguno vence)
+        private DateTime? proximoVencimiento;
+        public DateTime? ProximoVencimiento
+        {
+            get { return proximoVencimiento; }
+            set { proximoVencimiento = value; }
+        }
+
         public override string ToString()
         {
             return Nombre;

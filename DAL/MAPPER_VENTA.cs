@@ -48,7 +48,9 @@ namespace DAL
                         acceso.CrearParametro("@IdProducto", detalle.IdProducto),
                         acceso.CrearParametro("@IdTamanio", detalle.IdTamanio),
                         acceso.CrearParametro("@Cantidad", detalle.Cantidad),
-                        acceso.CrearParametro("@MontoLinea", detalle.MontoLinea)
+                        acceso.CrearParametro("@MontoLinea", detalle.MontoLinea),
+                        acceso.CrearParametro("@CostoLinea", detalle.CostoLinea),
+                        new SqlParameter("@IdPromocion", SqlDbType.Int) { Value = (object)detalle.IdPromocion ?? DBNull.Value }
                     };
                     DataTable tDetalle = acceso.Leer("GuardarVentaDetalle", pDetalle);
                     detalle.IdVentaDetalle = Convert.ToInt32(tDetalle.Rows[0]["IdVentaDetalle"]);
@@ -59,6 +61,82 @@ namespace DAL
             {
                 acceso.Cerrar();
             }
+        }
+
+        // Simulador de ventas (decisión 88): guarda un bloque de ventas simuladas con sus líneas en un solo llamado
+        // (parámetros de tabla dbo.VentaSimuladaTipo y dbo.VentaDetalleSimuladoTipo). Devuelve las ventas insertadas.
+        public int GuardarVentasSimuladas(List<BE.VENTA> ventas)
+        {
+            var tVentas = new DataTable();
+            tVentas.Columns.Add("Numero", typeof(int));
+            tVentas.Columns.Add("Fecha", typeof(DateTime));
+            tVentas.Columns.Add("Monto", typeof(decimal));
+            tVentas.Columns.Add("MedioPago", typeof(string));
+            var tDetalles = new DataTable();
+            tDetalles.Columns.Add("Numero", typeof(int));
+            tDetalles.Columns.Add("IdProducto", typeof(int));
+            tDetalles.Columns.Add("IdTamanio", typeof(int));
+            tDetalles.Columns.Add("Cantidad", typeof(int));
+            tDetalles.Columns.Add("MontoLinea", typeof(decimal));
+            tDetalles.Columns.Add("CostoLinea", typeof(decimal));
+            tDetalles.Columns.Add("IdPromocion", typeof(int));
+            int numero = 0;
+            foreach (var venta in ventas)
+            {
+                numero++;
+                tVentas.Rows.Add(numero, venta.Fecha, venta.Monto, venta.MedioPago);
+                foreach (var d in venta.Detalles)
+                    tDetalles.Rows.Add(numero, d.IdProducto, d.IdTamanio, d.Cantidad, d.MontoLinea, d.CostoLinea, (object)d.IdPromocion ?? DBNull.Value);
+            }
+
+            acceso.Abrir();
+            try
+            {
+                DataTable tabla = acceso.Leer("GuardarVentasSimuladas", new List<SqlParameter>
+                {
+                    new SqlParameter("@Ventas", SqlDbType.Structured) { TypeName = "dbo.VentaSimuladaTipo", Value = tVentas },
+                    new SqlParameter("@Detalles", SqlDbType.Structured) { TypeName = "dbo.VentaDetalleSimuladoTipo", Value = tDetalles }
+                });
+                return Convert.ToInt32(tabla.Rows[0]["Ventas"]);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        // Decisión 89: borra físicamente las ventas simuladas. Devuelve cuántas borró.
+        public int BorrarVentasSimuladas()
+        {
+            acceso.Abrir();
+            try
+            {
+                DataTable tabla = acceso.Leer("BorrarVentasSimuladas");
+                return Convert.ToInt32(tabla.Rows[0]["Ventas"]);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
+
+        // Cantidad de ventas simuladas y su rango de fechas (null si no hay)
+        public int ContarVentasSimuladas(out DateTime? desde, out DateTime? hasta)
+        {
+            acceso.Abrir();
+            DataTable tabla;
+            try
+            {
+                tabla = acceso.Leer("ContarVentasSimuladas");
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            var u = tabla.Rows[0];
+            desde = u["Desde"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(u["Desde"]);
+            hasta = u["Hasta"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(u["Hasta"]);
+            return Convert.ToInt32(u["Ventas"]);
         }
 
         // Consulta de ventas (decisión 56): ventas del período [desde, hasta) con vale, factura y comanda
@@ -88,7 +166,8 @@ namespace DAL
                     IdVenta = Convert.ToInt32(u["IdVenta"]),
                     Fecha = Convert.ToDateTime(u["Fecha"]),
                     Monto = Convert.ToDecimal(u["Monto"]),
-                    MedioPago = u["MedioPago"].ToString()
+                    MedioPago = u["MedioPago"].ToString(),
+                    Simulada = Convert.ToBoolean(u["Simulada"])
                 };
                 if (u["IdVale"] != DBNull.Value)
                     venta.Vale = new BE.VALE { IdVale = Convert.ToInt32(u["IdVale"]), IdVenta = venta.IdVenta, MontoCertificado = venta.Monto, Utilizado = Convert.ToBoolean(u["Utilizado"]) };
@@ -142,6 +221,8 @@ namespace DAL
                     IdTamanio = Convert.ToInt32(u["IdTamaño"]),
                     Cantidad = cantidad,
                     MontoLinea = montoLinea,
+                    CostoLinea = Convert.ToDecimal(u["CostoLinea"]),
+                    IdPromocion = u["IdPromocion"] == DBNull.Value ? (int?)null : Convert.ToInt32(u["IdPromocion"]),
                     ProductoTamanio = new BE.PRODUCTO_TAMANIO
                     {
                         IdProducto = Convert.ToInt32(u["IdProducto"]),

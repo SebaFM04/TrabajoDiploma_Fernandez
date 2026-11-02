@@ -13,6 +13,7 @@ namespace BLL
         ORDEN_COMPRA_BLL GestorOrden = new ORDEN_COMPRA_BLL();
         INSUMO_BLL GestorInsumo = new INSUMO_BLL();
         RECLAMO_BLL GestorReclamo = new RECLAMO_BLL();
+        LOTE_BLL GestorLote = new LOTE_BLL();
 
         // CU019 paso 6 / FA2 (mensajes 20-23). Las líneas con cantidad 0 no se registran.
         public bool ValidarRecepcion(BE.RECEPCION recepcion)
@@ -37,11 +38,13 @@ namespace BLL
                     throw new ArgumentException("msgRecepcionCantidadInvalida");
                 if (d.CostoUnidadCompra <= 0)
                     throw new ArgumentException("msgRecepcionCostoInvalido");
+                // FA4 (decisión 66): fecha de vencimiento faltante (perecedero) o no posterior a hoy
+                GestorLote.ValidarFechaVencimiento(new MAPPER_INSUMO().BuscarInsumo(d.IdInsumo), d.FechaVencimiento);
             }
             return true;
         }
 
-        // CU019 pasos 5 y 6 (mensajes 24-58), en una sola transacción: recepción, stock y costo, avisos (decisión 59),
+        // CU019 pasos 5 y 6 (mensajes 24-58), en una sola transacción: recepción, stock, costo y lotes (decisión 65), avisos (decisión 59),
         // cantidades y estado de la orden y, si se cerró, resolución de reclamos (decisión 60).
         // Devuelve el estado resultante: "Cerrada" o "Recibida parcialmente" (FA3: se abre CU020).
         public string RegistrarRecepcion(BE.RECEPCION recepcion)

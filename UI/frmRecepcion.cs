@@ -24,6 +24,8 @@ namespace UI
         bool cargando = false;
         // CU020: recepción parcial que espera su reclamo
         BE.RECEPCION recepcionParcial = null;
+        // Clave del mensaje cuando LeerRecepcion no puede leer un dato de la grilla
+        string errorLectura = null;
 
         public frmRecepcion()
         {
@@ -46,10 +48,11 @@ namespace UI
             AjusteGrilla.Configurar(dgvOrdenesfrmRecepcion);
 
             dgvInsumosfrmRecepcion.Columns.Clear();
-            foreach (string col in new[] { "colInsumofrmRecepcion", "colUnidadComprafrmRecepcion", "colPedidafrmRecepcion", "colPendientefrmRecepcion", "colRecibidafrmRecepcion", "colCostofrmRecepcion" })
+            // Decisión 65: vencimiento del lote de cada insumo recibido (dd/mm/aaaa; vacío = no vence)
+            foreach (string col in new[] { "colInsumofrmRecepcion", "colUnidadComprafrmRecepcion", "colPedidafrmRecepcion", "colPendientefrmRecepcion", "colRecibidafrmRecepcion", "colCostofrmRecepcion", "colVencimientofrmRecepcion" })
                 dgvInsumosfrmRecepcion.Columns.Add(col, g.Traducir(col));
             foreach (DataGridViewColumn col in dgvInsumosfrmRecepcion.Columns)
-                col.ReadOnly = col.Name != "colRecibidafrmRecepcion" && col.Name != "colCostofrmRecepcion";
+                col.ReadOnly = col.Name != "colRecibidafrmRecepcion" && col.Name != "colCostofrmRecepcion" && col.Name != "colVencimientofrmRecepcion";
             AjusteGrilla.Configurar(dgvInsumosfrmRecepcion);
 
             // CU020: motivo con valores de la base y texto traducido
@@ -127,7 +130,7 @@ namespace UI
                 foreach (var d in orden.Detalles)
                 {
                     int fila = dgvInsumosfrmRecepcion.Rows.Add(d.Insumo.Nombre, d.Insumo.UnidadCompra, d.CantidadPedida, d.CantidadPendiente,
-                        d.CantidadPendiente.ToString(), FormatoMoneda.Numero(d.Insumo.CostoUnidadCompra));
+                        d.CantidadPendiente.ToString(), FormatoMoneda.Numero(d.Insumo.CostoUnidadCompra), string.Empty);
                     dgvInsumosfrmRecepcion.Rows[fila].Tag = d;
                     if (d.CantidadPendiente == 0)
                         dgvInsumosfrmRecepcion.Rows[fila].ReadOnly = true;
@@ -139,10 +142,12 @@ namespace UI
             }
         }
 
-        // Recepción con lo cargado en la grilla. Devuelve null si un número no es válido (FA2).
+        // Recepción con lo cargado en la grilla. Devuelve null si un número (FA2) o una fecha (FA4) no es válido;
+        // la clave del mensaje queda en errorLectura.
         private BE.RECEPCION LeerRecepcion(BE.ORDEN_COMPRA orden)
         {
             dgvInsumosfrmRecepcion.EndEdit();
+            errorLectura = "msgRecepcionCantidadInvalida";
             var recepcion = new BE.RECEPCION
             {
                 IdOrdenCompra = orden.IdOrdenCompra,
@@ -159,7 +164,18 @@ namespace UI
                 if (cantidad == 0) continue;
                 if (!FormatoMoneda.TryLeer(fila.Cells["colCostofrmRecepcion"].Value?.ToString(), out decimal costo))
                     return null;
-                recepcion.Detalles.Add(new BE.RECEPCION_DETALLE { IdInsumo = linea.IdInsumo, CantidadRecibida = cantidad, CostoUnidadCompra = costo, Insumo = linea.Insumo });
+                DateTime? vencimiento = null;
+                string textoFecha = fila.Cells["colVencimientofrmRecepcion"].Value?.ToString();
+                if (!string.IsNullOrWhiteSpace(textoFecha))
+                {
+                    if (!DateTime.TryParseExact(textoFecha.Trim(), new[] { "d/M/yyyy", "dd/MM/yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fecha))
+                    {
+                        errorLectura = "msgLoteFechaFormato";
+                        return null;
+                    }
+                    vencimiento = fecha;
+                }
+                recepcion.Detalles.Add(new BE.RECEPCION_DETALLE { IdInsumo = linea.IdInsumo, CantidadRecibida = cantidad, CostoUnidadCompra = costo, FechaVencimiento = vencimiento, Insumo = linea.Insumo });
             }
             return recepcion;
         }
@@ -173,7 +189,7 @@ namespace UI
             var recepcion = LeerRecepcion(orden);
             if (recepcion == null)
             {
-                Avisar("msgRecepcionCantidadInvalida");
+                Avisar(errorLectura);
                 return;
             }
             try

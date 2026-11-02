@@ -38,6 +38,9 @@ namespace UI
         {
             cmbMedioPagofrmVenta.Items.Clear();
             cmbMedioPagofrmVenta.Items.AddRange(GestorVenta.ListarMediosPago());
+            // Decisión 78: estados de las promociones por fecha antes de listar los precios
+            try { new PROMOCION_BLL().ActualizarEstados(); }
+            catch (Exception) { /* informativo: la venta sigue; el precio promocional se busca por fecha (Fase 5) */ }
             CargarProductos();
             NuevaVenta();
         }
@@ -49,6 +52,8 @@ namespace UI
             dgvProductosfrmVenta.Columns.Add("colProductofrmVenta", g.Traducir("colProductofrmVenta"));
             dgvProductosfrmVenta.Columns.Add("colTamaniofrmVenta", g.Traducir("colTamaniofrmVenta"));
             dgvProductosfrmVenta.Columns.Add("colPreciofrmVenta", g.Traducir("colPreciofrmVenta"));
+            // Decisión 80: indica la promoción vigente y el precio de lista
+            dgvProductosfrmVenta.Columns.Add("colPromofrmVenta", g.Traducir("colPromofrmVenta"));
             AjusteGrilla.Configurar(dgvProductosfrmVenta);
 
             dgvPedidofrmVenta.Columns.Clear();
@@ -66,11 +71,15 @@ namespace UI
             dgvProductosfrmVenta.Rows.Clear();
             try
             {
-                var lista = GestorVenta.ListarProductosParaVenta();
+                // Decisión 80: precio que se cobra hoy (el promocional si hay una promoción vigente)
+                var lista = GestorVenta.ListarPreciosVenta();
                 foreach (var pt in lista)
                 {
-                    int fila = dgvProductosfrmVenta.Rows.Add(pt.Producto.Nombre, pt.Tamanio.Nombre, FormatoMoneda.Pesos(pt.Precio));
+                    int fila = dgvProductosfrmVenta.Rows.Add(pt.Producto.Nombre, pt.Tamanio.Nombre, FormatoMoneda.Pesos(pt.Precio),
+                        pt.IdPromocion.HasValue ? string.Format(g.Traducir("msgVentaPromoAntes"), FormatoMoneda.Pesos(pt.PrecioLista)) : string.Empty);
                     dgvProductosfrmVenta.Rows[fila].Tag = pt;
+                    if (pt.IdPromocion.HasValue)
+                        dgvProductosfrmVenta.Rows[fila].DefaultCellStyle.BackColor = Color.Honeydew;
                 }
                 dgvProductosfrmVenta.ClearSelection();
                 if (lista.Count == 0)
@@ -120,7 +129,8 @@ namespace UI
             dgvPedidofrmVenta.Rows.Clear();
             foreach (var d in venta.Detalles)
             {
-                int fila = dgvPedidofrmVenta.Rows.Add(d.ProductoTamanio.Producto.Nombre, d.ProductoTamanio.Tamanio.Nombre, d.Cantidad,
+                string nombre = d.ProductoTamanio.Producto.Nombre + (d.ProductoTamanio.IdPromocion.HasValue ? " " + GestorIdioma.Instancia.Traducir("msgVentaPromo") : string.Empty);
+                int fila = dgvPedidofrmVenta.Rows.Add(nombre, d.ProductoTamanio.Tamanio.Nombre, d.Cantidad,
                     FormatoMoneda.Pesos(d.ProductoTamanio.Precio * d.Cantidad));
                 dgvPedidofrmVenta.Rows[fila].Tag = d;
             }
@@ -205,7 +215,7 @@ namespace UI
                     f.Insumo?.Nombre ?? f.IdInsumo.ToString(),
                     f.Proporcion.ToString("#,0.###", CultureInfo.CurrentCulture),
                     f.Insumo?.UnidadMedida,
-                    (f.Insumo?.VolumenPesoDisponible ?? 0).ToString("#,0.###", CultureInfo.CurrentCulture),
+                    (f.Insumo?.StockVendible ?? 0).ToString("#,0.###", CultureInfo.CurrentCulture),
                     string.Join(", ", productos)));
             }
             return texto.ToString();

@@ -22,10 +22,30 @@ namespace BLL
             return new[] { "Efectivo", "Débito", "Crédito", "Transferencia", "QR" };
         }
 
-        // CU010 paso 1: productos activos con receta (S1), con cada tamaño y su precio
+        // Productos activos con receta (S1), con cada tamaño y su precio de lista. Lo usan el análisis, el simulador y
+        // las promociones; la venta usa ListarPreciosVenta.
         public List<BE.PRODUCTO_TAMANIO> ListarProductosParaVenta()
         {
-            return GestorProducto.ListarProductosConPrecios();
+            var productos = GestorProducto.ListarProductosConPrecios();
+            foreach (var pt in productos)
+                pt.PrecioLista = pt.Precio;
+            return productos;
+        }
+
+        // CU010 paso 1 (decisión 80, propuesta 1 de la Fase 5): los mismos productos con el precio que se cobra hoy:
+        // si hay una promoción vigente para el producto y tamaño, el precio promocional (PrecioLista queda con el de lista)
+        public List<BE.PRODUCTO_TAMANIO> ListarPreciosVenta()
+        {
+            var productos = ListarProductosParaVenta();
+            var promociones = new PROMOCION_BLL().ListarPreciosVigentes();
+            foreach (var pt in productos)
+            {
+                var promo = promociones.FirstOrDefault(p => p.IdProducto == pt.IdProducto && p.IdTamanio == pt.IdTamanio);
+                if (promo == null) continue;
+                pt.Precio = promo.PrecioPromocional;
+                pt.IdPromocion = promo.IdPromocion;
+            }
+            return productos;
         }
 
         // Consulta de ventas (decisión 56): ventas entre dos fechas (días completos)
@@ -98,9 +118,21 @@ namespace BLL
         {
             ValidarPedido(pedido);
             foreach (var linea in pedido.Detalles)
+            {
                 linea.MontoLinea = linea.ProductoTamanio.Precio * linea.Cantidad;
+                // Decisión 80: la línea guarda la promoción aplicada
+                linea.IdPromocion = linea.ProductoTamanio.IdPromocion;
+            }
             pedido.Monto = pedido.Detalles.Sum(d => d.MontoLinea);
             return pedido.Monto;
+        }
+
+        // Decisión 72: CostoLinea = Σ insumos de la receta escalada (Proporcion × CantidadMagnitud × Cantidad) × costo por
+        // unidad de medida consumido de ese insumo en esta venta (promedio de los lotes FEFO; el consumo se suma por insumo).
+        private void CalcularCostoLineas(Dictionary<BE.VENTA_DETALLE, List<BE.RECETA>> recetas, Dictionary<int, decimal> costos)
+        {
+            foreach (var par in recetas)
+                par.Key.CostoLinea = Math.Round(par.Value.Sum(r => r.Proporcion * (costos.TryGetValue(r.IdInsumo, out decimal c) ? c : 0)), 2);
         }
 
         // CU010 pasos 4 y 5 (mensajes 29-52). Todo en una sola transacción (decisiones 27, 42 y 47):
@@ -110,8 +142,8 @@ namespace BLL
             if (Array.IndexOf(ListarMediosPago(), venta.MedioPago) < 0)
                 throw new ArgumentException("msgVentaMedioPagoObligatorio");
             ValidarPedido(venta);
-            // Un producto o tamaño dado de baja (o sin receta, S1) no se vende; el precio es el vigente
-            var vendibles = ListarProductosParaVenta();
+            // Un producto o tamaño dado de baja (o sin receta, S1) no se vende; el precio es el vigente (con promoción, decisión 80)
+            var vendibles = ListarPreciosVenta();
             foreach (var linea in venta.Detalles)
             {
                 var vigente = vendibles.FirstOrDefault(v => v.IdProducto == linea.IdProducto && v.IdTamanio == linea.IdTamanio);
@@ -121,6 +153,9 @@ namespace BLL
             }
             CalcularMontoTotal(venta);
             var consumos = CalcularConsumos(venta, out _);
+            // Receta escalada de cada línea, para el costo (decisión 72). Se lee antes de la transacción:
+            // el SP de la receta lee INSUMO, que la transacción modifica.
+            var recetas = venta.Detalles.ToDictionary(l => l, l => GestorReceta.ObtenerRecetaEscalada(l.IdProducto, l.ProductoTamanio.Tamanio.CantidadMagnitud, l.Cantidad));
             venta.Fecha = DateTime.Now;
 
             var acceso = new ACCESO();
@@ -131,7 +166,8 @@ namespace BLL
                 if (consumos.Any(c => !GestorInsumo.VerificarDisponibilidad(c, acceso)))
                     throw new ArgumentException("msgVentaStockInsuficiente");
 
-                GestorInsumo.DescontarStock(consumos, acceso);
+                var costos = GestorInsumo.DescontarStock(consumos, acceso);
+                CalcularCostoLineas(recetas, costos);
                 GestorInsumo.VerificarStockBajoUmbral(consumos.Select(c => c.IdInsumo).ToList(), acceso);
                 new MAPPER_VENTA(acceso).GuardarVenta(venta);
                 venta.Vale = GestorVale.GenerarVale(venta, acceso);

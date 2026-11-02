@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.flpVistafrmReceta = new System.Windows.Forms.FlowLayoutPanel();
             this.rdbSinRecetafrmReceta = new System.Windows.Forms.RadioButton();
             this.rdbConRecetafrmReceta = new System.Windows.Forms.RadioButton();
             this.lblProductosfrmReceta = new System.Windows.Forms.Label();
@@ -47,6 +48,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductosfrmReceta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudProporcionfrmReceta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecetafrmReceta)).BeginInit();
+            this.flpVistafrmReceta.SuspendLayout();
             this.SuspendLayout();
             //
             // rdbSinRecetafrmReceta
@@ -54,9 +56,8 @@
             this.rdbSinRecetafrmReceta.AutoSize = true;
             this.rdbSinRecetafrmReceta.Checked = true;
             this.rdbSinRecetafrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbSinRecetafrmReceta.Location = new System.Drawing.Point(20, 12);
             this.rdbSinRecetafrmReceta.Name = "rdbSinRecetafrmReceta";
-            this.rdbSinRecetafrmReceta.Size = new System.Drawing.Size(200, 27);
+            this.rdbSinRecetafrmReceta.Size = new System.Drawing.Size(160, 22);
             this.rdbSinRecetafrmReceta.TabIndex = 0;
             this.rdbSinRecetafrmReceta.TabStop = true;
             this.rdbSinRecetafrmReceta.Text = "Productos sin receta";
@@ -67,9 +68,8 @@
             //
             this.rdbConRecetafrmReceta.AutoSize = true;
             this.rdbConRecetafrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbConRecetafrmReceta.Location = new System.Drawing.Point(260, 12);
             this.rdbConRecetafrmReceta.Name = "rdbConRecetafrmReceta";
-            this.rdbConRecetafrmReceta.Size = new System.Drawing.Size(200, 27);
+            this.rdbConRecetafrmReceta.Size = new System.Drawing.Size(160, 22);
             this.rdbConRecetafrmReceta.TabIndex = 1;
             this.rdbConRecetafrmReceta.Text = "Productos con receta";
             this.rdbConRecetafrmReceta.UseVisualStyleBackColor = true;
@@ -79,9 +79,9 @@
             //
             this.lblProductosfrmReceta.AutoSize = true;
             this.lblProductosfrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProductosfrmReceta.Location = new System.Drawing.Point(20, 48);
+            this.lblProductosfrmReceta.Location = new System.Drawing.Point(16, 38);
             this.lblProductosfrmReceta.Name = "lblProductosfrmReceta";
-            this.lblProductosfrmReceta.Size = new System.Drawing.Size(92, 23);
+            this.lblProductosfrmReceta.Size = new System.Drawing.Size(74, 18);
             this.lblProductosfrmReceta.TabIndex = 2;
             this.lblProductosfrmReceta.Text = "Productos";
             //
@@ -90,13 +90,14 @@
             this.dgvProductosfrmReceta.AllowUserToAddRows = false;
             this.dgvProductosfrmReceta.AllowUserToDeleteRows = false;
             this.dgvProductosfrmReceta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProductosfrmReceta.Location = new System.Drawing.Point(20, 75);
+            this.dgvProductosfrmReceta.Location = new System.Drawing.Point(16, 60);
             this.dgvProductosfrmReceta.MultiSelect = false;
+            this.dgvProductosfrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left));
             this.dgvProductosfrmReceta.Name = "dgvProductosfrmReceta";
             this.dgvProductosfrmReceta.ReadOnly = true;
             this.dgvProductosfrmReceta.RowHeadersWidth = 51;
             this.dgvProductosfrmReceta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProductosfrmReceta.Size = new System.Drawing.Size(400, 435);
+            this.dgvProductosfrmReceta.Size = new System.Drawing.Size(384, 348);
             this.dgvProductosfrmReceta.TabIndex = 3;
             this.dgvProductosfrmReceta.SelectionChanged += new System.EventHandler(this.dgvProductosfrmReceta_SelectionChanged);
             //
@@ -104,9 +105,9 @@
             //
             this.lblRecetafrmReceta.AutoSize = true;
             this.lblRecetafrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRecetafrmReceta.Location = new System.Drawing.Point(440, 12);
+            this.lblRecetafrmReceta.Location = new System.Drawing.Point(416, 10);
             this.lblRecetafrmReceta.Name = "lblRecetafrmReceta";
-            this.lblRecetafrmReceta.Size = new System.Drawing.Size(74, 25);
+            this.lblRecetafrmReceta.Size = new System.Drawing.Size(59, 20);
             this.lblRecetafrmReceta.TabIndex = 4;
             this.lblRecetafrmReceta.Text = "Receta";
             //
@@ -114,9 +115,9 @@
             //
             this.lblInsumofrmReceta.AutoSize = true;
             this.lblInsumofrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInsumofrmReceta.Location = new System.Drawing.Point(440, 52);
+            this.lblInsumofrmReceta.Location = new System.Drawing.Point(416, 42);
             this.lblInsumofrmReceta.Name = "lblInsumofrmReceta";
-            this.lblInsumofrmReceta.Size = new System.Drawing.Size(70, 23);
+            this.lblInsumofrmReceta.Size = new System.Drawing.Size(56, 18);
             this.lblInsumofrmReceta.TabIndex = 5;
             this.lblInsumofrmReceta.Text = "Insumo";
             //
@@ -125,18 +126,22 @@
             this.cmbInsumofrmReceta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbInsumofrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbInsumofrmReceta.FormattingEnabled = true;
-            this.cmbInsumofrmReceta.Location = new System.Drawing.Point(560, 48);
+            this.cmbInsumofrmReceta.Location = new System.Drawing.Point(512, 38);
+            this.cmbInsumofrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.cmbInsumofrmReceta.Name = "cmbInsumofrmReceta";
-            this.cmbInsumofrmReceta.Size = new System.Drawing.Size(300, 30);
+            this.cmbInsumofrmReceta.Size = new System.Drawing.Size(240, 24);
             this.cmbInsumofrmReceta.TabIndex = 6;
             //
             // btnNuevoInsumofrmReceta
             //
             this.btnNuevoInsumofrmReceta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnNuevoInsumofrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevoInsumofrmReceta.Location = new System.Drawing.Point(875, 46);
+            this.btnNuevoInsumofrmReceta.Location = new System.Drawing.Point(764, 37);
+            this.btnNuevoInsumofrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.btnNuevoInsumofrmReceta.AutoSize = true;
+            this.btnNuevoInsumofrmReceta.MinimumSize = new System.Drawing.Size(132, 27);
             this.btnNuevoInsumofrmReceta.Name = "btnNuevoInsumofrmReceta";
-            this.btnNuevoInsumofrmReceta.Size = new System.Drawing.Size(165, 34);
+            this.btnNuevoInsumofrmReceta.Size = new System.Drawing.Size(132, 27);
             this.btnNuevoInsumofrmReceta.TabIndex = 7;
             this.btnNuevoInsumofrmReceta.Text = "Nuevo insumo";
             this.btnNuevoInsumofrmReceta.UseVisualStyleBackColor = false;
@@ -146,9 +151,9 @@
             //
             this.lblProporcionfrmReceta.AutoSize = true;
             this.lblProporcionfrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProporcionfrmReceta.Location = new System.Drawing.Point(440, 94);
+            this.lblProporcionfrmReceta.Location = new System.Drawing.Point(416, 75);
             this.lblProporcionfrmReceta.Name = "lblProporcionfrmReceta";
-            this.lblProporcionfrmReceta.Size = new System.Drawing.Size(103, 23);
+            this.lblProporcionfrmReceta.Size = new System.Drawing.Size(82, 18);
             this.lblProporcionfrmReceta.TabIndex = 8;
             this.lblProporcionfrmReceta.Text = "Proporción";
             //
@@ -157,19 +162,21 @@
             this.nudProporcionfrmReceta.DecimalPlaces = 3;
             this.nudProporcionfrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nudProporcionfrmReceta.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            this.nudProporcionfrmReceta.Location = new System.Drawing.Point(560, 91);
+            this.nudProporcionfrmReceta.Location = new System.Drawing.Point(512, 73);
             this.nudProporcionfrmReceta.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             this.nudProporcionfrmReceta.Name = "nudProporcionfrmReceta";
-            this.nudProporcionfrmReceta.Size = new System.Drawing.Size(150, 29);
+            this.nudProporcionfrmReceta.Size = new System.Drawing.Size(120, 23);
             this.nudProporcionfrmReceta.TabIndex = 9;
             //
             // btnAgregarInsumofrmReceta
             //
             this.btnAgregarInsumofrmReceta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnAgregarInsumofrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregarInsumofrmReceta.Location = new System.Drawing.Point(725, 88);
+            this.btnAgregarInsumofrmReceta.Location = new System.Drawing.Point(644, 70);
+            this.btnAgregarInsumofrmReceta.AutoSize = true;
+            this.btnAgregarInsumofrmReceta.MinimumSize = new System.Drawing.Size(132, 27);
             this.btnAgregarInsumofrmReceta.Name = "btnAgregarInsumofrmReceta";
-            this.btnAgregarInsumofrmReceta.Size = new System.Drawing.Size(165, 34);
+            this.btnAgregarInsumofrmReceta.Size = new System.Drawing.Size(132, 27);
             this.btnAgregarInsumofrmReceta.TabIndex = 10;
             this.btnAgregarInsumofrmReceta.Text = "Agregar insumo";
             this.btnAgregarInsumofrmReceta.UseVisualStyleBackColor = false;
@@ -180,21 +187,25 @@
             this.dgvRecetafrmReceta.AllowUserToAddRows = false;
             this.dgvRecetafrmReceta.AllowUserToDeleteRows = false;
             this.dgvRecetafrmReceta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecetafrmReceta.Location = new System.Drawing.Point(440, 135);
+            this.dgvRecetafrmReceta.Location = new System.Drawing.Point(416, 108);
             this.dgvRecetafrmReceta.MultiSelect = false;
+            this.dgvRecetafrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvRecetafrmReceta.Name = "dgvRecetafrmReceta";
             this.dgvRecetafrmReceta.RowHeadersWidth = 51;
             this.dgvRecetafrmReceta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvRecetafrmReceta.Size = new System.Drawing.Size(600, 235);
+            this.dgvRecetafrmReceta.Size = new System.Drawing.Size(480, 188);
             this.dgvRecetafrmReceta.TabIndex = 11;
             //
             // btnQuitarInsumofrmReceta
             //
             this.btnQuitarInsumofrmReceta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnQuitarInsumofrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuitarInsumofrmReceta.Location = new System.Drawing.Point(440, 378);
+            this.btnQuitarInsumofrmReceta.Location = new System.Drawing.Point(416, 302);
+            this.btnQuitarInsumofrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.btnQuitarInsumofrmReceta.AutoSize = true;
+            this.btnQuitarInsumofrmReceta.MinimumSize = new System.Drawing.Size(132, 27);
             this.btnQuitarInsumofrmReceta.Name = "btnQuitarInsumofrmReceta";
-            this.btnQuitarInsumofrmReceta.Size = new System.Drawing.Size(165, 34);
+            this.btnQuitarInsumofrmReceta.Size = new System.Drawing.Size(132, 27);
             this.btnQuitarInsumofrmReceta.TabIndex = 12;
             this.btnQuitarInsumofrmReceta.Text = "Quitar insumo";
             this.btnQuitarInsumofrmReceta.UseVisualStyleBackColor = false;
@@ -203,9 +214,10 @@
             // lblAyudaProporcionfrmReceta
             //
             this.lblAyudaProporcionfrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAyudaProporcionfrmReceta.Location = new System.Drawing.Point(440, 420);
+            this.lblAyudaProporcionfrmReceta.Location = new System.Drawing.Point(416, 336);
+            this.lblAyudaProporcionfrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.lblAyudaProporcionfrmReceta.Name = "lblAyudaProporcionfrmReceta";
-            this.lblAyudaProporcionfrmReceta.Size = new System.Drawing.Size(600, 42);
+            this.lblAyudaProporcionfrmReceta.Size = new System.Drawing.Size(480, 34);
             this.lblAyudaProporcionfrmReceta.TabIndex = 13;
             this.lblAyudaProporcionfrmReceta.Text = "Proporción";
             //
@@ -213,9 +225,12 @@
             //
             this.btnConfirmarfrmReceta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnConfirmarfrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmarfrmReceta.Location = new System.Drawing.Point(745, 468);
+            this.btnConfirmarfrmReceta.Location = new System.Drawing.Point(660, 374);
+            this.btnConfirmarfrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnConfirmarfrmReceta.AutoSize = true;
+            this.btnConfirmarfrmReceta.MinimumSize = new System.Drawing.Size(112, 34);
             this.btnConfirmarfrmReceta.Name = "btnConfirmarfrmReceta";
-            this.btnConfirmarfrmReceta.Size = new System.Drawing.Size(140, 42);
+            this.btnConfirmarfrmReceta.Size = new System.Drawing.Size(112, 34);
             this.btnConfirmarfrmReceta.TabIndex = 14;
             this.btnConfirmarfrmReceta.Text = "Confirmar";
             this.btnConfirmarfrmReceta.UseVisualStyleBackColor = false;
@@ -225,20 +240,33 @@
             //
             this.btnCancelarfrmReceta.BackColor = System.Drawing.Color.SandyBrown;
             this.btnCancelarfrmReceta.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarfrmReceta.Location = new System.Drawing.Point(900, 468);
+            this.btnCancelarfrmReceta.Location = new System.Drawing.Point(784, 374);
+            this.btnCancelarfrmReceta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+            this.btnCancelarfrmReceta.AutoSize = true;
+            this.btnCancelarfrmReceta.MinimumSize = new System.Drawing.Size(112, 34);
             this.btnCancelarfrmReceta.Name = "btnCancelarfrmReceta";
-            this.btnCancelarfrmReceta.Size = new System.Drawing.Size(140, 42);
+            this.btnCancelarfrmReceta.Size = new System.Drawing.Size(112, 34);
             this.btnCancelarfrmReceta.TabIndex = 15;
             this.btnCancelarfrmReceta.Text = "Cancelar";
             this.btnCancelarfrmReceta.UseVisualStyleBackColor = false;
             this.btnCancelarfrmReceta.Click += new System.EventHandler(this.btnCancelarfrmReceta_Click);
+            // 
+            // flpVistafrmReceta
+            // 
+            this.flpVistafrmReceta.WrapContents = false;
+            this.flpVistafrmReceta.Controls.Add(this.rdbSinRecetafrmReceta);
+            this.flpVistafrmReceta.Controls.Add(this.rdbConRecetafrmReceta);
+            this.flpVistafrmReceta.Location = new System.Drawing.Point(14, 8);
+            this.flpVistafrmReceta.Size = new System.Drawing.Size(388, 28);
+            this.flpVistafrmReceta.Name = "flpVistafrmReceta";
             //
             // frmReceta
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1062, 530);
+            this.ClientSize = new System.Drawing.Size(914, 424);
+            this.Controls.Add(this.flpVistafrmReceta);
             this.Controls.Add(this.btnCancelarfrmReceta);
             this.Controls.Add(this.btnConfirmarfrmReceta);
             this.Controls.Add(this.lblAyudaProporcionfrmReceta);
@@ -253,8 +281,7 @@
             this.Controls.Add(this.lblRecetafrmReceta);
             this.Controls.Add(this.dgvProductosfrmReceta);
             this.Controls.Add(this.lblProductosfrmReceta);
-            this.Controls.Add(this.rdbConRecetafrmReceta);
-            this.Controls.Add(this.rdbSinRecetafrmReceta);
+            this.MinimumSize = new System.Drawing.Size(930, 463);
             this.Name = "frmReceta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmReceta";
@@ -262,6 +289,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductosfrmReceta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudProporcionfrmReceta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecetafrmReceta)).EndInit();
+            this.flpVistafrmReceta.ResumeLayout(false);
+            this.flpVistafrmReceta.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,6 +298,7 @@
 
         #endregion
 
+        private System.Windows.Forms.FlowLayoutPanel flpVistafrmReceta;
         private System.Windows.Forms.RadioButton rdbSinRecetafrmReceta;
         private System.Windows.Forms.RadioButton rdbConRecetafrmReceta;
         private System.Windows.Forms.Label lblProductosfrmReceta;

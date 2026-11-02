@@ -128,7 +128,8 @@ namespace BLL
             {
                 filas.Add(new[]
                 {
-                    d.ProductoTamanio?.Producto?.Nombre ?? d.IdProducto.ToString(),
+                    // Propuesta 7 de la Fase 5: la línea con promoción se marca (el precio unitario es el cobrado)
+                    (d.ProductoTamanio?.Producto?.Nombre ?? d.IdProducto.ToString()) + (d.IdPromocion.HasValue ? " (promo)" : ""),
                     d.ProductoTamanio?.Tamanio?.Nombre ?? d.IdTamanio.ToString(),
                     d.Cantidad.ToString(ar),
                     FormatoMoneda.Pesos(d.ProductoTamanio?.Precio ?? 0),

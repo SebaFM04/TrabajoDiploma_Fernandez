@@ -64,6 +64,7 @@
             this.dgvTraduccion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTraduccion.Location = new System.Drawing.Point(259, 13);
             this.dgvTraduccion.MultiSelect = false;
+            this.dgvTraduccion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvTraduccion.Name = "dgvTraduccion";
             this.dgvTraduccion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTraduccion.Size = new System.Drawing.Size(621, 356);
@@ -114,6 +115,7 @@
             this.btnModificacionTraduccion.Font = new System.Drawing.Font("MS Reference Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificacionTraduccion.Location = new System.Drawing.Point(437, 374);
             this.btnModificacionTraduccion.Margin = new System.Windows.Forms.Padding(2);
+            this.btnModificacionTraduccion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
             this.btnModificacionTraduccion.Name = "btnModificacionTraduccion";
             this.btnModificacionTraduccion.Size = new System.Drawing.Size(243, 32);
             this.btnModificacionTraduccion.TabIndex = 12;
@@ -163,6 +165,7 @@
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvTraduccion);
             this.Controls.Add(this.dgvIdiomas);
+            this.MinimumSize = new System.Drawing.Size(908, 489);
             this.Name = "frmABMIdioma";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmABMIdioma";

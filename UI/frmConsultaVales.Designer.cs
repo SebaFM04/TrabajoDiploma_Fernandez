@@ -92,6 +92,8 @@
             //
             this.btnBuscarfrmConsultaVales.BackColor = System.Drawing.Color.SandyBrown;
             this.btnBuscarfrmConsultaVales.Location = new System.Drawing.Point(650, 11);
+            this.btnBuscarfrmConsultaVales.AutoSize = true;
+            this.btnBuscarfrmConsultaVales.MinimumSize = new System.Drawing.Size(120, 32);
             this.btnBuscarfrmConsultaVales.Name = "btnBuscarfrmConsultaVales";
             this.btnBuscarfrmConsultaVales.Size = new System.Drawing.Size(120, 32);
             this.btnBuscarfrmConsultaVales.TabIndex = 6;
@@ -105,6 +107,7 @@
             this.dgvValesfrmConsultaVales.AllowUserToDeleteRows = false;
             this.dgvValesfrmConsultaVales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvValesfrmConsultaVales.Location = new System.Drawing.Point(20, 55);
+            this.dgvValesfrmConsultaVales.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvValesfrmConsultaVales.Name = "dgvValesfrmConsultaVales";
             this.dgvValesfrmConsultaVales.ReadOnly = true;
             this.dgvValesfrmConsultaVales.RowHeadersVisible = false;
@@ -117,6 +120,7 @@
             this.lblTotalesfrmConsultaVales.AutoSize = true;
             this.lblTotalesfrmConsultaVales.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalesfrmConsultaVales.Location = new System.Drawing.Point(20, 395);
+            this.lblTotalesfrmConsultaVales.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblTotalesfrmConsultaVales.Name = "lblTotalesfrmConsultaVales";
             this.lblTotalesfrmConsultaVales.TabIndex = 8;
             this.lblTotalesfrmConsultaVales.Text = "-";
@@ -137,6 +141,7 @@
             this.Controls.Add(this.dtpDesdefrmConsultaVales);
             this.Controls.Add(this.lblDesdefrmConsultaVales);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(806, 360);
             this.Name = "frmConsultaVales";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmConsultaVales";

@@ -82,6 +82,7 @@
             this.dgvInsumosfrmRecepcion.AllowUserToDeleteRows = false;
             this.dgvInsumosfrmRecepcion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInsumosfrmRecepcion.Location = new System.Drawing.Point(400, 40);
+            this.dgvInsumosfrmRecepcion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvInsumosfrmRecepcion.Name = "dgvInsumosfrmRecepcion";
             this.dgvInsumosfrmRecepcion.RowHeadersVisible = false;
             this.dgvInsumosfrmRecepcion.Size = new System.Drawing.Size(640, 250);
@@ -97,10 +98,10 @@
             //
             // txtRemitofrmRecepcion
             //
-            this.txtRemitofrmRecepcion.Location = new System.Drawing.Point(510, 302);
+            this.txtRemitofrmRecepcion.Location = new System.Drawing.Point(530, 302);
             this.txtRemitofrmRecepcion.MaxLength = 30;
             this.txtRemitofrmRecepcion.Name = "txtRemitofrmRecepcion";
-            this.txtRemitofrmRecepcion.Size = new System.Drawing.Size(160, 23);
+            this.txtRemitofrmRecepcion.Size = new System.Drawing.Size(150, 23);
             this.txtRemitofrmRecepcion.TabIndex = 5;
             //
             // lblFacturafrmRecepcion
@@ -115,6 +116,7 @@
             //
             this.txtFacturafrmRecepcion.Location = new System.Drawing.Point(800, 302);
             this.txtFacturafrmRecepcion.MaxLength = 30;
+            this.txtFacturafrmRecepcion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.txtFacturafrmRecepcion.Name = "txtFacturafrmRecepcion";
             this.txtFacturafrmRecepcion.Size = new System.Drawing.Size(240, 23);
             this.txtFacturafrmRecepcion.TabIndex = 7;
@@ -123,6 +125,9 @@
             //
             this.btnRegistrarRecepcionfrmRecepcion.BackColor = System.Drawing.Color.SandyBrown;
             this.btnRegistrarRecepcionfrmRecepcion.Location = new System.Drawing.Point(800, 337);
+            this.btnRegistrarRecepcionfrmRecepcion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.btnRegistrarRecepcionfrmRecepcion.AutoSize = true;
+            this.btnRegistrarRecepcionfrmRecepcion.MinimumSize = new System.Drawing.Size(240, 36);
             this.btnRegistrarRecepcionfrmRecepcion.Name = "btnRegistrarRecepcionfrmRecepcion";
             this.btnRegistrarRecepcionfrmRecepcion.Size = new System.Drawing.Size(240, 36);
             this.btnRegistrarRecepcionfrmRecepcion.TabIndex = 8;
@@ -146,6 +151,7 @@
             this.dgvReclamofrmRecepcion.AllowUserToDeleteRows = false;
             this.dgvReclamofrmRecepcion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReclamofrmRecepcion.Location = new System.Drawing.Point(20, 410);
+            this.dgvReclamofrmRecepcion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
             this.dgvReclamofrmRecepcion.Name = "dgvReclamofrmRecepcion";
             this.dgvReclamofrmRecepcion.RowHeadersVisible = false;
             this.dgvReclamofrmRecepcion.Size = new System.Drawing.Size(770, 140);
@@ -156,6 +162,9 @@
             //
             this.btnRegistrarReclamofrmRecepcion.BackColor = System.Drawing.Color.SandyBrown;
             this.btnRegistrarReclamofrmRecepcion.Location = new System.Drawing.Point(800, 410);
+            this.btnRegistrarReclamofrmRecepcion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.btnRegistrarReclamofrmRecepcion.AutoSize = true;
+            this.btnRegistrarReclamofrmRecepcion.MinimumSize = new System.Drawing.Size(240, 36);
             this.btnRegistrarReclamofrmRecepcion.Name = "btnRegistrarReclamofrmRecepcion";
             this.btnRegistrarReclamofrmRecepcion.Size = new System.Drawing.Size(240, 36);
             this.btnRegistrarReclamofrmRecepcion.TabIndex = 11;
@@ -183,6 +192,7 @@
             this.Controls.Add(this.dgvOrdenesfrmRecepcion);
             this.Controls.Add(this.lblOrdenesfrmRecepcion);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1076, 609);
             this.Name = "frmRecepcion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRecepcion";

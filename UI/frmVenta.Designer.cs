@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.txtCuitClientefrmVenta = new System.Windows.Forms.TextBox();
+            this.lblCuitClientefrmVenta = new System.Windows.Forms.Label();
+            this.cmbTipoFacturafrmVenta = new System.Windows.Forms.ComboBox();
+            this.lblTipoFacturafrmVenta = new System.Windows.Forms.Label();
             this.lblProductosfrmVenta = new System.Windows.Forms.Label();
             this.dgvProductosfrmVenta = new System.Windows.Forms.DataGridView();
             this.lblCantidadfrmVenta = new System.Windows.Forms.Label();
@@ -241,7 +245,7 @@
             // lblNombreClientefrmVenta
             //
             this.lblNombreClientefrmVenta.AutoSize = true;
-            this.lblNombreClientefrmVenta.Location = new System.Drawing.Point(20, 378);
+            this.lblNombreClientefrmVenta.Location = new System.Drawing.Point(20, 411);
             this.lblNombreClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblNombreClientefrmVenta.Name = "lblNombreClientefrmVenta";
             this.lblNombreClientefrmVenta.TabIndex = 16;
@@ -249,17 +253,17 @@
             //
             // txtNombreClientefrmVenta
             //
-            this.txtNombreClientefrmVenta.Location = new System.Drawing.Point(130, 375);
+            this.txtNombreClientefrmVenta.Location = new System.Drawing.Point(180, 408);
             this.txtNombreClientefrmVenta.MaxLength = 100;
             this.txtNombreClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtNombreClientefrmVenta.Name = "txtNombreClientefrmVenta";
-            this.txtNombreClientefrmVenta.Size = new System.Drawing.Size(270, 23);
+            this.txtNombreClientefrmVenta.Size = new System.Drawing.Size(220, 23);
             this.txtNombreClientefrmVenta.TabIndex = 17;
             //
             // lblTelefonoClientefrmVenta
             //
             this.lblTelefonoClientefrmVenta.AutoSize = true;
-            this.lblTelefonoClientefrmVenta.Location = new System.Drawing.Point(20, 411);
+            this.lblTelefonoClientefrmVenta.Location = new System.Drawing.Point(20, 477);
             this.lblTelefonoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblTelefonoClientefrmVenta.Name = "lblTelefonoClientefrmVenta";
             this.lblTelefonoClientefrmVenta.TabIndex = 18;
@@ -267,17 +271,17 @@
             //
             // txtTelefonoClientefrmVenta
             //
-            this.txtTelefonoClientefrmVenta.Location = new System.Drawing.Point(130, 408);
+            this.txtTelefonoClientefrmVenta.Location = new System.Drawing.Point(180, 474);
             this.txtTelefonoClientefrmVenta.MaxLength = 30;
             this.txtTelefonoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtTelefonoClientefrmVenta.Name = "txtTelefonoClientefrmVenta";
-            this.txtTelefonoClientefrmVenta.Size = new System.Drawing.Size(270, 23);
+            this.txtTelefonoClientefrmVenta.Size = new System.Drawing.Size(220, 23);
             this.txtTelefonoClientefrmVenta.TabIndex = 19;
             //
             // lblCorreoClientefrmVenta
             //
             this.lblCorreoClientefrmVenta.AutoSize = true;
-            this.lblCorreoClientefrmVenta.Location = new System.Drawing.Point(20, 444);
+            this.lblCorreoClientefrmVenta.Location = new System.Drawing.Point(20, 510);
             this.lblCorreoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblCorreoClientefrmVenta.Name = "lblCorreoClientefrmVenta";
             this.lblCorreoClientefrmVenta.TabIndex = 20;
@@ -285,22 +289,22 @@
             //
             // txtCorreoClientefrmVenta
             //
-            this.txtCorreoClientefrmVenta.Location = new System.Drawing.Point(130, 441);
+            this.txtCorreoClientefrmVenta.Location = new System.Drawing.Point(180, 507);
             this.txtCorreoClientefrmVenta.MaxLength = 100;
             this.txtCorreoClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtCorreoClientefrmVenta.Name = "txtCorreoClientefrmVenta";
-            this.txtCorreoClientefrmVenta.Size = new System.Drawing.Size(270, 23);
+            this.txtCorreoClientefrmVenta.Size = new System.Drawing.Size(220, 23);
             this.txtCorreoClientefrmVenta.TabIndex = 21;
             //
             // btnEmitirFacturafrmVenta
             //
             this.btnEmitirFacturafrmVenta.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnEmitirFacturafrmVenta.Location = new System.Drawing.Point(130, 478);
+            this.btnEmitirFacturafrmVenta.Location = new System.Drawing.Point(180, 544);
             this.btnEmitirFacturafrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnEmitirFacturafrmVenta.AutoSize = true;
-            this.btnEmitirFacturafrmVenta.MinimumSize = new System.Drawing.Size(270, 34);
+            this.btnEmitirFacturafrmVenta.MinimumSize = new System.Drawing.Size(220, 34);
             this.btnEmitirFacturafrmVenta.Name = "btnEmitirFacturafrmVenta";
-            this.btnEmitirFacturafrmVenta.Size = new System.Drawing.Size(270, 34);
+            this.btnEmitirFacturafrmVenta.Size = new System.Drawing.Size(220, 34);
             this.btnEmitirFacturafrmVenta.TabIndex = 22;
             this.btnEmitirFacturafrmVenta.Text = "Emitir factura";
             this.btnEmitirFacturafrmVenta.UseVisualStyleBackColor = false;
@@ -309,12 +313,12 @@
             // btnNuevaVentafrmVenta
             //
             this.btnNuevaVentafrmVenta.BackColor = System.Drawing.Color.SandyBrown;
-            this.btnNuevaVentafrmVenta.Location = new System.Drawing.Point(130, 522);
+            this.btnNuevaVentafrmVenta.Location = new System.Drawing.Point(180, 588);
             this.btnNuevaVentafrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnNuevaVentafrmVenta.AutoSize = true;
-            this.btnNuevaVentafrmVenta.MinimumSize = new System.Drawing.Size(270, 34);
+            this.btnNuevaVentafrmVenta.MinimumSize = new System.Drawing.Size(220, 34);
             this.btnNuevaVentafrmVenta.Name = "btnNuevaVentafrmVenta";
-            this.btnNuevaVentafrmVenta.Size = new System.Drawing.Size(270, 34);
+            this.btnNuevaVentafrmVenta.Size = new System.Drawing.Size(220, 34);
             this.btnNuevaVentafrmVenta.TabIndex = 23;
             this.btnNuevaVentafrmVenta.Text = "Nueva venta";
             this.btnNuevaVentafrmVenta.UseVisualStyleBackColor = false;
@@ -329,15 +333,57 @@
             this.txtResultadofrmVenta.Name = "txtResultadofrmVenta";
             this.txtResultadofrmVenta.ReadOnly = true;
             this.txtResultadofrmVenta.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtResultadofrmVenta.Size = new System.Drawing.Size(560, 211);
+            this.txtResultadofrmVenta.Size = new System.Drawing.Size(560, 277);
             this.txtResultadofrmVenta.TabIndex = 24;
+            // 
+            // lblTipoFacturafrmVenta
+            // 
+            this.lblTipoFacturafrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.lblTipoFacturafrmVenta.AutoSize = true;
+            this.lblTipoFacturafrmVenta.Location = new System.Drawing.Point(20, 378);
+            this.lblTipoFacturafrmVenta.TabIndex = 50;
+            this.lblTipoFacturafrmVenta.Text = "Tipo";
+            this.lblTipoFacturafrmVenta.Name = "lblTipoFacturafrmVenta";
+            // 
+            // cmbTipoFacturafrmVenta
+            // 
+            this.cmbTipoFacturafrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.cmbTipoFacturafrmVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipoFacturafrmVenta.FormattingEnabled = true;
+            this.cmbTipoFacturafrmVenta.Location = new System.Drawing.Point(180, 374);
+            this.cmbTipoFacturafrmVenta.Size = new System.Drawing.Size(220, 24);
+            this.cmbTipoFacturafrmVenta.TabIndex = 16;
+            this.cmbTipoFacturafrmVenta.Name = "cmbTipoFacturafrmVenta";
+            this.cmbTipoFacturafrmVenta.SelectedIndexChanged += new System.EventHandler(this.cmbTipoFacturafrmVenta_SelectedIndexChanged);
+            // 
+            // lblCuitClientefrmVenta
+            // 
+            this.lblCuitClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.lblCuitClientefrmVenta.AutoSize = true;
+            this.lblCuitClientefrmVenta.Location = new System.Drawing.Point(20, 444);
+            this.lblCuitClientefrmVenta.TabIndex = 51;
+            this.lblCuitClientefrmVenta.Text = "CUIT";
+            this.lblCuitClientefrmVenta.Name = "lblCuitClientefrmVenta";
+            // 
+            // txtCuitClientefrmVenta
+            // 
+            this.txtCuitClientefrmVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+            this.txtCuitClientefrmVenta.Location = new System.Drawing.Point(180, 441);
+            this.txtCuitClientefrmVenta.MaxLength = 13;
+            this.txtCuitClientefrmVenta.Size = new System.Drawing.Size(220, 23);
+            this.txtCuitClientefrmVenta.TabIndex = 18;
+            this.txtCuitClientefrmVenta.Name = "txtCuitClientefrmVenta";
             //
             // frmVenta
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(1100, 575);
+            this.ClientSize = new System.Drawing.Size(1100, 641);
+            this.Controls.Add(this.txtCuitClientefrmVenta);
+            this.Controls.Add(this.lblCuitClientefrmVenta);
+            this.Controls.Add(this.cmbTipoFacturafrmVenta);
+            this.Controls.Add(this.lblTipoFacturafrmVenta);
             this.Controls.Add(this.txtResultadofrmVenta);
             this.Controls.Add(this.btnNuevaVentafrmVenta);
             this.Controls.Add(this.btnEmitirFacturafrmVenta);
@@ -364,7 +410,7 @@
             this.Controls.Add(this.dgvProductosfrmVenta);
             this.Controls.Add(this.lblProductosfrmVenta);
             this.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinimumSize = new System.Drawing.Size(1116, 614);
+            this.MinimumSize = new System.Drawing.Size(1116, 680);
             this.Name = "frmVenta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmVenta";
@@ -379,6 +425,10 @@
 
         #endregion
 
+        private System.Windows.Forms.TextBox txtCuitClientefrmVenta;
+        private System.Windows.Forms.Label lblCuitClientefrmVenta;
+        private System.Windows.Forms.ComboBox cmbTipoFacturafrmVenta;
+        private System.Windows.Forms.Label lblTipoFacturafrmVenta;
         private System.Windows.Forms.Label lblProductosfrmVenta;
         private System.Windows.Forms.DataGridView dgvProductosfrmVenta;
         private System.Windows.Forms.Label lblCantidadfrmVenta;

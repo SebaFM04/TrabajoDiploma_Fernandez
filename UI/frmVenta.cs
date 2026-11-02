@@ -38,6 +38,7 @@ namespace UI
         {
             cmbMedioPagofrmVenta.Items.Clear();
             cmbMedioPagofrmVenta.Items.AddRange(GestorVenta.ListarMediosPago());
+            CargarTiposFactura();
             // Decisión 78: estados de las promociones por fecha antes de listar los precios
             try { new PROMOCION_BLL().ActualizarEstados(); }
             catch (Exception) { /* informativo: la venta sigue; el precio promocional se busca por fecha (Fase 5) */ }
@@ -62,6 +63,21 @@ namespace UI
             dgvPedidofrmVenta.Columns.Add("colCantidadfrmVenta", g.Traducir("colCantidadfrmVenta"));
             dgvPedidofrmVenta.Columns.Add("colSubtotalfrmVenta", g.Traducir("colSubtotalfrmVenta"));
             AjusteGrilla.Configurar(dgvPedidofrmVenta);
+        }
+
+        // Decisión 94: Factura B (consumidor final, índice 0) o Factura A (Responsable Inscripto, índice 1). Conserva la elección.
+        private void CargarTiposFactura()
+        {
+            var g = GestorIdioma.Instancia;
+            int elegido = cmbTipoFacturafrmVenta.SelectedIndex;
+            cmbTipoFacturafrmVenta.Items.Clear();
+            cmbTipoFacturafrmVenta.Items.AddRange(new object[] { g.Traducir("msgFacturaTipoB"), g.Traducir("msgFacturaTipoA") });
+            cmbTipoFacturafrmVenta.SelectedIndex = elegido < 0 ? 0 : elegido;
+        }
+
+        private string TipoFacturaElegido()
+        {
+            return cmbTipoFacturafrmVenta.SelectedIndex == 1 ? FACTURA_BLL.TipoA : FACTURA_BLL.TipoB;
         }
 
         // CU010 paso 1: productos activos con receta (S1) con sus tamaños y precios
@@ -99,6 +115,9 @@ namespace UI
             dgvPedidofrmVenta.Rows.Clear();
             cmbMedioPagofrmVenta.SelectedIndex = -1;
             txtNombreClientefrmVenta.Text = txtTelefonoClientefrmVenta.Text = txtCorreoClientefrmVenta.Text = string.Empty;
+            txtCuitClientefrmVenta.Text = string.Empty;
+            if (cmbTipoFacturafrmVenta.Items.Count > 0)
+                cmbTipoFacturafrmVenta.SelectedIndex = 0;
             txtResultadofrmVenta.Text = string.Empty;
             nudCantidadfrmVenta.Value = 1;
             PedidoModificado();
@@ -112,6 +131,9 @@ namespace UI
             btnQuitarfrmVenta.Enabled = btnVerificarfrmVenta.Enabled = cmbMedioPagofrmVenta.Enabled = btnCancelarfrmVenta.Enabled = !cobrada;
             btnCobrarfrmVenta.Enabled = !cobrada && verificado;
             txtNombreClientefrmVenta.Enabled = txtTelefonoClientefrmVenta.Enabled = txtCorreoClientefrmVenta.Enabled = cobrada && factura == null;
+            cmbTipoFacturafrmVenta.Enabled = cobrada && factura == null;
+            // Decisión 94: el CUIT solo se pide en la Factura A
+            txtCuitClientefrmVenta.Enabled = cobrada && factura == null && TipoFacturaElegido() == FACTURA_BLL.TipoA;
             btnEmitirFacturafrmVenta.Enabled = cobrada && factura == null;
             btnNuevaVentafrmVenta.Enabled = cobrada;
         }
@@ -280,8 +302,9 @@ namespace UI
             var g = GestorIdioma.Instancia;
             try
             {
-                // FA1: formato de los datos cargados
-                GestorFactura.ValidarDatosCliente(txtNombreClientefrmVenta.Text, txtTelefonoClientefrmVenta.Text, txtCorreoClientefrmVenta.Text);
+                // FA1: formato de los datos cargados; en la Factura A, razón social y CUIT (decisión 94)
+                GestorFactura.ValidarDatosCliente(TipoFacturaElegido(), txtNombreClientefrmVenta.Text, txtCuitClientefrmVenta.Text,
+                    txtTelefonoClientefrmVenta.Text, txtCorreoClientefrmVenta.Text);
             }
             catch (ArgumentException argEx)
             {
@@ -291,7 +314,8 @@ namespace UI
 
             try
             {
-                factura = GestorFactura.EmitirFactura(venta, txtNombreClientefrmVenta.Text, txtTelefonoClientefrmVenta.Text, txtCorreoClientefrmVenta.Text);
+                factura = GestorFactura.EmitirFactura(venta, TipoFacturaElegido(), txtNombreClientefrmVenta.Text, txtCuitClientefrmVenta.Text,
+                    txtTelefonoClientefrmVenta.Text, txtCorreoClientefrmVenta.Text);
             }
             catch (ArgumentException argEx)
             {
@@ -321,6 +345,13 @@ namespace UI
             }
             txtResultadofrmVenta.Text = texto.ToString();
             HabilitarEtapa(cobrada: true);
+        }
+
+        // Decisión 94: al elegir la Factura A se habilita el CUIT
+        private void cmbTipoFacturafrmVenta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool editable = venta.IdVenta > 0 && factura == null;
+            txtCuitClientefrmVenta.Enabled = editable && TipoFacturaElegido() == FACTURA_BLL.TipoA;
         }
 
         private void btnNuevaVentafrmVenta_Click(object sender, EventArgs e)
@@ -362,6 +393,8 @@ namespace UI
             dgvPedidofrmVenta.Columns["colTamanioPedidofrmVenta"].HeaderText = g.Traducir("colTamaniofrmVenta");
             dgvPedidofrmVenta.Columns["colCantidadfrmVenta"].HeaderText = g.Traducir("colCantidadfrmVenta");
             dgvPedidofrmVenta.Columns["colSubtotalfrmVenta"].HeaderText = g.Traducir("colSubtotalfrmVenta");
+            // Los combos no se traducen en el recorrido de arriba
+            CargarTiposFactura();
         }
     }
 }
